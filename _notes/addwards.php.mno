@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<info>
+	<infoitem key="UD_allcounties" value="name:countyID;datatype:int,name:countyname;datatype:string,name:description;datatype:string,name:dateadded;datatype:date,name:dateupdated;datatype:date,name:status;datatype:int" />
+	<infoitem key="UD_cmbconstituency" value="name:constituencyID;datatype:int,name:constituencyname;datatype:string" />
+	<infoitem key="UD_allwards" value="name:wardID;datatype:int,name:wardname;datatype:string,name:description;datatype:string,name:dateadded;datatype:date,name:dateupdated;datatype:date,name:status;datatype:int,name:constituemcyID;datatype:int,name:constituencyname;datatype:string" />
+</info>

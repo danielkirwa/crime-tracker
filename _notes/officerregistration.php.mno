@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<info>
+	<infoitem key="UD_alldepartmentofficer" value="name:departmentId;datatype:int,name:departmentName;datatype:string" />
+	<infoitem key="UD_allworkstationcode" value="name:workstationID;datatype:int,name:workstation;datatype:string" />
+</info>

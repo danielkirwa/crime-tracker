@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<info>
+	<infoitem key="UD_cmbcounty" value="name:countyID;datatype:int,name:countyname;datatype:string" />
+	<infoitem key="UD_allconstituency" value="name:constituencyID;datatype:int,name:constituencyname;datatype:string,name:description;datatype:string,name:dateadded;datatype:date,name:dateupdated;datatype:date,name:status;datatype:int,name:countyname;datatype:string" />
+</info>

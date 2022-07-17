@@ -37,7 +37,7 @@ if (isset($_SERVER['QUERY_STRING'])) {
 }
 
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
-  $insertSQL = sprintf("INSERT INTO tblward (wardname, `description`, dateadded, dateupdated, status, constituemcyID) VALUES (%s, %s, %s, %s, %s , 1)",
+  $insertSQL = sprintf("INSERT INTO tblward (wardname, `description`, dateadded, dateupdated, constituemcyID, status) VALUES (%s, %s, %s, %s, %s , 1)",
                        GetSQLValueString($_POST['wardname'], "text"),
                        GetSQLValueString($_POST['description'], "text"),
                        GetSQLValueString($_POST['dateadded'], "date"),

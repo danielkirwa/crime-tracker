@@ -8,6 +8,7 @@
 	border: none;
 	min-width: 250px;
 }
+
 .myinputtext{
 	padding: 8px 6px;
 	background: #f0f0f0;
@@ -26,6 +27,9 @@
 	border: none;
 	min-width: 250px;
 }
+
+
+
 .largeText{
   font-size: 24px;
   font-weight: bold;

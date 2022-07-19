@@ -80,17 +80,18 @@ $totalPages_allconstituency = ceil($totalRows_allconstituency/$maxRows_allconsti
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Constituency</title>
+<link rel="stylesheet" type="text/css" href="customcss/myelements.css">
 </head>
 <body>
 <form action="<?php echo $editFormAction; ?>" method="post" name="form1" id="form1">
   <table align="center">
     <tr valign="baseline">
-      <td><input type="text" name="constituencyname" value="" size="32" placeholder="Constituency name" /></td>
+      <td><input type="text" name="constituencyname" value="" placeholder="Constituency name" class="myinputtext" /></td>
     </tr>
     <tr valign="baseline">
 
       <td>
-     <textarea name="description" placeholder="Description">
+     <textarea name="description" placeholder="Description" class="myinputtext">
      	
 
      </textarea>
@@ -98,13 +99,13 @@ $totalPages_allconstituency = ceil($totalRows_allconstituency/$maxRows_allconsti
     </tr>
     <tr valign="baseline">
      
-      <td><input type="date" name="dateadded" value="" size="32" /></td>
+      <td><input type="date" name="dateadded" value="" class="myinputtext"/></td>
     </tr>
     
     <tr valign="baseline">
 
       <td>
-        <select name="countyID">
+        <select name="countyID" class="myoption">
           <?php
 do {  
 ?>
@@ -121,24 +122,32 @@ do {
       </td>
     </tr>
     <tr valign="baseline">
-      <td nowrap="nowrap" align="right">&nbsp;</td>
-      <td><input type="submit" value="Insert record" /></td>
+      <td><input type="submit" value="Add Constituency" class="mybutton"/></td>
     </tr>
   </table>
   <input type="hidden" name="MM_insert" value="form1" />
 </form>
 <p>&nbsp;</p>
-<table border="1">
+
+<div class="scroll-table">
+  <div class="table-holder">
+    <div class="table-caption">
+      <label class="largeText dodgerblueText">Availlable Constituencies <span></span></label>
+    </div>
+    <table>
+      <thead>
   <tr>
-    <td>ID</td>
-    <td>County</td>
-    <td>Constituency</td>
-    <td>Description</td>
-    <td>Date added</td>
-    <td>Last updated</td>
-    <td>Status</td>
+    <th>ID</th>
+    <th>County</th>
+    <th>Constituency</th>
+    <th>Description</th>
+    <th>Date added</th>
+    <th>Last updated</th>
+    <th>Status</th>
     
   </tr>
+  </thead>
+  <tbody>
   <?php do { ?>
     <tr>
       <td><?php echo $row_allconstituency['constituencyID']; ?></td>
@@ -148,15 +157,22 @@ do {
       <td><?php echo $row_allconstituency['dateadded']; ?></td>
       <td><?php echo $row_allconstituency['dateupdated']; ?></td>
       <td><?php if ($row_allconstituency['status'] == 1) {
-      	// code...
-      	echo "Active";
+        // code...
+        echo "Active";
       }else{
-      	echo "Not Active";
+        echo "Not Active";
       } ?></td>
       
     </tr>
     <?php } while ($row_allconstituency = mysql_fetch_assoc($allconstituency)); ?>
+    </tbody>
 </table>
+  </div>
+  </div>
+
+
+
+
 </body>
 </html>
 <?php

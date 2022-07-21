@@ -72,6 +72,7 @@ $totalPages_alldepartments = ceil($totalRows_alldepartments/$maxRows_alldepartme
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="customcss/myelements.css">
 <title>Add Departments</title>
 </head>
 <body>
@@ -94,15 +95,26 @@ $totalPages_alldepartments = ceil($totalRows_alldepartments/$maxRows_alldepartme
   <input type="hidden" name="MM_insert" value="form1" />
 </form>
 <p>&nbsp;</p>
-<table border="1">
+
+<div class="scroll-table">
+  <div class="table-holder">
+    <div class="table-caption">
+      <label class="largeText dodgerblueText">Availlable Constituencies <span></span></label>
+    </div>
+    <table>
+      <thead>
   <tr>
-    <td>ID</td>
-    <td>Name</td>
-    <td>Description</td>
-    <td>Date added</td>
-    <td>Last updated</td>
-    <td>Status</td>
+    <th>ID</th>
+    <th>Department</th>
+    <th>Description</th>
+    <th>Date added</th>
+    <th>Last updated</th>
+    <th>Status</th>
+    
   </tr>
+  </thead>
+  <tbody>
+    
   <?php do { ?>
     <tr>
       <td><?php echo $row_alldepartments['departmentId']; ?></td>
@@ -118,7 +130,12 @@ $totalPages_alldepartments = ceil($totalRows_alldepartments/$maxRows_alldepartme
       } ?></td>
     </tr>
     <?php } while ($row_alldepartments = mysql_fetch_assoc($alldepartments)); ?>
+    </tbody>
 </table>
+  </div>
+  </div>
+
+
 </body>
 </html>
 <?php

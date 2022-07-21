@@ -81,6 +81,7 @@ $totalPages_allwards = ceil($totalRows_allwards/$maxRows_allwards)-1;
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="customcss/myelements.css">
 <title>Add Wards</title>
 </head>
 <body>
@@ -125,17 +126,28 @@ do {
   <input type="hidden" name="MM_insert" value="form1" />
 </form>
 <p>&nbsp;</p>
-<table border="1">
+
+<div class="scroll-table">
+  <div class="table-holder">
+    <div class="table-caption">
+      <label class="largeText dodgerblueText">Availlable Constituencies <span></span></label>
+    </div>
+    <table>
+      <thead>
   <tr>
-    <td>ID</td>
-    <td>Ward name</td>
-    <td>Constituency</td>
-    <td>Description</td>
-    <td>Date added</td>
-    <td>Last updated</td>
-    <td>Status</td>
+    <th>ID</th>
+    <th>Ward name</th>
+    <th>Constituency</th>
+    <th>Description</th>
+    <th>Date added</th>
+    <th>Last updated</th>
+    <th>Status</th>
+    
   </tr>
-  <?php do { ?>
+  </thead>
+  <tbody>
+    
+ <?php do { ?>
     <tr>
       <td><?php echo $row_allwards['wardID']; ?></td>
       <td><?php echo $row_allwards['wardname']; ?></td>
@@ -152,7 +164,12 @@ do {
          ?></td>
     </tr>
     <?php } while ($row_allwards = mysql_fetch_assoc($allwards)); ?>
+    </tbody>
 </table>
+  </div>
+  </div>
+
+
 </body>
 </html>
 <?php

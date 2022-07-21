@@ -79,6 +79,7 @@ $totalPages_allworkstation = ceil($totalRows_allworkstation/$maxRows_allworkstat
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="customcss/myelements.css">
 <title>Add Worksattion</title>
 </head>
 
@@ -125,16 +126,26 @@ do {
   <input type="hidden" name="MM_insert" value="form1" />
 </form>
 <p>&nbsp;</p>
-<table border="1">
+
+<div class="scroll-table">
+  <div class="table-holder">
+    <div class="table-caption">
+      <label class="largeText dodgerblueText">Availlable Constituencies <span></span></label>
+    </div>
+    <table>
+      <thead>
   <tr>
-    <td>ID</td>
-    <td>Department</td>
-    <td>Work Station</td>
-    <td>Description</td>
-    <td>Date added</td>
-    <td>Last updated</td>
-    <td>Status</td>
+    <th>ID</th>
+    <th>Department</th>
+    <th>Work Station</th>
+    <th>Description</th>
+    <th>Date added</th>
+    <th>Last updated</th>
+    <th>Status</th>
+    
   </tr>
+  </thead>
+  <tbody>
   <?php do { ?>
     <tr>
       <td><?php echo $row_allworkstation['workstationID']; ?></td>
@@ -144,16 +155,22 @@ do {
       <td><?php echo $row_allworkstation['dateadded']; ?></td>
       <td><?php echo $row_allworkstation['dateupdated']; ?></td>
       <td><?php  if ($row_allworkstation['status'] == 1) {
-      	// code...
-      	echo "Active";
+        // code...
+        echo "Active";
       }else{
-      	echo "Not Active";
+        echo "Not Active";
       }
 
        ?></td>
     </tr>
     <?php } while ($row_allworkstation = mysql_fetch_assoc($allworkstation)); ?>
+    </tbody>
 </table>
+  </div>
+  </div>
+
+
+
 </body>
 </html>
 <?php

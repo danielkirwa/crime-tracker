@@ -73,6 +73,7 @@ $totalPages_allcounty = ceil($totalRows_allcounty/$maxRows_allcounty)-1;
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Counties</title>
+<link rel="stylesheet" type="text/css" href="customcss/myelements.css">
 </head>
 <body>
 <form action="<?php echo $editFormAction; ?>" method="post" name="form1" id="form1">
@@ -97,15 +98,26 @@ $totalPages_allcounty = ceil($totalRows_allcounty/$maxRows_allcounty)-1;
   <input type="hidden" name="MM_insert" value="form1" />
 </form>
 <p>&nbsp;</p>
-<table border="1">
+
+
+<div class="scroll-table">
+  <div class="table-holder">
+    <div class="table-caption">
+      <label class="largeText dodgerblueText">Availlable Constituencies <span></span></label>
+    </div>
+    <table>
+      <thead>
   <tr>
-    <td>countyID</td>
-    <td>countyname</td>
-    <td>description</td>
-    <td>dateadded</td>
-    <td>dateupdated</td>
-    <td>status</td>
+    <th>ID</th>
+    <th>County</th>
+    <th>Description</th>
+    <th>Date added</th>
+    <th>Last updated</th>
+    <th>Status</th>
+    
   </tr>
+  </thead>
+  <tbody>
   <?php do { ?>
     <tr>
       <td><?php echo $row_allcounty['countyID']; ?></td>
@@ -121,7 +133,13 @@ $totalPages_allcounty = ceil($totalRows_allcounty/$maxRows_allcounty)-1;
       } ?></td>
     </tr>
     <?php } while ($row_allcounty = mysql_fetch_assoc($allcounty)); ?>
+    </tbody>
 </table>
+  </div>
+  </div>
+
+
+
 </body>
 </html>
 <?php

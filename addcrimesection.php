@@ -72,6 +72,7 @@ $totalPages_allsections = ceil($totalRows_allsections/$maxRows_allsections)-1;
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="customcss/myelements.css">
 <title>Crime section</title>
 </head>
 <body>
@@ -98,15 +99,26 @@ $totalPages_allsections = ceil($totalRows_allsections/$maxRows_allsections)-1;
   <input type="hidden" name="MM_insert" value="form1" />
 </form>
 <p>&nbsp;</p>
-<table border="1">
+
+
+<div class="scroll-table">
+  <div class="table-holder">
+    <div class="table-caption">
+      <label class="largeText dodgerblueText">Availlable Sections <span></span></label>
+    </div>
+    <table>
+      <thead>
   <tr>
-    <td>ID</td>
-    <td>Section Name</td>
-    <td>Description</td>
-    <td>Dateadded</td>
-    <td>Last updated</td>
-    <td>Status</td>
+    <th>ID</th>
+    <th>Section Name</th>
+    <th>Description</th>
+    <th>Date added</th>
+    <th>Last updated</th>
+    <th>Status</th>
+    
   </tr>
+  </thead>
+  <tbody>
   <?php do { ?>
     <tr>
       <td><?php echo $row_allsections['sectionID']; ?></td>
@@ -115,14 +127,19 @@ $totalPages_allsections = ceil($totalRows_allsections/$maxRows_allsections)-1;
       <td><?php echo $row_allsections['dateadded']; ?></td>
       <td><?php echo $row_allsections['dateupdated']; ?></td>
       <td><?php if ($row_allsections['status'] == 1) {
-      	// code...
-      	echo "Active";
+        // code...
+        echo "Active";
       }else{
-      	echo "Not Active";
+        echo "Not Active";
       } ?></td>
     </tr>
     <?php } while ($row_allsections = mysql_fetch_assoc($allsections)); ?>
+    </tbody>
 </table>
+  </div>
+  </div>
+
+
 </body>
 </html>
 <?php

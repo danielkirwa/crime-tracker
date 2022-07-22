@@ -28,14 +28,14 @@
       
       <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">Navbar</a>
+    <a class="navbar-brand" href="#">Username</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
       	<li class="nav-item">
-          <a class="nav-link active" href="#">Dashboard</a>
+          <a class="nav-link active" href="dashboardadmin.php">Dashboard</a>
         </li>
 
         <li class="nav-item dropdown">
@@ -43,9 +43,10 @@
             Crimes/Case
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="#">Crimes</a></li>
-            <li><a class="dropdown-item" href="#">Victims</a></li>
-            <li><a class="dropdown-item" href="#">Suspects</a></li>
+            <li><a class="dropdown-item" href="crimes.php">Crimes</a></li>
+            <li><a class="dropdown-item" href="victims.php">Victims</a></li>
+            <li><a class="dropdown-item" href="suspects.php">Suspects</a></li>
+            <li><a class="dropdown-item" href="witness.php">Witness</a></li>
           </ul>
         </li>
 
@@ -54,9 +55,9 @@
             Officers
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="#">Add Officer</a></li>
-            <li><a class="dropdown-item" href="#">Add Department</a></li>
-            <li><a class="dropdown-item" href="#">Add WorkStation</a></li>
+            <li><a class="dropdown-item" href="officers.php">Add Officer</a></li>
+            <li><a class="dropdown-item" href="adddepartment.php">Add Department</a></li>
+            <li><a class="dropdown-item" href="addworkstation.php">Add WorkStation</a></li>
           </ul>
         </li>
 
@@ -65,9 +66,9 @@
             Location
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="#">Add County</a></li>
-            <li><a class="dropdown-item" href="#">Add Constituency</a></li>
-            <li><a class="dropdown-item" href="#">Add Wards</a></li>
+            <li><a class="dropdown-item" href="addcounty.php">Add County</a></li>
+            <li><a class="dropdown-item" href="addconstituency.php">Add Constituency</a></li>
+            <li><a class="dropdown-item" href="addwards.php">Add Wards</a></li>
           </ul>
         </li>
         <li class="nav-item">
@@ -85,6 +86,39 @@
 
 
 
+
+
+
+<div class="footer-dark">
+        <footer>
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6 col-md-3 item">
+                        <h3>Services</h3>
+                        <ul>
+                            <li><a href="#">Crime reporting</a></li>
+                            <li><a href="#">Crime alerts</a></li>
+                            <li><a href="#">Danger Zone </a></li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-6 col-md-3 item">
+                        <h3>About</h3>
+                        <ul>
+                            <li><a href="#">Police</a></li>
+                            <li><a href="#">CID</a></li>
+                            <li><a href="#">DCI</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6 item text">
+                        <h3>Bungoma  Crime Logger</h3>
+                        <p>Praesent sed lobortis mi. Suspendisse vel placerat ligula. Vivamus ac sem lacus. Ut vehicula rhoncus elementum. Etiam quis tristique lectus. Aliquam in arcu eget velit pulvinar dictum vel in justo.</p>
+                    </div>
+                    
+                </div>
+                <p class="copyright">Bungoma  Crime Logger &copy; 2022</p>
+            </div>
+        </footer>
+    </div>
 
 
 

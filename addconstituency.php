@@ -146,16 +146,7 @@ $totalPages_allconstituency = ceil($totalRows_allconstituency/$maxRows_allconsti
           </ul>
         </li>
 
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Location
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="addcounty.php">Add County</a></li>
-            <li><a class="dropdown-item" href="#addconstituency.php">Add Constituency</a></li>
-            <li><a class="dropdown-item" href="addwards.php">Add Wards</a></li>
-          </ul>
-        </li>
+        
         <li class="nav-item">
           <a class="nav-link" href="#">All Users</a>
         </li>
@@ -177,7 +168,7 @@ $totalPages_allconstituency = ceil($totalRows_allconstituency/$maxRows_allconsti
     </tr>
     <tr valign="baseline">
 
-      <td>
+      <td><br>
      <textarea name="description" placeholder="Description" class="myinputtext">
      	
 
@@ -186,12 +177,12 @@ $totalPages_allconstituency = ceil($totalRows_allconstituency/$maxRows_allconsti
     </tr>
     <tr valign="baseline">
      
-      <td><input type="date" name="dateadded" value="" class="myinputtext"/></td>
+      <td><br><input type="date" name="dateadded" value="" class="myinputtext"/></td>
     </tr>
     
     <tr valign="baseline">
 
-      <td>
+      <td><br>
         <select name="countyID" class="myoption">
           <?php
 do {  
@@ -209,7 +200,7 @@ do {
       </td>
     </tr>
     <tr valign="baseline">
-      <td><input type="submit" value="Add Constituency" class="mybutton"/></td>
+      <td> <br><input type="submit" value="Add Constituency" class="mybutton"/></td>
     </tr>
   </table>
   <input type="hidden" name="MM_insert" value="form1" />

@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<info>
+	<infoitem key="UD_adminAllofficer" value="name:officerID;datatype:int" />
+	<infoitem key="UD_adminAlldepartments" value="name:departmentId;datatype:int" />
+	<infoitem key="UD_adminAllcrimes" value="name:crimeID;datatype:int" />
+	<infoitem key="UD_adminAllsection" value="name:sectionID;datatype:int" />
+	<infoitem key="UD_mostcommoncrime" value="name:sectionID;datatype:int,name:sectionnmae;datatype:string" />
+</info>

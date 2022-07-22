@@ -102,9 +102,7 @@ $totalPages_alldepartments = ceil($totalRows_alldepartments/$maxRows_alldepartme
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
        
 
-        <li class="nav-item">
-          <a class="nav-link" href="dashboardadmin.php">Dashboard</a>
-        </li>
+       
 
 
         <li class="nav-item dropdown">
@@ -116,6 +114,9 @@ $totalPages_alldepartments = ceil($totalRows_alldepartments/$maxRows_alldepartme
             <li><a class="dropdown-item" href="adddepartment.php">Add Department</a></li>
             <li><a class="dropdown-item" href="addworkstation.php">Add WorkStation</a></li>
           </ul>
+        </li>
+         <li class="nav-item">
+          <a class="nav-link" href="dashboardadmin.php">Dashboard</a>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -156,17 +157,16 @@ $totalPages_alldepartments = ceil($totalRows_alldepartments/$maxRows_alldepartme
 <form action="<?php echo $editFormAction; ?>" method="post" name="form1" id="form1">
   <table align="center">
     <tr valign="baseline">
-      <td><input type="text" name="departmentName" value="" size="32" placeholder="Department Name" /></td>
+      <td><input type="text" name="departmentName" value="" placeholder="Department Name" class="myinputtext"/></td>
     </tr>
     <tr valign="baseline">
-      <td><textarea name="description" placeholder="Department Description"></textarea></td>
+      <td><br><textarea name="description" placeholder="Department Description" class="myinputtext"></textarea></td>
     </tr>
     <tr valign="baseline">
-      <td><input type="date" name="dateadded" value="" size="32" /></td>
+      <td><br><input type="date" name="dateadded" value=""  class="myinputtext"/></td>
     </tr>
     <tr valign="baseline">
-      <td nowrap="nowrap" align="right">&nbsp;</td>
-      <td><input type="submit" value="Add Department" /></td>
+      <td><br><input type="submit" value="Add Department" class="mybutton"/></td>
     </tr>
   </table>
   <input type="hidden" name="MM_insert" value="form1" />

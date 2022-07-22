@@ -87,7 +87,7 @@ padding: 16px;
     <center><h2>Current state if security </h2></center>
     <div class="body-card-holder">
    <div class="card">
-    <img src="assets/images/danger.jpg" class="card-img-top">
+    <img src="assets/logo/dangerzone.jpg" class="card-img-top">
     <div class="card-body">
         <h5 class="card-title">Danger zone</h5>
         <p class="card-text">
@@ -98,7 +98,7 @@ padding: 16px;
    </div>
 
     <div class="card">
-    <img src="assets/images/danger.jpg" class="card-img-top">
+    <img src="assets/logo/onrise.jpg" class="card-img-top">
     <div class="card-body">
         <h5 class="card-title">Most crime</h5>
         <p class="card-text">

@@ -149,16 +149,6 @@ $totalPages_allwards = ceil($totalRows_allwards/$maxRows_allwards)-1;
           </ul>
         </li>
 
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Location
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="addcounty.php">Add County</a></li>
-            <li><a class="dropdown-item" href="#addconstituency.php">Add Constituency</a></li>
-            <li><a class="dropdown-item" href="addwards.php">Add Wards</a></li>
-          </ul>
-        </li>
         <li class="nav-item">
           <a class="nav-link" href="#">All Users</a>
         </li>
@@ -256,7 +246,7 @@ do {
 </table>
   </div>
   </div>
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
 
 </body>
 </html>

@@ -1,15 +1,85 @@
+<?php require_once('Connections/crimecon.php'); ?>
+<?php
+if (!function_exists("GetSQLValueString")) {
+function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "") 
+{
+  if (PHP_VERSION < 6) {
+    $theValue = get_magic_quotes_gpc() ? stripslashes($theValue) : $theValue;
+  }
+
+  $theValue = function_exists("mysql_real_escape_string") ? mysql_real_escape_string($theValue) : mysql_escape_string($theValue);
+
+  switch ($theType) {
+    case "text":
+      $theValue = ($theValue != "") ? "'" . $theValue . "'" : "NULL";
+      break;    
+    case "long":
+    case "int":
+      $theValue = ($theValue != "") ? intval($theValue) : "NULL";
+      break;
+    case "double":
+      $theValue = ($theValue != "") ? doubleval($theValue) : "NULL";
+      break;
+    case "date":
+      $theValue = ($theValue != "") ? "'" . $theValue . "'" : "NULL";
+      break;
+    case "defined":
+      $theValue = ($theValue != "") ? $theDefinedValue : $theNotDefinedValue;
+      break;
+  }
+  return $theValue;
+}
+}
+
+mysql_select_db($database_crimecon, $crimecon);
+$query_adminAllcrimes = "SELECT tblcrime.crimeID FROM tblcrime";
+$adminAllcrimes = mysql_query($query_adminAllcrimes, $crimecon) or die(mysql_error());
+$row_adminAllcrimes = mysql_fetch_assoc($adminAllcrimes);
+$totalRows_adminAllcrimes = mysql_num_rows($adminAllcrimes);
+
+mysql_select_db($database_crimecon, $crimecon);
+$query_adminAllofficer = "SELECT tblofficers.officerID FROM tblofficers";
+$adminAllofficer = mysql_query($query_adminAllofficer, $crimecon) or die(mysql_error());
+$row_adminAllofficer = mysql_fetch_assoc($adminAllofficer);
+$totalRows_adminAllofficer = mysql_num_rows($adminAllofficer);
+
+mysql_select_db($database_crimecon, $crimecon);
+$query_adminAlldepartments = "SELECT tbldepartment.departmentId FROM tbldepartment";
+$adminAlldepartments = mysql_query($query_adminAlldepartments, $crimecon) or die(mysql_error());
+$row_adminAlldepartments = mysql_fetch_assoc($adminAlldepartments);
+$totalRows_adminAlldepartments = mysql_num_rows($adminAlldepartments);
+
+mysql_select_db($database_crimecon, $crimecon);
+$query_adminAllsection = "SELECT tblsection.sectionID FROM tblsection";
+$adminAllsection = mysql_query($query_adminAllsection, $crimecon) or die(mysql_error());
+$row_adminAllsection = mysql_fetch_assoc($adminAllsection);
+$totalRows_adminAllsection = mysql_num_rows($adminAllsection);
+
+mysql_select_db($database_crimecon, $crimecon);
+$query_mostcommoncrime = "SELECT tblcrime.sectionID, tblsection.sectionnmae FROM tblcrime, tblsection WHERE tblsection.sectionID = tblcrime.sectionID ORDER BY tblcrime.sectionID DESC  LIMIT 1";
+$mostcommoncrime = mysql_query($query_mostcommoncrime, $crimecon) or die(mysql_error());
+$row_mostcommoncrime = mysql_fetch_assoc($mostcommoncrime);
+$totalRows_mostcommoncrime = mysql_num_rows($mostcommoncrime);
+?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" type="text/css" href="customcss/navigation.css">
+<link rel="stylesheet" type="text/css" href="customcss/admin.css">
 <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
 <title>Dashboard</title>
 </head>
 <style type="text/css">
 
-
+.enrolls-holder{
+  width: 80%;
+  margin-left: 10%;
+  display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
 
 
 </style>
@@ -82,8 +152,90 @@
     </div>
   </div>
 </nav>
+ 
+ <!-- Start of body -->
+ <div class="enrolls-holder">
+   <div class="enroll-card hoverme" id="crimebtn">
+      <table>
+      <tr>
+        <td>
+          <img src="assets/shopping.png" width="75px">
+        </td>
+        <td>
+          <label class="smallText dodgerblueText">All Crimes : <?php echo $totalRows_adminAllcrimes ?> </label><br/>
+          <label>Solved crimes : </label><br>
+          <label>Unsolved crimes</label><br>
+          <label>Solve rate : </label>
+        </td>
+      </tr>
+    </table>
+    </div>
+
+    
+
+    <div class="enroll-card hoverme" id="crimebtn">
+      <table>
+      <tr>
+        <td>
+          <img src="assets/shopping.png" width="75px">
+        </td>
+        <td>
+          <label class="smallText dodgerblueText">Common Crime :  <?php echo $row_mostcommoncrime['sectionnmae']; ?></label>
+          <label class="smallText dodgerblueText">Total cases : </label>
+        </td>
+      </tr>
+    </table>
+    </div>
+
+     <div class="enroll-card hoverme" id="crimebtn">
+      <table>
+      <tr>
+        <td>
+          <img src="assets/shopping.png" width="75px">
+        </td>
+        <td>
+          <label class="smallText dodgerblueText">All Officers : <?php echo $totalRows_adminAllofficer ?></label><br/>
+          <label class="smallText dodgerblueText">Active Officers : </label><br/>
+          <label class="smallText dodgerblueText">Not Active Officers : </label>
+        </td>
+      </tr>
+    </table>
+    </div>
+
+    <div class="enroll-card hoverme" id="crimebtn">
+      <table>
+      <tr>
+        <td>
+          <img src="assets/shopping.png" width="75px">
+        </td>
+        <td>
+          <label class="smallText dodgerblueText">All Departments : <?php echo $totalRows_adminAlldepartments ?></label><br/>
+          <label class="smallText dodgerblueText">Active Departments : </label><br/>
+          <label class="smallText dodgerblueText">Not Active Departments : </label>
+        </td>
+      </tr>
+    </table>
+    </div>
+
+    <div class="enroll-card hoverme" id="crimebtn">
+      <table>
+      <tr>
+        <td>
+          <img src="assets/shopping.png" width="75px">
+        </td>
+        <td>
+          <label class="smallText dodgerblueText">All Sections : <?php echo $totalRows_adminAllsection ?></label><br/>
+          <label class="smallText dodgerblueText">Active Sections : </label><br/>
+          <label class="smallText dodgerblueText">Not Active Sections : </label>
+        </td>
+      </tr>
+    </table>
+    </div>
 
 
+ </div>
+
+ <!-- End of body -->
 
 
 
@@ -126,3 +278,14 @@
 
 </body>
 </html>
+<?php
+mysql_free_result($adminAllcrimes);
+
+mysql_free_result($adminAllofficer);
+
+mysql_free_result($adminAlldepartments);
+
+mysql_free_result($adminAllsection);
+
+mysql_free_result($mostcommoncrime);
+?>

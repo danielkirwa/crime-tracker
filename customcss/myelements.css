@@ -1,8 +1,8 @@
 .mybutton{
-	padding: 8px 6px;
+	padding: 4px 3px;
 	background: dodgerblue;
 	color: white;
-	font-size: 24px;
+	font-size: 18px;
 	border-radius: 5px;
 	outline: none;
 	border: none;
@@ -12,11 +12,11 @@
 .myinputtext{
 	padding: 8px 6px;
 	background: #f0f0f0;
-	font-size: 24px;
+	font-size: 16px;
 	border-radius: 5px;
 	outline: none;
 	border: none;
-	min-width: 250px;
+	min-width: 300px;
 }
 .myoption{
 	padding: 8px 6px;
@@ -25,7 +25,7 @@
 	border-radius: 5px;
 	outline: none;
 	border: none;
-	min-width: 250px;
+	min-width: 300px;
 }
 
 

@@ -60,6 +60,30 @@ $query_mostcommoncrime = "SELECT tblcrime.sectionID, tblsection.sectionnmae FROM
 $mostcommoncrime = mysql_query($query_mostcommoncrime, $crimecon) or die(mysql_error());
 $row_mostcommoncrime = mysql_fetch_assoc($mostcommoncrime);
 $totalRows_mostcommoncrime = mysql_num_rows($mostcommoncrime);
+
+mysql_select_db($database_crimecon, $crimecon);
+$query_activeofficer = "SELECT tblofficers.officerID FROM tblofficers WHERE tblofficers.status = 1";
+$activeofficer = mysql_query($query_activeofficer, $crimecon) or die(mysql_error());
+$row_activeofficer = mysql_fetch_assoc($activeofficer);
+$totalRows_activeofficer = mysql_num_rows($activeofficer);
+
+mysql_select_db($database_crimecon, $crimecon);
+$query_activecrimes = "SELECT tblcrime.crimeID FROM tblcrime WHERE tblcrime.status = 1";
+$activecrimes = mysql_query($query_activecrimes, $crimecon) or die(mysql_error());
+$row_activecrimes = mysql_fetch_assoc($activecrimes);
+$totalRows_activecrimes = mysql_num_rows($activecrimes);
+
+mysql_select_db($database_crimecon, $crimecon);
+$query_activedepartmets = "SELECT tbldepartment.departmentId FROM tbldepartment WHERE tbldepartment.status = 1";
+$activedepartmets = mysql_query($query_activedepartmets, $crimecon) or die(mysql_error());
+$row_activedepartmets = mysql_fetch_assoc($activedepartmets);
+$totalRows_activedepartmets = mysql_num_rows($activedepartmets);
+
+mysql_select_db($database_crimecon, $crimecon);
+$query_activesections = "SELECT tblsection.sectionID FROM tblsection WHERE tblsection.status = 1";
+$activesections = mysql_query($query_activesections, $crimecon) or die(mysql_error());
+$row_activesections = mysql_fetch_assoc($activesections);
+$totalRows_activesections = mysql_num_rows($activesections);
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -98,7 +122,19 @@ $totalRows_mostcommoncrime = mysql_num_rows($mostcommoncrime);
       
       <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">Username</a>
+    <!-- <a class="navbar-brand" href="#">Username</a> -->
+
+      <li class="nav-item dropdown">
+          <a class="navbar-brand dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Username
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="crimes.php">Profile</a></li>
+            <li><a class="dropdown-item" href="victims.php">User Guide </a></li>
+            <li><a class="dropdown-item" href="suspects.php">Logout</a></li>
+          </ul>
+        </li>
+
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -163,9 +199,9 @@ $totalRows_mostcommoncrime = mysql_num_rows($mostcommoncrime);
         </td>
         <td>
           <label class="smallText dodgerblueText">All Crimes : <?php echo $totalRows_adminAllcrimes ?> </label><br/>
-          <label>Solved crimes : </label><br>
-          <label>Unsolved crimes</label><br>
-          <label>Solve rate : </label>
+          <label>Solved crimes :  <?php echo $totalRows_adminAllcrimes - $totalRows_activecrimes ?> </label><br>
+          <label>Unsolved crimes : <?php echo $totalRows_activecrimes ?></label><br>
+          <label>Solve rate :  <?php echo ($totalRows_adminAllcrimes - $totalRows_activecrimes)/$totalRows_adminAllcrimes * 100  ?>%</label>
         </td>
       </tr>
     </table>
@@ -181,7 +217,7 @@ $totalRows_mostcommoncrime = mysql_num_rows($mostcommoncrime);
         </td>
         <td>
           <label class="smallText dodgerblueText">Common Crime :  <?php echo $row_mostcommoncrime['sectionnmae']; ?></label>
-          <label class="smallText dodgerblueText">Total cases : </label>
+          <label class="smallText dodgerblueText">Total cases : <?php echo $totalRows_mostcommoncrime ?></label>
         </td>
       </tr>
     </table>
@@ -195,8 +231,9 @@ $totalRows_mostcommoncrime = mysql_num_rows($mostcommoncrime);
         </td>
         <td>
           <label class="smallText dodgerblueText">All Officers : <?php echo $totalRows_adminAllofficer ?></label><br/>
-          <label class="smallText dodgerblueText">Active Officers : </label><br/>
-          <label class="smallText dodgerblueText">Not Active Officers : </label>
+          <label class="smallText dodgerblueText">Active Officers :<?php echo $totalRows_activeofficer ?> </label>
+          <br/>
+          <label class="smallText dodgerblueText">Not Active Officers :<?php echo $totalRows_adminAllofficer - $totalRows_activeofficer ?> </label>
         </td>
       </tr>
     </table>
@@ -210,8 +247,8 @@ $totalRows_mostcommoncrime = mysql_num_rows($mostcommoncrime);
         </td>
         <td>
           <label class="smallText dodgerblueText">All Departments : <?php echo $totalRows_adminAlldepartments ?></label><br/>
-          <label class="smallText dodgerblueText">Active Departments : </label><br/>
-          <label class="smallText dodgerblueText">Not Active Departments : </label>
+          <label class="smallText dodgerblueText">Active Departments : <?php echo $totalRows_activedepartmets ?></label><br/>
+          <label class="smallText dodgerblueText">Not Active Departments :  <?php echo $totalRows_adminAlldepartments - $totalRows_activedepartmets ?></label>
         </td>
       </tr>
     </table>
@@ -225,8 +262,8 @@ $totalRows_mostcommoncrime = mysql_num_rows($mostcommoncrime);
         </td>
         <td>
           <label class="smallText dodgerblueText">All Sections : <?php echo $totalRows_adminAllsection ?></label><br/>
-          <label class="smallText dodgerblueText">Active Sections : </label><br/>
-          <label class="smallText dodgerblueText">Not Active Sections : </label>
+          <label class="smallText dodgerblueText">Active Sections : <?php echo $totalRows_activesections ?></label><br/>
+          <label class="smallText dodgerblueText">Not Active Sections : <?php echo $totalRows_adminAllsection - $totalRows_activesections ?></label>
         </td>
       </tr>
     </table>
@@ -288,4 +325,12 @@ mysql_free_result($adminAlldepartments);
 mysql_free_result($adminAllsection);
 
 mysql_free_result($mostcommoncrime);
+
+mysql_free_result($activeofficer);
+
+mysql_free_result($activecrimes);
+
+mysql_free_result($activedepartmets);
+
+mysql_free_result($activesections);
 ?>

@@ -168,7 +168,7 @@ $totalPages_allconstituency = ceil($totalRows_allconstituency/$maxRows_allconsti
     </tr>
     <tr valign="baseline">
 
-      <td><br>
+      <td>
      <textarea name="description" placeholder="Description" class="myinputtext">
      	
 
@@ -177,7 +177,7 @@ $totalPages_allconstituency = ceil($totalRows_allconstituency/$maxRows_allconsti
     </tr>
     <tr valign="baseline">
      
-      <td><br><input type="date" name="dateadded" value="" class="myinputtext"/></td>
+      <td><input type="date" name="dateadded" value="" class="myinputtext"/></td>
     </tr>
     
     <tr valign="baseline">

@@ -1,3 +1,70 @@
+<?php require_once('Connections/crimecon.php'); ?>
+<?php
+//initialize the session
+if (!isset($_SESSION)) {
+  session_start();
+}
+
+// ** Logout the current user. **
+$logoutAction = $_SERVER['PHP_SELF']."?doLogout=true";
+if ((isset($_SERVER['QUERY_STRING'])) && ($_SERVER['QUERY_STRING'] != "")){
+  $logoutAction .="&". htmlentities($_SERVER['QUERY_STRING']);
+}
+
+if ((isset($_GET['doLogout'])) &&($_GET['doLogout']=="true")){
+  //to fully log out a visitor we need to clear the session varialbles
+  $_SESSION['MM_Username'] = NULL;
+  $_SESSION['MM_UserGroup'] = NULL;
+  $_SESSION['PrevUrl'] = NULL;
+  unset($_SESSION['MM_Username']);
+  unset($_SESSION['MM_UserGroup']);
+  unset($_SESSION['PrevUrl']);
+	
+  $logoutGoTo = "index.php";
+  if ($logoutGoTo) {
+    header("Location: $logoutGoTo");
+    exit;
+  }
+}
+?>
+<?php
+if (!function_exists("GetSQLValueString")) {
+function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "") 
+{
+  if (PHP_VERSION < 6) {
+    $theValue = get_magic_quotes_gpc() ? stripslashes($theValue) : $theValue;
+  }
+
+  $theValue = function_exists("mysql_real_escape_string") ? mysql_real_escape_string($theValue) : mysql_escape_string($theValue);
+
+  switch ($theType) {
+    case "text":
+      $theValue = ($theValue != "") ? "'" . $theValue . "'" : "NULL";
+      break;    
+    case "long":
+    case "int":
+      $theValue = ($theValue != "") ? intval($theValue) : "NULL";
+      break;
+    case "double":
+      $theValue = ($theValue != "") ? doubleval($theValue) : "NULL";
+      break;
+    case "date":
+      $theValue = ($theValue != "") ? "'" . $theValue . "'" : "NULL";
+      break;
+    case "defined":
+      $theValue = ($theValue != "") ? $theDefinedValue : $theNotDefinedValue;
+      break;
+  }
+  return $theValue;
+}
+}
+
+mysql_select_db($database_crimecon, $crimecon);
+$query_mostcommoncrime = "SELECT  tblsection.sectionnmae, tblcrime.sectionID, tblsection.`description` FROM tblsection, tblcrime WHERE tblsection.sectionID = tblcrime.sectionID  ORDER BY tblsection.sectionID DESC LIMIT 1";
+$mostcommoncrime = mysql_query($query_mostcommoncrime, $crimecon) or die(mysql_error());
+$row_mostcommoncrime = mysql_fetch_assoc($mostcommoncrime);
+$totalRows_mostcommoncrime = mysql_num_rows($mostcommoncrime);
+?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -41,26 +108,9 @@ nav{
     flex: 0 1 310px; /*  No stretching: */
     margin: 5px;
 }
-.my-nav-holder{
-background: #E8EEF1;
-padding: 16px;
-}
-.my-nav-holder a {
-	padding: 8px;
-	text-decoration: none;
-	font-size: 18px;
-	color: black;
-	border-bottom: 2px solid #E8EEF1;
 
-}
-.my-nav-holder a:hover{
-	padding: 8px;
-	text-decoration: none;
-	font-size: 18px;
-	color: dodgerblue;
-	border-bottom: 2px solid white;
 
-}
+
 
 </style>
 <body>
@@ -72,11 +122,50 @@ padding: 16px;
    	<div class="name-holder">
    		<h3 class="dodgerblueText">Bungoma county crime logger</h3>
    		<div class="my-nav-holder">
-   			<a href="#">Home</a>
-   			<a href="#">Post</a>
-   			<a href="#">Alerts</a>
-   			<a href="#">Profile</a>
-   			<a href="#">Logout</a>
+   		
+
+           <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <div class="container-fluid">
+    <!-- <a class="navbar-brand" href="#">Username</a> -->
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" href="userdashboard.php">Home</a>
+        </li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Report
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="addcrime.php">Crimes</a></li>
+            <li><a class="dropdown-item" href="usercrimereport.php">View crime</a></li>
+          </ul>
+        </li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            username
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="userprofile.php">Profile</a></li>
+            <li><a class="dropdown-item" href="usermanual.php">User manual</a></li>
+            <li><a class="dropdown-item" href="#">Logout</a></li>
+          </ul>
+        </li>
+
+        
+      </ul>
+ 
+    </div>
+  </div>
+</nav>
+
+
    		</div>
    	</div>
    </div>
@@ -100,15 +189,15 @@ padding: 16px;
     <div class="card">
     <img src="assets/logo/onrise.jpg" class="card-img-top">
     <div class="card-body">
-        <h5 class="card-title">Most crime</h5>
+        <h5 class="card-title">Most crime : <?php echo $row_mostcommoncrime['sectionnmae']; ?></h5>
         <p class="card-text">
-            Praesent sed lobortis mi. Suspendisse vel placerat ligula. Vivamus ac sem lacus. Ut vehicula rhoncus elementum. Etiam quis tristique lectus.
+		<?php echo $row_mostcommoncrime['description']; ?> 
         </p>
         <a href="" class="btn btn-primary">View more</a>
     </div>
    </div>
    <div class="card">
-    <img src="assets/images/danger.jpg" class="card-img-top">
+    <img src="assets/logo/warning.jpg" class="card-img-top">
     <div class="card-body">
         <h5 class="card-title">Advice report</h5>
         <p class="card-text">
@@ -177,5 +266,10 @@ padding: 16px;
             </div>
         </footer>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
 </body>
 </html>
+<?php
+mysql_free_result($mostcommoncrime);
+?>

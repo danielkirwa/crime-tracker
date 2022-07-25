@@ -160,13 +160,13 @@ $totalPages_alldepartments = ceil($totalRows_alldepartments/$maxRows_alldepartme
       <td><input type="text" name="departmentName" value="" placeholder="Department Name" class="myinputtext"/></td>
     </tr>
     <tr valign="baseline">
-      <td><br><textarea name="description" placeholder="Department Description" class="myinputtext"></textarea></td>
+      <td><textarea name="description" placeholder="Department Description" class="myinputtext"></textarea></td>
     </tr>
     <tr valign="baseline">
-      <td><br><input type="date" name="dateadded" value=""  class="myinputtext"/></td>
+      <td><input type="date" name="dateadded" value=""  class="myinputtext"/></td>
     </tr>
     <tr valign="baseline">
-      <td><br><input type="submit" value="Add Department" class="mybutton"/></td>
+      <td><input type="submit" value="Add Department" class="mybutton"/></td>
     </tr>
   </table>
   <input type="hidden" name="MM_insert" value="form1" />

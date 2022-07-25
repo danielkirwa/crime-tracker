@@ -77,24 +77,70 @@ $totalRows_cmbward = mysql_num_rows($cmbward);
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="customcss/myelements.css">
+<link rel="stylesheet" type="text/css" href="customcss/navigation.css">
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
 <title>Residence Registration</title>
 </head>
+<style type="text/css">
+nav{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  transition: all 0.4s ease;
+  z-index: 1000;
+}
 
+.name-holder a{
+    text-decoration: none;
+    font-size: 18px;
+    padding-left: 8px;
+    padding-right: 8px;
+    border-bottom: 3px solid white;
+    transition: border-bottom 2s;
+}
+.name-holder a:hover{
+    text-decoration: none;
+    font-size: 18px;
+    padding-left: 8px;
+    padding-right: 8px;
+    border-bottom: 3px solid dodgerblue;
+}
+
+
+</style>
 <body>
+<nav class="shadow-lg p-3 mb-5 bg-body rounded">
+   <div class="logoholder">
+    <div class="logo-holder">
+      <img src="assets/logo/logo.png">
+    </div>
+    <div class="name-holder">
+      <h3>Bungoma county crime logger</h3>
+        <a href="index.php">Back</a>
+        <a href="login.php">Login</a>
+    </div>
+   </div>
+   </nav>
+
+<br><br><br><br><br>
+<br><br><br><br>
 <form action="<?php echo $editFormAction; ?>" method="post" name="form1" id="form1">
   <table align="center">
     <tr valign="baseline">
-      <td><input type="text" name="residenceIdNumber" value="" size="32" placeholder="Enter ID Number" /></td>
+      <td><input type="text" name="residenceIdNumber" value="" class="myinputtext" placeholder="Enter ID Number" /></td>
     </tr>
     <tr valign="baseline">
-      <td><input type="text" name="firstname" value="" size="32" placeholder="First Name" /></td>
+      <td><input type="text" name="firstname" value="" class="myinputtext" placeholder="First Name" /></td>
     </tr>
     <tr valign="baseline">
-      <td><input type="text" name="othername" value="" size="32" placeholder="Other name" /></td>
+      <td><input type="text" name="othername" value="" class="myinputtext" placeholder="Other name" /></td>
     </tr>
     <tr valign="baseline">
       <td>
-        <select name="gender">
+        <select name="gender" class="myoption">
           <option>Select Gender</option>
           <option>MALE</option>
           <option>FEMALE</option>
@@ -102,15 +148,15 @@ $totalRows_cmbward = mysql_num_rows($cmbward);
       </td>
     </tr>
     <tr valign="baseline">
-      <td><input type="text" name="phone" value="" size="32" placeholder="Phone number" /></td>
+      <td><input type="text" name="phone" value="" class="myinputtext" placeholder="Phone number" /></td>
     </tr>
     <tr valign="baseline">
-      <td><input type="text" name="email" value="" size="32" placeholder="Enter email" /></td>
+      <td><input type="text" name="email" value="" class="myinputtext" placeholder="Enter email" /></td>
     </tr>
     <tr valign="baseline">
       
       <td>
-      <select name="countyID">
+      <select name="countyID" class="myoption">
         <?php
 do {  
 ?>
@@ -129,7 +175,7 @@ do {
     <tr valign="baseline">
      
       <td>
-      <select name="consituencyID">
+      <select name="consituencyID" class="myoption">
         <?php
 do {  
 ?>
@@ -148,7 +194,7 @@ do {
     <tr valign="baseline">
      
       <td>
-           <select name="wardID">
+           <select name="wardID" class="myoption">
              <?php
 do {  
 ?>
@@ -165,19 +211,52 @@ do {
       </td>
     </tr>
     <tr valign="baseline">
-      <td><input type="text" name="village" value="" size="32" placeholder="Place of Residence" /></td>
+      <td><input type="text" name="village" value="" class="myinputtext" placeholder="Place of Residence/town/village" /></td>
     </tr>
     <tr valign="baseline">
-      <td><input type="date" name="datecreated" value="" size="32" /></td>
+      <td><input type="date" name="datecreated" value="" class="myinputtext" /></td>
     </tr>
     <tr valign="baseline">
-      <td nowrap="nowrap" align="right">&nbsp;</td>
-      <td><input type="submit" value="Insert record" /></td>
+      
+      <td><input type="submit" value="Register now" class="mybutton"/></td>
     </tr>
   </table>
   <input type="hidden" name="MM_insert" value="form1" />
 </form>
 <p>&nbsp;</p>
+
+ <div class="footer-dark">
+        <footer>
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6 col-md-3 item">
+                        <h3>Services</h3>
+                        <ul>
+                            <li><a href="#">Crime reporting</a></li>
+                            <li><a href="#">Crime alerts</a></li>
+                            <li><a href="#">Danger Zone </a></li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-6 col-md-3 item">
+                        <h3>About</h3>
+                        <ul>
+                            <li><a href="#">Police</a></li>
+                            <li><a href="#">CID</a></li>
+                            <li><a href="#">DCI</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6 item text">
+                        <h3>Bungoma  Crime Logger</h3>
+                        <p>Praesent sed lobortis mi. Suspendisse vel placerat ligula. Vivamus ac sem lacus. Ut vehicula rhoncus elementum. Etiam quis tristique lectus. Aliquam in arcu eget velit pulvinar dictum vel in justo.</p>
+                    </div>
+                    
+                </div>
+                <p class="copyright">Bungoma  Crime Logger &copy; 2022</p>
+            </div>
+        </footer>
+    </div>
+
+
 </body>
 </html>
 <?php

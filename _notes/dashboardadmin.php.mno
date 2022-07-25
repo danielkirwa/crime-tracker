@@ -5,4 +5,8 @@
 	<infoitem key="UD_adminAllcrimes" value="name:crimeID;datatype:int" />
 	<infoitem key="UD_adminAllsection" value="name:sectionID;datatype:int" />
 	<infoitem key="UD_mostcommoncrime" value="name:sectionID;datatype:int,name:sectionnmae;datatype:string" />
+	<infoitem key="UD_activecrimes" value="name:crimeID;datatype:int" />
+	<infoitem key="UD_activedepartmets" value="name:departmentId;datatype:int" />
+	<infoitem key="UD_activeofficer" value="name:officerID;datatype:int" />
+	<infoitem key="UD_activesections" value="name:sectionID;datatype:int" />
 </info>

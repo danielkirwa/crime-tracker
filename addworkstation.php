@@ -168,16 +168,16 @@ $totalPages_allworkstation = ceil($totalRows_allworkstation/$maxRows_allworkstat
       <td><input type="text" name="workstation" value="" placeholder="Workstation Name" class="myinputtext"/></td>
     </tr>
     <tr valign="baseline">
-      <td><br><textarea  name="description" placeholder="workstation description" class="myinputtext">
+      <td><textarea  name="description" placeholder="workstation description" class="myinputtext">
       	
       </textarea></td>
     </tr>
     <tr valign="baseline">
-      <td><br><input type="date" name="dateadded" value="" class="myinputtext" /></td>
+      <td><input type="date" name="dateadded" value="" class="myinputtext" /></td>
     </tr>
    
     <tr valign="baseline">
-      <td><br>
+      <td>
       <select  name="departmentID" class="myoption">
         <?php
 do {  
@@ -197,7 +197,7 @@ do {
     </tr>
     
     <tr valign="baseline">
-      <td><br><input type="submit" value="Insert record" class="mybutton"/></td>
+      <td><input type="submit" value="Insert record" class="mybutton"/></td>
     </tr>
   </table>
   <input type="hidden" name="MM_insert" value="form1" />

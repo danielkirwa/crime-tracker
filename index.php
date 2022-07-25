@@ -39,6 +39,22 @@ nav{
     flex: 0 1 310px; /*  No stretching: */
     margin: 5px;
 }
+.name-holder a{
+    text-decoration: none;
+    font-size: 18px;
+    padding-left: 8px;
+    padding-right: 8px;
+    border-bottom: 3px solid white;
+    transition: border-bottom 2s;
+}
+.name-holder a:hover{
+    text-decoration: none;
+    font-size: 18px;
+    padding-left: 8px;
+    padding-right: 8px;
+    border-bottom: 3px solid dodgerblue;
+}
+
 
 </style>
 <body>
@@ -49,6 +65,8 @@ nav{
    	</div>
    	<div class="name-holder">
    		<h3>Bungoma county crime logger</h3>
+        <a href="login.php">Login</a>
+        <a href="addresidence.php">Register</a>
    	</div>
    </div>
    </nav>
@@ -65,7 +83,7 @@ nav{
     <center><h2>Current state if security </h2></center>
     <div class="body-card-holder">
    <div class="card">
-    <img src="assets/images/danger.jpg" class="card-img-top">
+    <img src="assets/logo/dangerzone.jpg" class="card-img-top">
     <div class="card-body">
         <h5 class="card-title">Danger zone</h5>
         <p class="card-text">
@@ -76,7 +94,7 @@ nav{
    </div>
 
     <div class="card">
-    <img src="assets/images/danger.jpg" class="card-img-top">
+    <img src="assets/logo/onrise.jpg" class="card-img-top">
     <div class="card-body">
         <h5 class="card-title">Most crime</h5>
         <p class="card-text">
@@ -86,7 +104,7 @@ nav{
     </div>
    </div>
    <div class="card">
-    <img src="assets/images/danger.jpg" class="card-img-top">
+    <img src="assets/logo/warning.jpg" class="card-img-top">
     <div class="card-body">
         <h5 class="card-title">Advice report</h5>
         <p class="card-text">

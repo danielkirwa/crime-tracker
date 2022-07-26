@@ -33,47 +33,31 @@ function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDe
 ?>
 <?php
 // *** Validate request to login to this site.
-if (!isset($_SESSION)) {
   session_start();
+if(isset($_POST['btnlogin'])){
+  $username = $_POST['username'];
+  $password = $_POST['password'];
+ 
+ $LoginRS__query=mysql_query("SELECT username, password, privillage FROM tblusers WHERE username= username AND password= password");
+ $row = mysql_fetch_array($LoginRS__query);
+
+ if(is_array($row)){
+  $_SESSION['username'] = $row['username'];
+  $_SESSION['password'] = $row['password'];
+ }else{
+  echo '<script type = "text/javacsript">';
+  echo 'alert("Inalid username and password");';
+  echo 'window.location.href = "login.php"' ;
+  echo '</script>';
+ }
+
 }
 
-$loginFormAction = $_SERVER['PHP_SELF'];
-if (isset($_GET['accesscheck'])) {
-  $_SESSION['PrevUrl'] = $_GET['accesscheck'];
+if ($_SESSION['username']) {
+  // code...
+  header("Location:userdashboard.php");
 }
 
-if (isset($_POST['username'])) {
-  $loginUsername=$_POST['username'];
-  $password=$_POST['password'];
-  $MM_fldUserAuthorization = "privillage";
-  $MM_redirectLoginSuccess = "userdashboard.php";
-  $MM_redirectLoginFailed = "login.php";
-  $MM_redirecttoReferrer = false;
-  mysql_select_db($database_crimecon, $crimecon);
-  	
-  $LoginRS__query=sprintf("SELECT username, password, privillage FROM tblusers WHERE username=%s AND password=%s",
-  GetSQLValueString($loginUsername, "text"), GetSQLValueString($password, "text")); 
-   
-  $LoginRS = mysql_query($LoginRS__query, $crimecon) or die(mysql_error());
-  $loginFoundUser = mysql_num_rows($LoginRS);
-  if ($loginFoundUser) {
-    
-    $loginStrGroup  = mysql_result($LoginRS,0,'privillage');
-    
-	if (PHP_VERSION >= 5.1) {session_regenerate_id(true);} else {session_regenerate_id();}
-    //declare two session variables and assign them
-    $_SESSION['MM_Username'] = $loginUsername;
-    $_SESSION['MM_UserGroup'] = $loginStrGroup;	      
-
-    if (isset($_SESSION['PrevUrl']) && false) {
-      $MM_redirectLoginSuccess = $_SESSION['PrevUrl'];	
-    }
-    header("Location: " . $MM_redirectLoginSuccess );
-  }
-  else {
-    header("Location: ". $MM_redirectLoginFailed );
-  }
-}
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -131,7 +115,7 @@ nav{
 <br><br><br><br><br>
 <br><br><br><br>
 
-<form action="<?php echo $loginFormAction; ?>" method="POST" name="form1" id="form1">
+<form action="login.php" method="POST" name="form1" id="form1">
   <table align="center">
     <tr valign="baseline">
       <td><input type="text" name="username" value="" class="myinputtext" placeholder="Enter username" /></td>
@@ -146,7 +130,7 @@ nav{
       </td>
     </tr>
     <tr valign="baseline">
-      <td><input type="submit" value="Login now"  class="mybutton" /></td>
+      <td><input type="submit" value="Login now"  class="mybutton" name="btnlogin" /></td>
     </tr>
   </table>
   <input type="hidden" name="MM_insert" value="form1" />

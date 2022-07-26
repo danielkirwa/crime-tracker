@@ -5,27 +5,13 @@ if (!isset($_SESSION)) {
   session_start();
 }
 
-// ** Logout the current user. **
-$logoutAction = $_SERVER['PHP_SELF']."?doLogout=true";
-if ((isset($_SERVER['QUERY_STRING'])) && ($_SERVER['QUERY_STRING'] != "")){
-  $logoutAction .="&". htmlentities($_SERVER['QUERY_STRING']);
+if ($_SESSION['username']) {
+  // code...
+ $currentUser =   $_SESSION['username'];
+}else{
+    header("Location:login.php");
 }
 
-if ((isset($_GET['doLogout'])) &&($_GET['doLogout']=="true")){
-  //to fully log out a visitor we need to clear the session varialbles
-  $_SESSION['MM_Username'] = NULL;
-  $_SESSION['MM_UserGroup'] = NULL;
-  $_SESSION['PrevUrl'] = NULL;
-  unset($_SESSION['MM_Username']);
-  unset($_SESSION['MM_UserGroup']);
-  unset($_SESSION['PrevUrl']);
-	
-  $logoutGoTo = "index.php";
-  if ($logoutGoTo) {
-    header("Location: $logoutGoTo");
-    exit;
-  }
-}
 ?>
 <?php
 if (!function_exists("GetSQLValueString")) {
@@ -64,6 +50,11 @@ $query_mostcommoncrime = "SELECT  tblsection.sectionnmae, tblcrime.sectionID, tb
 $mostcommoncrime = mysql_query($query_mostcommoncrime, $crimecon) or die(mysql_error());
 $row_mostcommoncrime = mysql_fetch_assoc($mostcommoncrime);
 $totalRows_mostcommoncrime = mysql_num_rows($mostcommoncrime);
+mysql_select_db($database_crimecon, $crimecon);
+$query_userid = "SELECT tblresidence.residenceID, tblresidence.email FROM tblresidence WHERE tblresidence.email = '{$currentUser}' ";
+$userid = mysql_query($query_userid, $crimecon) or die(mysql_error());
+$row_userid = mysql_fetch_assoc($userid);
+$totalRows_userid = mysql_num_rows($userid);
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -149,12 +140,12 @@ nav{
 
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            username
+            <?php echo $_SESSION['username'] ?>
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
             <li><a class="dropdown-item" href="userprofile.php">Profile</a></li>
             <li><a class="dropdown-item" href="usermanual.php">User manual</a></li>
-            <li><a class="dropdown-item" href="#">Logout</a></li>
+            <li><a class="dropdown-item" href="logout.php">Logout</a></li>
           </ul>
         </li>
 
@@ -178,9 +169,10 @@ nav{
    <div class="card">
     <img src="assets/logo/dangerzone.jpg" class="card-img-top">
     <div class="card-body">
-        <h5 class="card-title">Danger zone</h5>
+        <h5 class="card-title">Danger zone <?php echo $row_userid['residenceID']; ?></h5>
         <p class="card-text">
-            Praesent sed lobortis mi. Suspendisse vel placerat ligula. Vivamus ac sem lacus. Ut vehicula rhoncus elementum. Etiam quis tristique lectus.
+            <label>Constituency level : </label><br>
+            <label>Ward level : </label>
         </p>
         <a href="" class="btn btn-primary">View more</a>
     </div>
@@ -272,4 +264,6 @@ nav{
 </html>
 <?php
 mysql_free_result($mostcommoncrime);
+
+mysql_free_result($userid);
 ?>

@@ -1,4 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <info>
 	<infoitem key="UD_mostcommoncrime" value="name:sectionnmae;datatype:string,name:sectionID;datatype:int,name:description;datatype:string" />
+	<infoitem key="UD_userid" value="name:residenceID;datatype:int,name:email;datatype:string" />
 </info>

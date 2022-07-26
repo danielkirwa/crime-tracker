@@ -81,6 +81,10 @@ $totalRows_cmbward = mysql_num_rows($cmbward);
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="customcss/myelements.css">
+<link rel="stylesheet" type="text/css" href="customcss/navigation.css">
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
 <title>Crime Reporting</title>
 </head>
 <body>
@@ -190,6 +194,10 @@ do {
   <input type="hidden" name="MM_insert" value="form1" />
 </form>
 <p>&nbsp;</p>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+
 </body>
 </html>
 <?php

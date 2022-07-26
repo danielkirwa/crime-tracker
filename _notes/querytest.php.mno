@@ -1,4 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <info>
+	<infoitem key="UD_userprofile" value="name:residenceID;datatype:int,name:residenceIdNumber;datatype:string,name:firstname;datatype:string,name:othername;datatype:string,name:gender;datatype:string,name:phone;datatype:string,name:email;datatype:string,name:village;datatype:string,name:status;datatype:int,name:wardname;datatype:string,name:constituencyname;datatype:string,name:countyname;datatype:string" />
 	<infoitem key="UD_adminAllcrimes" value="name:crimeID;datatype:int" />
+	<infoitem key="UD_userid" value="name:residenceID;datatype:int,name:email;datatype:string" />
 </info>

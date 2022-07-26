@@ -30,7 +30,10 @@
 	margin-top: 16px;
 	min-width: 300px;
 }
-
+.mylinks{
+	text-decoration: none;
+	color: white;
+}
 
 
 .largeText{

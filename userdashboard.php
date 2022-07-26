@@ -87,6 +87,10 @@ nav{
   transition: all 0.4s ease;
   z-index: 1000;
 }
+.mylinks{
+    text-decoration: none;
+    color: white;
+}
 
 .body-card-holder{
   width: 100%;
@@ -212,9 +216,8 @@ nav{
  					</span></label>
  				</td>
  				<td>
- 					<button class="mybutton-small">Update</button>
- 					<button class="mybutton-small">Add Victim</button>
- 					<button class="mybutton-small">Add Suspect</button>
+ 					<button class="mybutton-small"><a href="addvictim.php" class="mylinks">Add Victim</a></button>
+ 					<button class="mybutton-small"><a href="addsuspect.php" class="mylinks">Add Suspect</a></button>
  				</td>
  			</tr>
  		</table>

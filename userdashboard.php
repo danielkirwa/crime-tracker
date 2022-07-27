@@ -255,9 +255,10 @@ nav{
                     
                 </td>
                 <td style="padding-bottom: 8px;"> &nbsp;&nbsp;
-                    <button class="mybutton-small"><a href="addvictim.php" class="mylinks">Add Victim</a></button>
-                    <button class="mybutton-small"><a href="addsuspect.php" class="mylinks">Add Suspect</a></button>
-                    <button class="mybutton-small"><a href="addwitness.php" class="mylinks">Add Witness</a></button>
+                    <button class="mybutton-small"><a href="addvictim.php?editcaseid=<?php echo $row_activeeditablecrime['crimeID'];
+                     ?>" class="mylinks">Add Victim</a></button>
+                    <button class="mybutton-small"><a href="addsuspect.php" class="mylinks" id="<?php echo $row_activeeditablecrime['crimeID']; ?>">Add Suspect</a></button>
+                    <button class="mybutton-small"><a href="addwitness.php" class="mylinks" id="<?php echo $row_activeeditablecrime['crimeID']; ?>">Add Witness</a></button>
                 </td>
 
             </tr>

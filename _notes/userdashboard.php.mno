@@ -2,4 +2,6 @@
 <info>
 	<infoitem key="UD_mostcommoncrime" value="name:sectionnmae;datatype:string,name:sectionID;datatype:int,name:description;datatype:string" />
 	<infoitem key="UD_userid" value="name:residenceID;datatype:int,name:email;datatype:string" />
+	<infoitem key="UD_userpostedcrime" value="name:crimeID;datatype:int,name:sectionID;datatype:int,name:dateadded;datatype:date,name:status;datatype:int,name:suspectID;datatype:int,name:victimID;datatype:int,name:witnessID;datatype:int" />
+	<infoitem key="UD_activeeditablecrime" value="name:crimeID;datatype:int,name:dateadded;datatype:date,name:status;datatype:int,name:sectionnmae;datatype:string" />
 </info>

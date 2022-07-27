@@ -207,7 +207,7 @@ do {
     </tr>
     <tr valign="baseline">
       <td nowrap="nowrap" align="right">Complainer :</td>
-      <td><input type="text" name="complainerID" value="" class="myinputtext" /></td>
+      <td><input type="text" name="complainerID" value="<?php echo $_SESSION['thisuserid'] ?>" class="myinputtext" /></td>
     </tr>
     <tr valign="baseline">
       <td nowrap="nowrap" align="right">Description:</td>
@@ -237,7 +237,7 @@ do {
     <tr valign="baseline">
       <td nowrap="nowrap" align="right">Constituency :</td>
       <td>
-       <select name="constituencyIDs" class="myoption">
+       <select name="constituencyID" class="myoption">
         <?php
 do {  
 ?>

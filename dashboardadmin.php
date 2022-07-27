@@ -153,6 +153,7 @@ $totalRows_activesections = mysql_num_rows($activesections);
             <li><a class="dropdown-item" href="victims.php">Victims</a></li>
             <li><a class="dropdown-item" href="suspects.php">Suspects</a></li>
             <li><a class="dropdown-item" href="witness.php">Witness</a></li>
+            <li><a class="dropdown-item" href="addcrimesection.php">Add Section</a></li>
           </ul>
         </li>
 

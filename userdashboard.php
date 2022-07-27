@@ -55,6 +55,35 @@ $query_userid = "SELECT tblresidence.residenceID, tblresidence.email FROM tblres
 $userid = mysql_query($query_userid, $crimecon) or die(mysql_error());
 $row_userid = mysql_fetch_assoc($userid);
 $totalRows_userid = mysql_num_rows($userid);
+
+$maxRows_userpostedcrime = 10;
+$pageNum_userpostedcrime = 0;
+if (isset($_GET['pageNum_userpostedcrime'])) {
+  $pageNum_userpostedcrime = $_GET['pageNum_userpostedcrime'];
+}
+$startRow_userpostedcrime = $pageNum_userpostedcrime * $maxRows_userpostedcrime;
+ 
+ $_SESSION['thisuserid'] = $row_userid['residenceID'];
+  
+mysql_select_db($database_crimecon, $crimecon);
+$query_userpostedcrime = "SELECT tblcrime.crimeID, tblcrime.dateadded, tblcrime.status, tblsuspect.suspectID, tblvictim.victimID, tblwitness.witnessID, tblsection.sectionnmae FROM tblcrime, tblsuspectcrime, tblsuspect, tblvictim, tblvictimcrime, tblwitness, tblwitnesscrime, tblresidence, tblsection WHERE tblsuspectcrime.crimeID = tblcrime.crimeID  AND tblsuspect.suspectID =  tblsuspectcrime.suspectID   AND tblvictimcrime.crimeID = tblcrime.crimeID   AND tblvictim.victimID =  tblvictimcrime.victimID  AND tblwitnesscrime.crimeID = tblcrime.crimeID  AND tblwitness.witnessID = tblwitnesscrime.witnessID AND tblcrime.complainerID = 1";
+$query_limit_userpostedcrime = sprintf("%s LIMIT %d, %d", $query_userpostedcrime, $startRow_userpostedcrime, $maxRows_userpostedcrime);
+$userpostedcrime = mysql_query($query_limit_userpostedcrime, $crimecon) or die(mysql_error());
+$row_userpostedcrime = mysql_fetch_assoc($userpostedcrime);
+
+if (isset($_GET['totalRows_userpostedcrime'])) {
+  $totalRows_userpostedcrime = $_GET['totalRows_userpostedcrime'];
+} else {
+  $all_userpostedcrime = mysql_query($query_userpostedcrime);
+  $totalRows_userpostedcrime = mysql_num_rows($all_userpostedcrime);
+}
+$totalPages_userpostedcrime = ceil($totalRows_userpostedcrime/$maxRows_userpostedcrime)-1;
+
+mysql_select_db($database_crimecon, $crimecon);
+$query_activeeditablecrime = "SELECT tblcrime.crimeID, tblcrime.dateadded, tblcrime.status, tblsection.sectionnmae FROM tblcrime, tblsection WHERE tblsection.sectionID =  tblcrime.sectionID  AND tblcrime.complainerID = 1 AND tblcrime.status = 1";
+$activeeditablecrime = mysql_query($query_activeeditablecrime, $crimecon) or die(mysql_error());
+$row_activeeditablecrime = mysql_fetch_assoc($activeeditablecrime);
+$totalRows_activeeditablecrime = mysql_num_rows($activeeditablecrime);
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -205,33 +234,86 @@ nav{
    </div>
    </div>
    
+
 <div id="post-crime">
-		<div class="main-totalusers"> 
- 		
- 		<table id="totalusers">
- 			<tr>
- 				<td>
- 					<label class="smallText dodgerblueText">No. 1, Case name : <span>
- 						Victim No. Suspect No1. 12/7/2022 
- 					</span></label>
- 				</td>
- 				<td>
- 					<button class="mybutton-small"><a href="addvictim.php" class="mylinks">Add Victim</a></button>
- 					<button class="mybutton-small"><a href="addsuspect.php" class="mylinks">Add Suspect</a></button>
- 				</td>
- 			</tr>
- 		</table>
- 	</div>
+     <center><label class="largeText dodgerblueText">Pending crime post</label></center>
+        <div class="main-totalusers"> 
+        
+        <table id="totalusers">
+<?php do { ?>
+            <tr style="border-bottom: 2px solid dodgerblue;">
+                <td style="padding-bottom: 8px;">
+                    <label class="smallText dodgerblueText"> ID :  <?php echo $row_activeeditablecrime['crimeID']; ?> , <span> Sec : <?php echo $row_activeeditablecrime['sectionnmae']; ?>,  </span> Date : <?php echo $row_activeeditablecrime['dateadded']; ?>  ,<span> Status : <?php 
+                    if ($row_activeeditablecrime['status'] = 1) {
+                        // code...
+                        echo 'Active';
+                    }else{
+
+                    echo 'Closed';
+                    }
+                     ?></span></label>
+                    
+                </td>
+                <td style="padding-bottom: 8px;"> &nbsp;&nbsp;
+                    <button class="mybutton-small"><a href="addvictim.php" class="mylinks">Add Victim</a></button>
+                    <button class="mybutton-small"><a href="addsuspect.php" class="mylinks">Add Suspect</a></button>
+                    <button class="mybutton-small"><a href="addwitness.php" class="mylinks">Add Witness</a></button>
+                </td>
+
+            </tr>
+            <?php } while ($row_activeeditablecrime = mysql_fetch_assoc($activeeditablecrime)); ?>
+        </table>
+    </div>
 
 </div>
 
+   <div class="scroll-table">
+  <div class="table-holder">
+    <div class="table-caption">
+      <label class="largeText dodgerblueText">Completely posted crime <span></span></label>
+    </div>
+    
+<table>
+    <thead>
+  <tr>
+    <th>ID</th>
+    <th>Section</th>
+    <th>dateadded</th>
+    <th>status</th>
+    <th>suspect ID</th>
+    <th>victim ID</th>
+    <th>witness ID</th>
+  </tr>
+</thead>
+<tbody>
+  <?php do { ?>
+    <tr>
+      <td><?php echo $row_userpostedcrime['crimeID']; ?></td>
+      <td><?php echo $row_userpostedcrime['sectionnmae']; ?></td>
+      <td><?php echo $row_userpostedcrime['dateadded']; ?></td>
+      <td><?php 
+             if ($row_userpostedcrime['status'] = 1) {
+                 // code...
+                echo 'On going ...';
+             }else{
+                echo 'Closed'; 
+             }
+       ?></td>
+      <td><?php echo $row_userpostedcrime['suspectID']; ?></td>
+      <td><?php echo $row_userpostedcrime['victimID']; ?></td>
+      <td><?php echo $row_userpostedcrime['witnessID']; ?></td>
+    </tr>
+    <?php } while ($row_userpostedcrime = mysql_fetch_assoc($userpostedcrime)); ?>
+</tbody>
+</table>
+  </div>
+  </div>
 
 
 
 
 
-
-   <div class="footer-dark">
+<div class="footer-dark">
         <footer>
             <div class="container">
                 <div class="row">
@@ -269,4 +351,8 @@ nav{
 mysql_free_result($mostcommoncrime);
 
 mysql_free_result($userid);
+
+mysql_free_result($userpostedcrime);
+
+mysql_free_result($activeeditablecrime);
 ?>

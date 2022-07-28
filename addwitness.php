@@ -14,6 +14,12 @@ if ($_SESSION['username']) {
 }
 
 ?>
+
+<?php 
+$CrimeID = $_GET['editcaseid'];
+ ?>
+
+
 <?php
 if (!function_exists("GetSQLValueString")) {
 function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "") 
@@ -52,8 +58,9 @@ if (isset($_SERVER['QUERY_STRING'])) {
 }
 
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
-  $insertSQL = sprintf("INSERT INTO tblwitness (firstname, othername, gender, phone, email, countyid, constituencyid, wardid, dateadded) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)",
-                       GetSQLValueString($_POST['firstname'], "text"),
+  $insertSQL = sprintf("INSERT INTO tblwitness (crimeID,firstname, othername, gender, phone, email, countyid, constituencyid, wardid, dateadded) VALUES (%s,%s, %s, %s, %s, %s, %s, %s, %s, %s)",
+                       GetSQLValueString($_POST['crimeid'], "text"),
+					   GetSQLValueString($_POST['firstname'], "text"),
                        GetSQLValueString($_POST['othername'], "text"),
                        GetSQLValueString($_POST['gender'], "text"),
                        GetSQLValueString($_POST['phone'], "text"),
@@ -178,6 +185,9 @@ nav{
 <form action="<?php echo $editFormAction; ?>" method="post" name="form1" id="form1">
    <center><label class="largeText dodgerblueText">Witness form fill and submit</label></center>
   <table align="center">
+    <tr valign="baseline">
+      <td><input type="text" value="<?php echo $CrimeID;  ?>" class="myinputtext" placeholder="Crime ID" name="crimeid"/></td>
+    </tr>
     <tr valign="baseline">
       <td><input type="text" name="firstname" value="" class="myinputtext" placeholder="First name" /></td>
     </tr>

@@ -57,8 +57,9 @@ if (isset($_SERVER['QUERY_STRING'])) {
 }
 
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
-  $insertSQL = sprintf("INSERT INTO tblvictim (firstname, othername, gender, idnumber, phone, `description`, countyid, constituencyid, wardid, dateadded, status) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, 1)",
-                       GetSQLValueString($_POST['firstname'], "text"),
+  $insertSQL = sprintf("INSERT INTO tblvictim (crimeID,firstname, othername, gender, idnumber, phone, `description`, countyid, constituencyid, wardid, dateadded, status) VALUES (%s,%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, 1)",
+                       GetSQLValueString($_POST['crimeid'], "text"),
+					   GetSQLValueString($_POST['firstname'], "text"),
                        GetSQLValueString($_POST['othername'], "text"),
                        GetSQLValueString($_POST['gender'], "text"),
                        GetSQLValueString($_POST['idnumber'], "int"),
@@ -182,7 +183,7 @@ nav{
    <center><label class="largeText dodgerblueText">Victim form fill and submit</label></center>
   <table align="center">
     <tr valign="baseline">
-      <td><input type="text" value="<?php echo $CrimeID;  ?>" class="myinputtext" placeholder="First name" /></td>
+      <td><input type="text" value="<?php echo $CrimeID;  ?>" class="myinputtext" placeholder="Crime ID" name="crimeid"/></td>
     </tr>
     <tr valign="baseline">
       <td><input type="text" name="firstname" value="" class="myinputtext" placeholder="First name" /></td>

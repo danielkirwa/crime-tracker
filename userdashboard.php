@@ -257,8 +257,10 @@ nav{
                 <td style="padding-bottom: 8px;"> &nbsp;&nbsp;
                     <button class="mybutton-small"><a href="addvictim.php?editcaseid=<?php echo $row_activeeditablecrime['crimeID'];
                      ?>" class="mylinks">Add Victim</a></button>
-                    <button class="mybutton-small"><a href="addsuspect.php" class="mylinks" id="<?php echo $row_activeeditablecrime['crimeID']; ?>">Add Suspect</a></button>
-                    <button class="mybutton-small"><a href="addwitness.php" class="mylinks" id="<?php echo $row_activeeditablecrime['crimeID']; ?>">Add Witness</a></button>
+                    <button class="mybutton-small"><a href="addsuspect.php?editcaseid=<?php echo $row_activeeditablecrime['crimeID'];
+                     ?>" class="mylinks">Add Suspect</a></button>
+                    <button class="mybutton-small"><a href="addwitness.php?editcaseid=<?php echo $row_activeeditablecrime['crimeID'];
+                     ?>" class="mylinks">Add Witness</a></button>
                 </td>
 
             </tr>
@@ -271,7 +273,7 @@ nav{
    <div class="scroll-table">
   <div class="table-holder">
     <div class="table-caption">
-      <label class="largeText dodgerblueText">Completely posted crime <span></span></label>
+      <label class="largeText dodgerblueText">Closed crime <span></span></label>
     </div>
     
 <table>
@@ -287,24 +289,7 @@ nav{
   </tr>
 </thead>
 <tbody>
-  <?php do { ?>
-    <tr>
-      <td><?php echo $row_userpostedcrime['crimeID']; ?></td>
-      <td><?php echo $row_userpostedcrime['sectionnmae']; ?></td>
-      <td><?php echo $row_userpostedcrime['dateadded']; ?></td>
-      <td><?php 
-             if ($row_userpostedcrime['status'] = 1) {
-                 // code...
-                echo 'On going ...';
-             }else{
-                echo 'Closed'; 
-             }
-       ?></td>
-      <td><?php echo $row_userpostedcrime['suspectID']; ?></td>
-      <td><?php echo $row_userpostedcrime['victimID']; ?></td>
-      <td><?php echo $row_userpostedcrime['witnessID']; ?></td>
-    </tr>
-    <?php } while ($row_userpostedcrime = mysql_fetch_assoc($userpostedcrime)); ?>
+ 
 </tbody>
 </table>
   </div>

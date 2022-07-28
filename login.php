@@ -50,13 +50,14 @@ if(isset($_POST['btnlogin'])){
   echo 'window.location.href = "login.php"' ;
   echo '</script>';
  }
-
-}
-
-if ($_SESSION['username']) {
+ if ($_SESSION['username']) {
   // code...
   header("Location:userdashboard.php");
 }
+
+}
+
+
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -71,7 +72,7 @@ if ($_SESSION['username']) {
 </head>
 <style type="text/css">
 nav{
-
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;

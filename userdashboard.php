@@ -46,7 +46,7 @@ function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDe
 }
 
 mysql_select_db($database_crimecon, $crimecon);
-$query_mostcommoncrime = "SELECT  tblsection.sectionnmae, tblcrime.sectionID, tblsection.`description` FROM tblsection, tblcrime WHERE tblsection.sectionID = tblcrime.sectionID  ORDER BY tblsection.sectionID DESC LIMIT 1";
+$query_mostcommoncrime = "SELECT  tblsection.sectionnmae, tblcrime.sectionID, tblsection.`description` FROM tblsection, tblcrime WHERE tblsection.sectionID = tblcrime.sectionID  ORDER BY tblsection.sectionID ASC LIMIT 1";
 $mostcommoncrime = mysql_query($query_mostcommoncrime, $crimecon) or die(mysql_error());
 $row_mostcommoncrime = mysql_fetch_assoc($mostcommoncrime);
 $totalRows_mostcommoncrime = mysql_num_rows($mostcommoncrime);
@@ -84,6 +84,18 @@ $query_activeeditablecrime = "SELECT tblcrime.crimeID, tblcrime.dateadded, tblcr
 $activeeditablecrime = mysql_query($query_activeeditablecrime, $crimecon) or die(mysql_error());
 $row_activeeditablecrime = mysql_fetch_assoc($activeeditablecrime);
 $totalRows_activeeditablecrime = mysql_num_rows($activeeditablecrime);
+
+mysql_select_db($database_crimecon, $crimecon);
+$query_mostcommonward = "SELECT tblward.wardname, tblcrime.wardID   FROM tblward, tblcrime WHERE tblward.wardID = tblcrime.wardID   ORDER BY tblward.wardID DESC LIMIT 1";
+$mostcommonward = mysql_query($query_mostcommonward, $crimecon) or die(mysql_error());
+$row_mostcommonward = mysql_fetch_assoc($mostcommonward);
+$totalRows_mostcommonward = mysql_num_rows($mostcommonward);
+
+mysql_select_db($database_crimecon, $crimecon);
+$query_mostcommonconstituency = "SELECT tblconstituency.constituencyname, tblcrime.constituencyID    FROM tblconstituency, tblcrime  WHERE tblconstituency.constituencyID = tblcrime.constituencyID       ORDER BY  tblconstituency.constituencyID DESC LIMIT 1";
+$mostcommonconstituency = mysql_query($query_mostcommonconstituency, $crimecon) or die(mysql_error());
+$row_mostcommonconstituency = mysql_fetch_assoc($mostcommonconstituency);
+$totalRows_mostcommonconstituency = mysql_num_rows($mostcommonconstituency);
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -204,8 +216,9 @@ nav{
     <div class="card-body">
         <h5 class="card-title">Danger zone <?php echo $row_userid['residenceID']; ?></h5>
         <p class="card-text">
-            <label>Constituency level : </label><br>
-            <label>Ward level : </label>
+            <label>Constituency level : <?php echo $row_mostcommonconstituency['constituencyname']; ?></label>
+            <br>
+            <label>Ward level : <?php echo $row_mostcommonward['wardname']; ?></label>
         </p>
         <a href="" class="btn btn-primary">View more</a>
     </div>
@@ -341,4 +354,8 @@ mysql_free_result($userid);
 mysql_free_result($userpostedcrime);
 
 mysql_free_result($activeeditablecrime);
+
+mysql_free_result($mostcommonward);
+
+mysql_free_result($mostcommonconstituency);
 ?>

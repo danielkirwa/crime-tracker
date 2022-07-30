@@ -91,6 +91,27 @@ $query_cmbconstituency = "SELECT tblconstituency.constituencyID, tblconstituency
 $cmbconstituency = mysql_query($query_cmbconstituency, $crimecon) or die(mysql_error());
 $row_cmbconstituency = mysql_fetch_assoc($cmbconstituency);
 $totalRows_cmbconstituency = mysql_num_rows($cmbconstituency);
+
+$maxRows_postedvictime = 10;
+$pageNum_postedvictime = 0;
+if (isset($_GET['pageNum_postedvictime'])) {
+  $pageNum_postedvictime = $_GET['pageNum_postedvictime'];
+}
+$startRow_postedvictime = $pageNum_postedvictime * $maxRows_postedvictime;
+
+mysql_select_db($database_crimecon, $crimecon);
+$query_postedvictime = "SELECT  tblvictim.victimID, tblcrime.crimeID, tblvictim.firstname, tblvictim.gender, tblvictim.dateadded, tblsection.sectionnmae FROM tblcrime, tblvictim, tblsection WHERE  tblsection.sectionID =  tblcrime.sectionID  AND tblvictim.crimeID = tblcrime.crimeID   AND tblcrime.complainerID = 1";
+$query_limit_postedvictime = sprintf("%s LIMIT %d, %d", $query_postedvictime, $startRow_postedvictime, $maxRows_postedvictime);
+$postedvictime = mysql_query($query_limit_postedvictime, $crimecon) or die(mysql_error());
+$row_postedvictime = mysql_fetch_assoc($postedvictime);
+
+if (isset($_GET['totalRows_postedvictime'])) {
+  $totalRows_postedvictime = $_GET['totalRows_postedvictime'];
+} else {
+  $all_postedvictime = mysql_query($query_postedvictime);
+  $totalRows_postedvictime = mysql_num_rows($all_postedvictime);
+}
+$totalPages_postedvictime = ceil($totalRows_postedvictime/$maxRows_postedvictime)-1;
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -283,6 +304,45 @@ do {
 </form>
 <p>&nbsp;</p>
 
+
+
+<div class="scroll-table">
+  <div class="table-holder">
+    <div class="table-caption">
+      <label class="largeText dodgerblueText">All Posted Victim <span></span></label>
+    </div>
+    
+<table>
+    <thead>
+  <tr>
+    <th>Victim ID</th>
+    <th>Crime ID</th>
+    <th>First Name</th>
+    <th>Gender</th>
+    <th>Date Added</th>
+    <th>Section Name</th>
+  </tr>
+</thead>
+<tbody>
+ </tr>
+  <?php do { ?>
+    <tr>
+      <td><?php echo $row_postedvictime['victimID']; ?></td>
+      <td><?php echo $row_postedvictime['crimeID']; ?></td>
+      <td><?php echo $row_postedvictime['firstname']; ?></td>
+      <td><?php echo $row_postedvictime['gender']; ?></td>
+      <td><?php echo $row_postedvictime['dateadded']; ?></td>
+      <td><?php echo $row_postedvictime['sectionnmae']; ?></td>
+    </tr>
+    <?php } while ($row_postedvictime = mysql_fetch_assoc($postedvictime)); ?>
+</tbody>
+</table>
+  </div>
+  </div>
+
+
+
+
 <div class="footer-dark">
         <footer>
             <div class="container">
@@ -324,4 +384,6 @@ mysql_free_result($cmbward);
 mysql_free_result($cmbcounty);
 
 mysql_free_result($cmbconstituency);
+
+mysql_free_result($postedvictime);
 ?>

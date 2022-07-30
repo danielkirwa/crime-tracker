@@ -3,4 +3,5 @@
 	<infoitem key="UD_cmbcounty" value="name:countyID;datatype:int,name:countyname;datatype:string" />
 	<infoitem key="UD_cmbconstituency" value="name:constituencyID;datatype:int,name:constituencyname;datatype:string" />
 	<infoitem key="UD_cmbward" value="name:wardID;datatype:int,name:wardname;datatype:string" />
+	<infoitem key="UD_postedsuspects" value="name:suspectID;datatype:int,name:crimeID;datatype:int,name:sectionnmae;datatype:string,name:firstname;datatype:string,name:dateadded;datatype:date" />
 </info>

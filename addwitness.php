@@ -91,6 +91,27 @@ $query_cmbward = "SELECT tblward.wardID, tblward.wardname FROM tblward WHERE tbl
 $cmbward = mysql_query($query_cmbward, $crimecon) or die(mysql_error());
 $row_cmbward = mysql_fetch_assoc($cmbward);
 $totalRows_cmbward = mysql_num_rows($cmbward);
+
+$maxRows_allpostedwitness = 10;
+$pageNum_allpostedwitness = 0;
+if (isset($_GET['pageNum_allpostedwitness'])) {
+  $pageNum_allpostedwitness = $_GET['pageNum_allpostedwitness'];
+}
+$startRow_allpostedwitness = $pageNum_allpostedwitness * $maxRows_allpostedwitness;
+
+mysql_select_db($database_crimecon, $crimecon);
+$query_allpostedwitness = "SELECT   tblwitness.witnessID, tblcrime.crimeID, tblwitness.firstname, tblwitness.dateadded, tblsection.sectionnmae FROM tblcrime, tblwitness, tblsection WHERE tblwitness.crimeID = tblcrime.crimeID  AND tblcrime.complainerID = 1 AND tblsection.sectionID = tblcrime.sectionID";
+$query_limit_allpostedwitness = sprintf("%s LIMIT %d, %d", $query_allpostedwitness, $startRow_allpostedwitness, $maxRows_allpostedwitness);
+$allpostedwitness = mysql_query($query_limit_allpostedwitness, $crimecon) or die(mysql_error());
+$row_allpostedwitness = mysql_fetch_assoc($allpostedwitness);
+
+if (isset($_GET['totalRows_allpostedwitness'])) {
+  $totalRows_allpostedwitness = $_GET['totalRows_allpostedwitness'];
+} else {
+  $all_allpostedwitness = mysql_query($query_allpostedwitness);
+  $totalRows_allpostedwitness = mysql_num_rows($all_allpostedwitness);
+}
+$totalPages_allpostedwitness = ceil($totalRows_allpostedwitness/$maxRows_allpostedwitness)-1;
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -276,6 +297,41 @@ do {
 </form>
 <p>&nbsp;</p>
 
+
+
+<div class="scroll-table">
+  <div class="table-holder">
+    <div class="table-caption">
+      <label class="largeText dodgerblueText">Closed crime <span></span></label>
+    </div>
+    
+<table>
+    <thead>
+  <tr>
+    <th>Witness ID</th>
+    <th>Crime ID</th>
+    <th>First Name</th>
+    <th>Date Added</th>
+    <th>Section Name</th>
+
+  </tr>
+</thead>
+<tbody>
+  <?php do { ?>
+    <tr>
+      <td><?php echo $row_allpostedwitness['witnessID']; ?></td>
+      <td><?php echo $row_allpostedwitness['crimeID']; ?></td>
+      <td><?php echo $row_allpostedwitness['firstname']; ?></td>
+      <td><?php echo $row_allpostedwitness['dateadded']; ?></td>
+      <td><?php echo $row_allpostedwitness['sectionnmae']; ?></td>
+    </tr>
+    <?php } while ($row_allpostedwitness = mysql_fetch_assoc($allpostedwitness)); ?>
+</tbody>
+</table>
+  </div>
+  </div>
+
+
 <div class="footer-dark">
         <footer>
             <div class="container">
@@ -316,4 +372,6 @@ mysql_free_result($cmbcounty);
 mysql_free_result($cmbconstituency);
 
 mysql_free_result($cmbward);
+
+mysql_free_result($allpostedwitness);
 ?>

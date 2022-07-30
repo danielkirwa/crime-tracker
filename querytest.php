@@ -72,6 +72,36 @@ $query_activeeditablecrime = "SELECT tblcrime.crimeID, tblcrime.dateadded, tblcr
 $activeeditablecrime = mysql_query($query_activeeditablecrime, $crimecon) or die(mysql_error());
 $row_activeeditablecrime = mysql_fetch_assoc($activeeditablecrime);
 $totalRows_activeeditablecrime = mysql_num_rows($activeeditablecrime);
+
+mysql_select_db($database_crimecon, $crimecon);
+$query_mostcommonward = "SELECT tblward.wardname, tblcrime.wardID   FROM tblward, tblcrime WHERE tblward.wardID = tblcrime.wardID   ORDER BY tblward.wardID DESC LIMIT 1";
+$mostcommonward = mysql_query($query_mostcommonward, $crimecon) or die(mysql_error());
+$row_mostcommonward = mysql_fetch_assoc($mostcommonward);
+$totalRows_mostcommonward = mysql_num_rows($mostcommonward);
+
+mysql_select_db($database_crimecon, $crimecon);
+$query_mostcommonconstituency = "SELECT tblconstituency.constituencyname, tblcrime.constituencyID    FROM tblconstituency, tblcrime  WHERE tblconstituency.constituencyID = tblcrime.constituencyID       ORDER BY  tblconstituency.constituencyID DESC LIMIT 1";
+$mostcommonconstituency = mysql_query($query_mostcommonconstituency, $crimecon) or die(mysql_error());
+$row_mostcommonconstituency = mysql_fetch_assoc($mostcommonconstituency);
+$totalRows_mostcommonconstituency = mysql_num_rows($mostcommonconstituency);
+
+mysql_select_db($database_crimecon, $crimecon);
+$query_postedvictime = "SELECT  tblvictim.victimID, tblcrime.crimeID, tblvictim.firstname, tblvictim.gender, tblvictim.dateadded, tblsection.sectionnmae FROM tblcrime, tblvictim, tblsection WHERE  tblsection.sectionID =  tblcrime.sectionID  AND tblvictim.crimeID = tblcrime.crimeID   AND tblcrime.complainerID = 1";
+$postedvictime = mysql_query($query_postedvictime, $crimecon) or die(mysql_error());
+$row_postedvictime = mysql_fetch_assoc($postedvictime);
+$totalRows_postedvictime = mysql_num_rows($postedvictime);
+
+mysql_select_db($database_crimecon, $crimecon);
+$query_postedsuspects = "SELECT  tblsuspect.suspectID, tblcrime.crimeID,  tblsection.sectionnmae, tblsuspect.firstname, tblsuspect.dateadded FROM tblcrime, tblsection, tblsuspect WHERE tblsuspect.crimeID = tblcrime.crimeID  AND tblsection.sectionID = tblcrime.sectionID  AND tblcrime.complainerID = 1 ";
+$postedsuspects = mysql_query($query_postedsuspects, $crimecon) or die(mysql_error());
+$row_postedsuspects = mysql_fetch_assoc($postedsuspects);
+$totalRows_postedsuspects = mysql_num_rows($postedsuspects);
+
+mysql_select_db($database_crimecon, $crimecon);
+$query_allpostedwitness = "SELECT   tblwitness.witnessID, tblcrime.crimeID, tblwitness.firstname, tblwitness.dateadded, tblsection.sectionnmae FROM tblcrime, tblwitness, tblsection WHERE tblwitness.crimeID = tblcrime.crimeID  AND tblcrime.complainerID = 1 AND tblsection.sectionID = tblcrime.sectionID";
+$allpostedwitness = mysql_query($query_allpostedwitness, $crimecon) or die(mysql_error());
+$row_allpostedwitness = mysql_fetch_assoc($allpostedwitness);
+$totalRows_allpostedwitness = mysql_num_rows($allpostedwitness);
 ?>
 <?php
 // *** Validate request to login to this site.
@@ -157,6 +187,16 @@ mysql_free_result($userlogedcrime);
 mysql_free_result($userpostedcrime);
 
 mysql_free_result($activeeditablecrime);
+
+mysql_free_result($mostcommonward);
+
+mysql_free_result($mostcommonconstituency);
+
+mysql_free_result($postedvictime);
+
+mysql_free_result($postedsuspects);
+
+mysql_free_result($allpostedwitness);
 ?>
 
 

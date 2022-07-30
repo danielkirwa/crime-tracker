@@ -2,9 +2,14 @@
 <info>
 	<infoitem key="UD_userprofile" value="name:residenceID;datatype:int,name:residenceIdNumber;datatype:string,name:firstname;datatype:string,name:othername;datatype:string,name:gender;datatype:string,name:phone;datatype:string,name:email;datatype:string,name:village;datatype:string,name:status;datatype:int,name:wardname;datatype:string,name:constituencyname;datatype:string,name:countyname;datatype:string" />
 	<infoitem key="UD_adminAllcrimes" value="name:crimeID;datatype:int" />
-	<infoitem key="UD_userid" value="name:residenceID;datatype:int,name:email;datatype:string" />
 	<infoitem key="UD_mylogedcrime" value="name:crimeID;datatype:int,name:sectionID;datatype:int,name:dateadded;datatype:date,name:status;datatype:int,name:crimeID;datatype:int,name:suspectID;datatype:int,name:suspectID;datatype:int,name:victimID;datatype:int,name:victimID;datatype:int,name:crimeID;datatype:int,name:witnessID;datatype:int,name:crimeID;datatype:int,name:witnessID;datatype:int" />
 	<infoitem key="UD_userlogedcrime" value="name:crimeID;datatype:int,name:sectionID;datatype:int,name:dateadded;datatype:date,name:status;datatype:int,name:suspectID;datatype:int,name:victimID;datatype:int,name:witnessID;datatype:int" />
 	<infoitem key="UD_userpostedcrime" value="name:crimeID;datatype:int,name:sectionID;datatype:int,name:dateadded;datatype:date,name:status;datatype:int,name:suspectID;datatype:int,name:victimID;datatype:int,name:witnessID;datatype:int" />
 	<infoitem key="UD_activeeditablecrime" value="name:crimeID;datatype:int,name:dateadded;datatype:date,name:status;datatype:int,name:sectionnmae;datatype:string" />
+	<infoitem key="UD_mostcommonward" value="name:wardname;datatype:string,name:wardID;datatype:int" />
+	<infoitem key="UD_postedvictime" value="name:victimID;datatype:int,name:crimeID;datatype:int,name:firstname;datatype:string,name:gender;datatype:string,name:dateadded;datatype:date,name:sectionnmae;datatype:string" />
+	<infoitem key="UD_mostcommonconstituency" value="name:constituencyname;datatype:string,name:constituencyID;datatype:int" />
+	<infoitem key="UD_postedsuspects" value="name:suspectID;datatype:int,name:crimeID;datatype:int,name:sectionnmae;datatype:string,name:firstname;datatype:string,name:dateadded;datatype:date" />
+	<infoitem key="UD_userid" value="name:residenceID;datatype:int,name:email;datatype:string" />
+	<infoitem key="UD_allpostedwitness" value="name:witnessID;datatype:int,name:crimeID;datatype:int,name:firstname;datatype:string,name:dateadded;datatype:date,name:sectionnmae;datatype:string" />
 </info>

@@ -56,7 +56,7 @@ $row_adminAllsection = mysql_fetch_assoc($adminAllsection);
 $totalRows_adminAllsection = mysql_num_rows($adminAllsection);
 
 mysql_select_db($database_crimecon, $crimecon);
-$query_mostcommoncrime = "SELECT tblcrime.sectionID, tblsection.sectionnmae FROM tblcrime, tblsection WHERE tblsection.sectionID = tblcrime.sectionID ORDER BY tblcrime.sectionID DESC  LIMIT 1";
+$query_mostcommoncrime = "SELECT tblcrime.sectionID, tblsection.sectionnmae FROM tblcrime, tblsection WHERE tblsection.sectionID = tblcrime.sectionID ORDER BY tblcrime.sectionID ASC  LIMIT 1";
 $mostcommoncrime = mysql_query($query_mostcommoncrime, $crimecon) or die(mysql_error());
 $row_mostcommoncrime = mysql_fetch_assoc($mostcommoncrime);
 $totalRows_mostcommoncrime = mysql_num_rows($mostcommoncrime);

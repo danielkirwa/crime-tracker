@@ -85,8 +85,8 @@ $activesections = mysql_query($query_activesections, $crimecon) or die(mysql_err
 $row_activesections = mysql_fetch_assoc($activesections);
 $totalRows_activesections = mysql_num_rows($activesections);
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" type="text/css" href="customcss/navigation.css">
@@ -108,6 +108,7 @@ $totalRows_activesections = mysql_num_rows($activesections);
 
 
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 <body>
 	  <nav class="shadow-lg p-3 mb-5 bg-body rounded">
    <div class="logoholder">
@@ -197,7 +198,7 @@ $totalRows_activesections = mysql_num_rows($activesections);
       <table>
       <tr>
         <td>
-          <img src="assets/shopping.png" width="75px">
+          <img src="" width="75px">
         </td>
         <td>
           <label class="smallText dodgerblueText">All Crimes : <?php echo $totalRows_adminAllcrimes ?> </label><br/>
@@ -215,7 +216,7 @@ $totalRows_activesections = mysql_num_rows($activesections);
       <table>
       <tr>
         <td>
-          <img src="assets/shopping.png" width="75px">
+          <img src="" width="75px">
         </td>
         <td>
           <label class="smallText dodgerblueText">Common Crime :  <?php echo $row_mostcommoncrime['sectionnmae']; ?></label>
@@ -229,7 +230,7 @@ $totalRows_activesections = mysql_num_rows($activesections);
       <table>
       <tr>
         <td>
-          <img src="assets/shopping.png" width="75px">
+          <img src="" width="75px">
         </td>
         <td>
           <label class="smallText dodgerblueText">All Officers : <?php echo $totalRows_adminAllofficer ?></label><br/>
@@ -245,7 +246,7 @@ $totalRows_activesections = mysql_num_rows($activesections);
       <table>
       <tr>
         <td>
-          <img src="assets/shopping.png" width="75px">
+          <img src="" width="75px">
         </td>
         <td>
           <label class="smallText dodgerblueText">All Departments : <?php echo $totalRows_adminAlldepartments ?></label><br/>
@@ -260,7 +261,7 @@ $totalRows_activesections = mysql_num_rows($activesections);
       <table>
       <tr>
         <td>
-          <img src="assets/shopping.png" width="75px">
+          <img src="" width="75px">
         </td>
         <td>
           <label class="smallText dodgerblueText">All Sections : <?php echo $totalRows_adminAllsection ?></label><br/>
@@ -280,24 +281,24 @@ $totalRows_activesections = mysql_num_rows($activesections);
   <div class="scroll-analysis">
  
     <div class="analysis-holder">
-  
-  <label class="analytic-titel">General report</label>
+  <label class="analytic-titel">Visual report crime logger</label>
   <hr>
   <div class="report-holder">
     <div class="report-card">
       
-   <label>TOTAL CRIME : <span>null</span></label><br>
-   <canvas id="pieChartEnrolls" width="50%"></canvas>
+   <label>ALL CRIMES : <span>null</span></label><br>
+   <canvas id="graphallcases" width="50%"></canvas>
     </div>
     <div class="report-card-long">
       
-   <label>SOLVED CRIMES</label><br>
+   <label>RESULTS </label><br>
    <canvas id="barGraphResults" width="50%"></canvas>
     </div>
     <div class="report-card-longer">
       
-   <label>UNSOLVED CRIMES </label><br>
-   <canvas id="barGraphUnitReport" width="50%"></canvas>
+   <label>GENERAL INFORMATION </label><br>
+    <canvas id="barGraphUnitReport" width="50%"></canvas>
+   
     </div>
   </div>
   
@@ -340,6 +341,11 @@ $totalRows_activesections = mysql_num_rows($activesections);
     </div>
 
 
+
+
+
+
+<script type="text/javascript" src="customjs/analysis.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
 

@@ -1,0 +1,31 @@
+.scroll-analysis{
+  width: 80%;
+  overflow: hidden;
+  overflow-x: scroll;
+  background: #fff;
+  padding: 8px;
+  left: 0; 
+  right: 0; 
+  margin-left: auto; 
+  margin-right: auto;
+   border: 1px solid #fff;
+  box-shadow: 0 0 0.5rem 0 rgba(0 ,0,0,0.3);
+
+}
+.analysis-holder{
+   background: #fff;
+   width: 98%;
+   min-width: 750px;
+  border: 1px solid #fff;
+  box-shadow: 0 0 0.5rem 0 rgba(0 ,0,0,0.3);
+  padding: 8px;
+margin-left: auto; 
+  margin-right: auto;
+  color: dodgerblue;
+}
+
+
+.mybutton{
+  padding: 8px 12px;
+  border-radius: 5px;
+}

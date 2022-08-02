@@ -91,6 +91,7 @@ $totalRows_activesections = mysql_num_rows($activesections);
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" type="text/css" href="customcss/navigation.css">
 <link rel="stylesheet" type="text/css" href="customcss/admin.css">
+<link rel="stylesheet" type="text/css" href="customcss/popupanalysis.css">
 <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
 <title>Dashboard</title>
@@ -275,7 +276,35 @@ $totalRows_activesections = mysql_num_rows($activesections);
 
  <!-- End of body -->
 
+<!-- POP UP UNIT ANALYSIS -->
+  <div class="scroll-analysis">
+ 
+    <div class="analysis-holder">
+  
+  <label class="analytic-titel">General report</label>
+  <hr>
+  <div class="report-holder">
+    <div class="report-card">
+      
+   <label>TOTAL CRIME : <span>null</span></label><br>
+   <canvas id="pieChartEnrolls" width="50%"></canvas>
+    </div>
+    <div class="report-card-long">
+      
+   <label>SOLVED CRIMES</label><br>
+   <canvas id="barGraphResults" width="50%"></canvas>
+    </div>
+    <div class="report-card-longer">
+      
+   <label>UNSOLVED CRIMES </label><br>
+   <canvas id="barGraphUnitReport" width="50%"></canvas>
+    </div>
+  </div>
+  
+  </div>
+</div>
 
+<!-- end of grahp -->
 
 
 

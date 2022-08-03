@@ -217,6 +217,12 @@ do {
       <td><input type="date" name="datecreated" value="" class="myinputtext" /></td>
     </tr>
     <tr valign="baseline">
+      <td><input type="password" name="password" value="" class="myinputtext" placeholder="********" onkeyup="validatepassword()" id="checkpassword" /></td>
+    </tr>
+    <tr valign="baseline">
+      <td><input type="checkbox" name="" > &nbsp;Show password</td>
+    </tr>
+    <tr valign="baseline">
       
       <td><input type="submit" value="Register now" class="mybutton"/></td>
     </tr>
@@ -256,7 +262,7 @@ do {
         </footer>
     </div>
 
-
+<script type="text/javascript" src="customjs/registervalidation.js"></script>
 </body>
 </html>
 <?php

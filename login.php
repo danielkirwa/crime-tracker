@@ -52,7 +52,13 @@ if(isset($_POST['btnlogin'])){
  }
  if ($_SESSION['username']) {
   // code...
+  if($row['privillage'] == "user"){
   header("Location:userdashboard.php");
+  }else if($row['privillage'] == "admin"){
+     header("Location:dashboardadmin.php");
+  }else{
+
+  }
 }
 
 }

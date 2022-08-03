@@ -1,8 +1,17 @@
 // analysis 
+// get data
+
+var totalcrimes = document.getElementById('lbtotalcrimes');
+var totalsolvedcrimes = document.getElementById('lbtotalsolvedcrimes');
+var totalpendingcrimes = totalcrimes - totalpendingcrimes;
+
+
+
+
 function createPieChart() {
 	// body...
 var chartLabels = ["TOTAL CRIMES", "SOLVED", "UNSOLVED"];
-var chartValues = [55, 49, 44];
+var chartValues = [totalcrimes, totalsolvedcrimes, totalpendingcrimes];
 var chartColors = [
   "#b91d47",
   "#00aba9",

@@ -1,5 +1,19 @@
 <?php require_once('Connections/crimecon.php'); ?>
 <?php
+//initialize the session
+if (!isset($_SESSION)) {
+  session_start();
+}
+
+if ($_SESSION['username']) {
+  // code...
+ $currentUser =   $_SESSION['username'];
+}else{
+    header("Location:login.php");
+}
+
+?>
+<?php
 if (!function_exists("GetSQLValueString")) {
 function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "") 
 {
@@ -128,7 +142,7 @@ $totalRows_activesections = mysql_num_rows($activesections);
 
       <li class="nav-item dropdown">
           <a class="navbar-brand dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Username
+            <?php echo $_SESSION['username'] ?>
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
             <li><a class="dropdown-item" href="crimes.php">Profile</a></li>
@@ -201,8 +215,8 @@ $totalRows_activesections = mysql_num_rows($activesections);
           <img src="" width="75px">
         </td>
         <td>
-          <label class="smallText dodgerblueText">All Crimes : <?php echo $totalRows_adminAllcrimes ?> </label><br/>
-          <label>Solved crimes :  <?php echo $totalRows_adminAllcrimes - $totalRows_activecrimes ?> </label><br>
+          <label class="smallText dodgerblueText">All Crimes : <span id="lbtotalcrimes"> <?php echo $totalRows_adminAllcrimes ?> </span> </label><br/>
+          <label>Solved crimes : <span id="lbtotalsolvedcrimes"> <?php echo $totalRows_adminAllcrimes - $totalRows_activecrimes ?> </span> </label><br>
           <label>Unsolved crimes : <?php echo $totalRows_activecrimes ?></label><br>
           <label>Solve rate :  <?php echo ($totalRows_adminAllcrimes - $totalRows_activecrimes)/$totalRows_adminAllcrimes * 100  ?>%</label>
         </td>

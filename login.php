@@ -37,29 +37,28 @@ function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDe
 if(isset($_POST['btnlogin'])){
   $username = $_POST['username'];
   $password = $_POST['password'];
- 
- $LoginRS__query=mysql_query("SELECT username, password, privillage FROM tblusers WHERE username= username AND password= password");
- $row = mysql_fetch_array($LoginRS__query);
 
- if(is_array($row)){
+  $query="SELECT username,privillage FROM tblusers WHERE username='$username' AND password='$password'"; 
+   $check=mysql_query($query);
+   $num_rows=mysql_num_rows($check);
+
+  if($num_rows){
+   $row=mysql_fetch_assoc($check);
   $_SESSION['username'] = $row['username'];
-  $_SESSION['password'] = $row['password'];
- }else{
-  echo '<script type = "text/javacsript">';
-  echo 'alert("Inalid username and password");';
-  echo 'window.location.href = "login.php"' ;
-  echo '</script>';
- }
- if ($_SESSION['username']) {
-  // code...
-  if($row['privillage'] == "user"){
-  header("Location:userdashboard.php");
-  }else if($row['privillage'] == "admin"){
-     header("Location:dashboardadmin.php");
-  }else{
+  $_SESSION['privillage'] = $row['privillage'];
+   
+   if($_SESSION['privillage'] == "user"){
+   header("Refresh:1; url=userdashboard.php");
 
   }
-}
+
+  if($_SESSION['privillage'] == "admin"){
+   header("Location:dashboardadmin.php");
+
+  }
+
+  }
+
 
 }
 

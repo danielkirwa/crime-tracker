@@ -108,6 +108,9 @@ $totalRows_activesections = mysql_num_rows($activesections);
 <link rel="stylesheet" type="text/css" href="customcss/popupanalysis.css">
 <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+
+<meta name="vartotalcrimes" content="<?php echo $totalRows_adminAllcrimes ?>">
+<meta name="vartotalactivecrimes" content="<?php echo $totalRows_activecrimes ?>">
 <title>Dashboard</title>
 </head>
 <style type="text/css">
@@ -145,9 +148,9 @@ $totalRows_activesections = mysql_num_rows($activesections);
             <?php echo $_SESSION['username'] ?>
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="crimes.php">Profile</a></li>
-            <li><a class="dropdown-item" href="victims.php">User Guide </a></li>
-            <li><a class="dropdown-item" href="suspects.php">Logout</a></li>
+            <li><a class="dropdown-item" href="profile.php">Profile</a></li>
+            <li><a class="dropdown-item" href="adminusermanual.php">User Guide </a></li>
+            <li><a class="dropdown-item" href="logout.php">Logout</a></li>
           </ul>
         </li>
 

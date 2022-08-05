@@ -1,12 +1,12 @@
 // analysis 
 // get data
 
-var totalcrimes = document.getElementById('lbtotalcrimes');
-var totalsolvedcrimes = document.getElementById('lbtotalsolvedcrimes');
-var totalpendingcrimes = totalcrimes - totalpendingcrimes;
+var totalcrimes = document.querySelector("meta[name=vartotalcrimes]").content;
+var totalpendingcrimes = document.querySelector("meta[name=vartotalactivecrimes]").content;
+var totalsolvedcrimes = totalcrimes - totalpendingcrimes;
 
 
-
+console.log(totalsolvedcrimes);
 
 function createPieChart() {
 	// body...

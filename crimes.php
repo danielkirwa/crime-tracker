@@ -1,8 +1,81 @@
+<?php require_once('Connections/crimecon.php'); ?>
+<?php
+if (!function_exists("GetSQLValueString")) {
+function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "") 
+{
+  if (PHP_VERSION < 6) {
+    $theValue = get_magic_quotes_gpc() ? stripslashes($theValue) : $theValue;
+  }
+
+  $theValue = function_exists("mysql_real_escape_string") ? mysql_real_escape_string($theValue) : mysql_escape_string($theValue);
+
+  switch ($theType) {
+    case "text":
+      $theValue = ($theValue != "") ? "'" . $theValue . "'" : "NULL";
+      break;    
+    case "long":
+    case "int":
+      $theValue = ($theValue != "") ? intval($theValue) : "NULL";
+      break;
+    case "double":
+      $theValue = ($theValue != "") ? doubleval($theValue) : "NULL";
+      break;
+    case "date":
+      $theValue = ($theValue != "") ? "'" . $theValue . "'" : "NULL";
+      break;
+    case "defined":
+      $theValue = ($theValue != "") ? $theDefinedValue : $theNotDefinedValue;
+      break;
+  }
+  return $theValue;
+}
+}
+
+$maxRows_allcrimesmangement = 10;
+$pageNum_allcrimesmangement = 0;
+if (isset($_GET['pageNum_allcrimesmangement'])) {
+  $pageNum_allcrimesmangement = $_GET['pageNum_allcrimesmangement'];
+}
+$startRow_allcrimesmangement = $pageNum_allcrimesmangement * $maxRows_allcrimesmangement;
+
+mysql_select_db($database_crimecon, $crimecon);
+$query_allcrimesmangement = "SELECT tblcrime.crimeID,  tblcrime.`description`, tblcrime.dateofoffence, tblcrime.dateadded, tblcrime.status, tblsection.sectionnmae, tblresidence.firstname FROM tblcrime, tblsection, tblresidence WHERE tblsection.sectionID = tblcrime.sectionID  AND tblresidence.residenceID = tblcrime.complainerID  AND tblcrime.status = 1";
+$query_limit_allcrimesmangement = sprintf("%s LIMIT %d, %d", $query_allcrimesmangement, $startRow_allcrimesmangement, $maxRows_allcrimesmangement);
+$allcrimesmangement = mysql_query($query_limit_allcrimesmangement, $crimecon) or die(mysql_error());
+$row_allcrimesmangement = mysql_fetch_assoc($allcrimesmangement);
+
+if (isset($_GET['totalRows_allcrimesmangement'])) {
+  $totalRows_allcrimesmangement = $_GET['totalRows_allcrimesmangement'];
+} else {
+  $all_allcrimesmangement = mysql_query($query_allcrimesmangement);
+  $totalRows_allcrimesmangement = mysql_num_rows($all_allcrimesmangement);
+}
+$totalPages_allcrimesmangement = ceil($totalRows_allcrimesmangement/$maxRows_allcrimesmangement)-1;
+?>
+<?php 
+
+   if(isset($_POST['btnclosecase'])){
+    $closeid = $_POST['btnclosecase'];
+  
+   $close_crime = "UPDATE tblcrime SET status = 0 WHERE crimeID = '$closeid' ";
+   if (mysql_query($close_crime)) {
+     // code...
+    echo '<script>alert ("Crime Close successfuly")</script>';
+    header("Location:crimes.php");
+   }else{
+      echo '<script>alert ("Failed to Close crime")</script>';
+   }
+
+   mysql_query($close_crime) or die(mysql_error());
+
+}
+ ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" type="text/css" href="customcss/navigation.css">
+<link rel="stylesheet" type="text/css" href="customcss/myelements.css">
 <link rel="stylesheet" type="text/css" href="customcss/admin.css">
 <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
@@ -115,6 +188,52 @@
 <!-- end of other display -->
 
 
+<div class="scroll-table">
+  <div class="table-holder">
+    <div class="table-caption">
+      <label class="largeText dodgerblueText">Availlable Constituencies <span></span></label>
+    </div>
+    <table>
+      <thead>
+  <tr>
+    <th>ID</th>
+    <th>Section</th>
+    <th>Description</th>
+    <th>Date of offence</th>
+    <th>Date Added</th>
+    <th>Complainer</th>
+    <th>Status</th>
+    
+  </tr>
+  </thead>
+  <tbody>
+    
+<?php do { ?>
+    <tr>
+      <td><?php echo $row_allcrimesmangement['crimeID']; ?></td>
+      <td><?php echo $row_allcrimesmangement['sectionnmae']; ?></td>
+      <td><?php echo $row_allcrimesmangement['description']; ?></td>
+      <td><?php echo $row_allcrimesmangement['dateofoffence']; ?></td>
+      <td><?php echo $row_allcrimesmangement['dateadded']; ?></td>
+      <td><?php echo $row_allcrimesmangement['firstname']; ?></td>
+      <td><?php   if($row_allcrimesmangement['status'] == 1){
+        echo "Active";
+      }else{
+        echo "Closed";
+      } ?></td>
+      <td><form action="crimes.php" method="POST" name="formclosecrime" id="closecrime1"> <button class="mybutton-small" value="<?php echo $row_allcrimesmangement['crimeID']; ?>" name="btnclosecase">Close</button>
+      </form>
+    </td>
+      
+    </tr>
+    <?php } while ($row_allcrimesmangement = mysql_fetch_assoc($allcrimesmangement)); ?>
+    </tbody>
+</table>
+  </div>
+  </div>
+
+
+
 <!-- end of body -->
 <div class="footer-dark">
         <footer>
@@ -152,3 +271,6 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
 </body>
 </html>
+<?php
+mysql_free_result($allcrimesmangement);
+?>

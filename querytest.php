@@ -31,6 +31,28 @@ function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDe
 }
 }
 
+$editFormAction = $_SERVER['PHP_SELF'];
+if (isset($_SERVER['QUERY_STRING'])) {
+  $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
+}
+
+if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form2")) {
+  $updateSQL = sprintf("UPDATE tblcrime SET dateupdated=%s, status=%s WHERE crimeID=%s",
+                       GetSQLValueString($_POST['dateupdated'], "date"),
+                       GetSQLValueString($_POST['status'], "int"),
+                       GetSQLValueString($_POST['crimeID'], "int"));
+
+  mysql_select_db($database_crimecon, $crimecon);
+  $Result1 = mysql_query($updateSQL, $crimecon) or die(mysql_error());
+
+  $updateGoTo = "crimes.php";
+  if (isset($_SERVER['QUERY_STRING'])) {
+    $updateGoTo .= (strpos($updateGoTo, '?')) ? "&" : "?";
+    $updateGoTo .= $_SERVER['QUERY_STRING'];
+  }
+  header(sprintf("Location: %s", $updateGoTo));
+}
+
 mysql_select_db($database_crimecon, $crimecon);
 $query_adminAllcrimes = "SELECT tblcrime.crimeID FROM tblcrime";
 $adminAllcrimes = mysql_query($query_adminAllcrimes, $crimecon) or die(mysql_error());
@@ -171,6 +193,25 @@ if (isset($_POST['username'])) {
   </table>
   <input type="hidden" name="MM_insert" value="form1" />
 </form>
+<form action="<?php echo $editFormAction; ?>" method="post" name="form2" id="form2">
+  <table align="center">
+    <tr valign="baseline">
+      <td nowrap="nowrap" align="right">Dateupdated:</td>
+      <td><input type="text" name="dateupdated" value="" size="32" /></td>
+    </tr>
+    <tr valign="baseline">
+      <td nowrap="nowrap" align="right">Status:</td>
+      <td><input type="text" name="status" value="" size="32" /></td>
+    </tr>
+    <tr valign="baseline">
+      <td nowrap="nowrap" align="right">&nbsp;</td>
+      <td><input type="submit" value="Update record" /></td>
+    </tr>
+  </table>
+  <input type="hidden" name="MM_update" value="form2" />
+  <input type="hidden" name="crimeID" value="<?php echo $row_adminAllcrimes['crimeID']; ?>" />
+</form>
+<p>&nbsp;</p>
 </body>
 </html>
 <?php

@@ -198,7 +198,7 @@ $totalRows_activesections = mysql_num_rows($activesections);
           </ul>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">All Users</a>
+          <a class="nav-link" href="systemusers.php">All Users</a>
         </li>
       </ul>
       <form class="d-flex">

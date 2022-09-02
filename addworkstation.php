@@ -120,7 +120,7 @@ $totalPages_allworkstation = ceil($totalRows_allworkstation/$maxRows_allworkstat
             Officers
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="officers.php">Add Officer</a></li>
+            <li><a class="dropdown-item" href="officerregistration.php">Add Officer</a></li>
             <li><a class="dropdown-item" href="adddepartment.php">Add Department</a></li>
             <li><a class="dropdown-item" href="addworkstation.php">Add WorkStation</a></li>
           </ul>
@@ -247,6 +247,38 @@ do {
   </div>
 
 
+<div class="footer-dark">
+        <footer>
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6 col-md-3 item">
+                        <h3>Services</h3>
+                        <ul>
+                            <li><a href="#">Crime reporting</a></li>
+                            <li><a href="#">Crime alerts</a></li>
+                            <li><a href="#">Danger Zone </a></li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-6 col-md-3 item">
+                        <h3>About</h3>
+                        <ul>
+                            <li><a href="#">Police</a></li>
+                            <li><a href="#">CID</a></li>
+                            <li><a href="#">DCI</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6 item text">
+                        <h3>Bungoma  Crime Logger</h3>
+                        <p>Praesent sed lobortis mi. Suspendisse vel placerat ligula. Vivamus ac sem lacus. Ut vehicula rhoncus elementum. Etiam quis tristique lectus. Aliquam in arcu eget velit pulvinar dictum vel in justo.</p>
+                    </div>
+                    
+                </div>
+                <p class="copyright">Bungoma  Crime Logger &copy; 2022</p>
+            </div>
+        </footer>
+    </div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
 
 </body>
 </html>

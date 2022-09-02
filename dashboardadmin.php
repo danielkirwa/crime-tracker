@@ -181,7 +181,7 @@ $totalRows_activesections = mysql_num_rows($activesections);
             Officers
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="officers.php">Add Officer</a></li>
+            <li><a class="dropdown-item" href="officerregistration.php">Add Officer</a></li>
             <li><a class="dropdown-item" href="adddepartment.php">Add Department</a></li>
             <li><a class="dropdown-item" href="addworkstation.php">Add WorkStation</a></li>
           </ul>

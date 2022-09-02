@@ -99,8 +99,9 @@ if (isset($_GET['pageNum_allpostedwitness'])) {
 }
 $startRow_allpostedwitness = $pageNum_allpostedwitness * $maxRows_allpostedwitness;
 
+$UserID =  $_SESSION['thisuserid'];
 mysql_select_db($database_crimecon, $crimecon);
-$query_allpostedwitness = "SELECT   tblwitness.witnessID, tblcrime.crimeID, tblwitness.firstname, tblwitness.dateadded, tblsection.sectionnmae FROM tblcrime, tblwitness, tblsection WHERE tblwitness.crimeID = tblcrime.crimeID  AND tblcrime.complainerID = 1 AND tblsection.sectionID = tblcrime.sectionID";
+$query_allpostedwitness = "SELECT   tblwitness.witnessID, tblcrime.crimeID, tblwitness.firstname, tblwitness.dateadded, tblsection.sectionnmae FROM tblcrime, tblwitness, tblsection WHERE tblwitness.crimeID = tblcrime.crimeID  AND tblcrime.complainerID = '{$UserID}' AND tblsection.sectionID = tblcrime.sectionID";
 $query_limit_allpostedwitness = sprintf("%s LIMIT %d, %d", $query_allpostedwitness, $startRow_allpostedwitness, $maxRows_allpostedwitness);
 $allpostedwitness = mysql_query($query_limit_allpostedwitness, $crimecon) or die(mysql_error());
 $row_allpostedwitness = mysql_fetch_assoc($allpostedwitness);

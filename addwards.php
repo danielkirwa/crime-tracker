@@ -143,7 +143,7 @@ $totalPages_allwards = ceil($totalRows_allwards/$maxRows_allwards)-1;
             Officers
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="officers.php">Add Officer</a></li>
+            <li><a class="dropdown-item" href="officerregistration.php">Add Officer</a></li>
             <li><a class="dropdown-item" href="adddepartment.php">Add Department</a></li>
             <li><a class="dropdown-item" href="addworkstation.php">Add WorkStation</a></li>
           </ul>
@@ -166,21 +166,21 @@ $totalPages_allwards = ceil($totalRows_allwards/$maxRows_allwards)-1;
 <form action="<?php echo $editFormAction; ?>" method="post" name="form1" id="form1">
   <table align="center">
     <tr valign="baseline">
-      <td><input type="text" name="wardname" value="" size="32" placeholder="Ward name" /></td>
+      <td><input type="text" name="wardname" value="" class="myinputtext" placeholder="Ward name" /></td>
     </tr>
     <tr valign="baseline">
       <td>
-        <textarea name="description" placeholder="Ward description">
+        <textarea name="description" placeholder="Ward description" class="myinputtext">
           
         </textarea>
       </td>
     </tr>
     <tr valign="baseline">
-      <td><input type="date" name="dateadded" value="" size="32" /></td>
+      <td><input type="date" name="dateadded" value="" class="myinputtext" /></td>
     </tr>
     <tr valign="baseline">
       <td>
-         <select name="constituemcyID">
+         <select name="constituemcyID" class="myoption">
            <?php
 do {  
 ?>
@@ -197,8 +197,7 @@ do {
       </td>
     </tr>
     <tr valign="baseline">
-      <td nowrap="nowrap" align="right">&nbsp;</td>
-      <td><input type="submit" value="Insert record" /></td>
+      <td><input type="submit" value="Add Ward" class="mybutton" /></td>
     </tr>
   </table>
   <input type="hidden" name="MM_insert" value="form1" />
@@ -246,6 +245,40 @@ do {
 </table>
   </div>
   </div>
+
+
+<div class="footer-dark">
+        <footer>
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6 col-md-3 item">
+                        <h3>Services</h3>
+                        <ul>
+                            <li><a href="#">Crime reporting</a></li>
+                            <li><a href="#">Crime alerts</a></li>
+                            <li><a href="#">Danger Zone </a></li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-6 col-md-3 item">
+                        <h3>About</h3>
+                        <ul>
+                            <li><a href="#">Police</a></li>
+                            <li><a href="#">CID</a></li>
+                            <li><a href="#">DCI</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6 item text">
+                        <h3>Bungoma  Crime Logger</h3>
+                        <p>Praesent sed lobortis mi. Suspendisse vel placerat ligula. Vivamus ac sem lacus. Ut vehicula rhoncus elementum. Etiam quis tristique lectus. Aliquam in arcu eget velit pulvinar dictum vel in justo.</p>
+                    </div>
+                    
+                </div>
+                <p class="copyright">Bungoma  Crime Logger &copy; 2022</p>
+            </div>
+        </footer>
+    </div>
+
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
 
 </body>

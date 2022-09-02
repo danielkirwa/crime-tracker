@@ -37,6 +37,7 @@ if (isset($_SERVER['QUERY_STRING'])) {
 }
 
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
+  $accountType = "user";
   $insertSQL = sprintf("INSERT INTO tblresidence (residenceIdNumber, firstname, othername, gender, phone, email, countyID, consituencyID, wardID, village, photo, datecreated, dateupdated, status) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, 0, %s, %s, 1)",
                        GetSQLValueString($_POST['residenceIdNumber'], "text"),
                        GetSQLValueString($_POST['firstname'], "text"),
@@ -51,8 +52,25 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
                        GetSQLValueString($_POST['datecreated'], "date"),
                        GetSQLValueString($_POST['datecreated'], "date"));
 
+  $insertSQLUser = sprintf("INSERT INTO tblusers (username, password, privillage) VALUES (%s, %s, '{$accountType}')",
+                       GetSQLValueString($_POST['email'], "text"),
+                       GetSQLValueString($_POST['password'], "text"));
+                       
+
+ 
+
   mysql_select_db($database_crimecon, $crimecon);
   $Result1 = mysql_query($insertSQL, $crimecon) or die(mysql_error());
+
+   mysql_select_db($database_crimecon, $crimecon);
+  $Result2 = mysql_query($insertSQLUser, $crimecon) or die(mysql_error());
+
+  $insertGoTo = "login.php";
+  if (isset($_SERVER['QUERY_STRING'])) {
+    $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
+    $insertGoTo .= $_SERVER['QUERY_STRING'];
+  }
+  header(sprintf("Location: %s", $insertGoTo));
 }
 
 mysql_select_db($database_crimecon, $crimecon);

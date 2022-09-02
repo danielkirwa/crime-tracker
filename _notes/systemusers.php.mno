@@ -1,4 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <info>
 	<infoitem key="UD_AllusersinSystem" value="name:email;datatype:string,name:phone;datatype:string,name:status;datatype:int" />
+	<infoitem key="UD_AllOfficers" value="name:email;datatype:string,name:firstname;datatype:string,name:phone;datatype:string,name:status;datatype:int,name:departmentName;datatype:string,name:workstation;datatype:string" />
 </info>

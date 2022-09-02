@@ -64,9 +64,10 @@ if (isset($_GET['pageNum_userpostedcrime'])) {
 $startRow_userpostedcrime = $pageNum_userpostedcrime * $maxRows_userpostedcrime;
  
  $_SESSION['thisuserid'] = $row_userid['residenceID'];
+ $UserID = $row_userid['residenceID'];
   
 mysql_select_db($database_crimecon, $crimecon);
-$query_userpostedcrime = "SELECT tblcrime.crimeID, tblcrime.dateadded, tblcrime.status, tblsuspect.suspectID, tblvictim.victimID, tblwitness.witnessID, tblsection.sectionnmae FROM tblcrime, tblsuspectcrime, tblsuspect, tblvictim, tblvictimcrime, tblwitness, tblwitnesscrime, tblresidence, tblsection WHERE tblsuspectcrime.crimeID = tblcrime.crimeID  AND tblsuspect.suspectID =  tblsuspectcrime.suspectID   AND tblvictimcrime.crimeID = tblcrime.crimeID   AND tblvictim.victimID =  tblvictimcrime.victimID  AND tblwitnesscrime.crimeID = tblcrime.crimeID  AND tblwitness.witnessID = tblwitnesscrime.witnessID AND tblcrime.complainerID = 1";
+$query_userpostedcrime = "SELECT tblcrime.crimeID, tblcrime.dateadded, tblcrime.status, tblsuspect.suspectID, tblvictim.victimID, tblwitness.witnessID, tblsection.sectionnmae FROM tblcrime, tblsuspectcrime, tblsuspect, tblvictim, tblvictimcrime, tblwitness, tblwitnesscrime, tblresidence, tblsection WHERE tblsuspectcrime.crimeID = tblcrime.crimeID  AND tblsuspect.suspectID =  tblsuspectcrime.suspectID   AND tblvictimcrime.crimeID = tblcrime.crimeID   AND tblvictim.victimID =  tblvictimcrime.victimID  AND tblwitnesscrime.crimeID = tblcrime.crimeID  AND tblwitness.witnessID = tblwitnesscrime.witnessID AND tblcrime.complainerID = '{$UserID}'";
 $query_limit_userpostedcrime = sprintf("%s LIMIT %d, %d", $query_userpostedcrime, $startRow_userpostedcrime, $maxRows_userpostedcrime);
 $userpostedcrime = mysql_query($query_limit_userpostedcrime, $crimecon) or die(mysql_error());
 $row_userpostedcrime = mysql_fetch_assoc($userpostedcrime);
@@ -80,7 +81,7 @@ if (isset($_GET['totalRows_userpostedcrime'])) {
 $totalPages_userpostedcrime = ceil($totalRows_userpostedcrime/$maxRows_userpostedcrime)-1;
 
 mysql_select_db($database_crimecon, $crimecon);
-$query_activeeditablecrime = "SELECT tblcrime.crimeID, tblcrime.dateadded, tblcrime.status, tblsection.sectionnmae FROM tblcrime, tblsection WHERE tblsection.sectionID =  tblcrime.sectionID  AND tblcrime.complainerID = 1 AND tblcrime.status = 1";
+$query_activeeditablecrime = "SELECT tblcrime.crimeID, tblcrime.dateadded, tblcrime.status, tblsection.sectionnmae FROM tblcrime, tblsection WHERE tblsection.sectionID =  tblcrime.sectionID  AND tblcrime.complainerID = '{$UserID}' AND tblcrime.status = 1";
 $activeeditablecrime = mysql_query($query_activeeditablecrime, $crimecon) or die(mysql_error());
 $row_activeeditablecrime = mysql_fetch_assoc($activeeditablecrime);
 $totalRows_activeeditablecrime = mysql_num_rows($activeeditablecrime);
@@ -214,13 +215,13 @@ nav{
    <div class="card">
     <img src="assets/logo/dangerzone.jpg" class="card-img-top">
     <div class="card-body">
-        <h5 class="card-title">Danger zone <?php echo $row_userid['residenceID']; ?></h5>
+        <h5 class="card-title">Danger zone</h5>
         <p class="card-text">
             <label>Constituency level : <?php echo $row_mostcommonconstituency['constituencyname']; ?></label>
             <br>
             <label>Ward level : <?php echo $row_mostcommonward['wardname']; ?></label>
         </p>
-        <a href="" class="btn btn-primary">View more</a>
+       <!--  <a href="" class="btn btn-primary">View more</a> -->
     </div>
    </div>
 
@@ -231,7 +232,7 @@ nav{
         <p class="card-text">
 		<?php echo $row_mostcommoncrime['description']; ?> 
         </p>
-        <a href="" class="btn btn-primary">View more</a>
+        <!-- <a href="" class="btn btn-primary">View more</a> -->
     </div>
    </div>
    <div class="card">
@@ -241,7 +242,7 @@ nav{
         <p class="card-text">
             Praesent sed lobortis mi. Suspendisse vel placerat ligula. Vivamus ac sem lacus. Ut vehicula rhoncus elementum. Etiam quis tristique lectus.
         </p>
-        <a href="" class="btn btn-primary">View more</a>
+        <!-- <a href="" class="btn btn-primary">View more</a> -->
     </div>
    </div>
    </div>
@@ -253,6 +254,15 @@ nav{
         <div class="main-totalusers"> 
         
         <table id="totalusers">
+             <thead>
+  <tr>
+    <th>Crime Details</th>
+    
+    <th>Action</th>
+    
+  </tr>
+</thead>
+<tbody>
 <?php do { ?>
             <tr style="border-bottom: 2px solid dodgerblue;">
                 <td style="padding-bottom: 8px;">
@@ -278,6 +288,7 @@ nav{
 
             </tr>
             <?php } while ($row_activeeditablecrime = mysql_fetch_assoc($activeeditablecrime)); ?>
+            </tbody>
         </table>
     </div>
 
@@ -307,10 +318,6 @@ nav{
 </table>
   </div>
   </div>
-
-
-
-
 
 <div class="footer-dark">
         <footer>

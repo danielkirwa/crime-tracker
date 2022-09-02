@@ -9,6 +9,16 @@
 	min-width: 250px;
 	margin-top: 16px;
 }
+.myActionbutton{
+  padding: 4px 3px;
+  background: dodgerblue;
+  color: white;
+  font-size: 18px;
+  border-radius: 5px;
+  outline: none;
+  border: none;
+
+}
 
 .myinputtext{
 	padding: 8px 6px;

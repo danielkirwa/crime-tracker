@@ -53,6 +53,23 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form2")) {
   header(sprintf("Location: %s", $updateGoTo));
 }
 
+if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form3")) {
+  $insertSQL = sprintf("INSERT INTO tblusers (username, password, privillage) VALUES (%s, %s, %s)",
+                       GetSQLValueString($_POST['username'], "text"),
+                       GetSQLValueString($_POST['password'], "text"),
+                       GetSQLValueString($_POST['privillage'], "text"));
+
+  mysql_select_db($database_crimecon, $crimecon);
+  $Result1 = mysql_query($insertSQL, $crimecon) or die(mysql_error());
+
+  $insertGoTo = "login.php";
+  if (isset($_SERVER['QUERY_STRING'])) {
+    $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
+    $insertGoTo .= $_SERVER['QUERY_STRING'];
+  }
+  header(sprintf("Location: %s", $insertGoTo));
+}
+
 mysql_select_db($database_crimecon, $crimecon);
 $query_adminAllcrimes = "SELECT tblcrime.crimeID FROM tblcrime";
 $adminAllcrimes = mysql_query($query_adminAllcrimes, $crimecon) or die(mysql_error());
@@ -210,6 +227,28 @@ if (isset($_POST['username'])) {
   </table>
   <input type="hidden" name="MM_update" value="form2" />
   <input type="hidden" name="crimeID" value="<?php echo $row_adminAllcrimes['crimeID']; ?>" />
+</form>
+<p>&nbsp;</p>
+<form action="<?php echo $editFormAction; ?>" method="post" name="form3" id="form3">
+  <table align="center">
+    <tr valign="baseline">
+      <td nowrap="nowrap" align="right">Username:</td>
+      <td><input type="text" name="username" value="" size="32" /></td>
+    </tr>
+    <tr valign="baseline">
+      <td nowrap="nowrap" align="right">Password:</td>
+      <td><input type="text" name="password" value="" size="32" /></td>
+    </tr>
+    <tr valign="baseline">
+      <td nowrap="nowrap" align="right">Privillage:</td>
+      <td><input type="text" name="privillage" value="" size="32" /></td>
+    </tr>
+    <tr valign="baseline">
+      <td nowrap="nowrap" align="right">&nbsp;</td>
+      <td><input type="submit" value="Insert record" /></td>
+    </tr>
+  </table>
+  <input type="hidden" name="MM_insert" value="form3" />
 </form>
 <p>&nbsp;</p>
 </body>

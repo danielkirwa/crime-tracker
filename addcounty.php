@@ -132,7 +132,7 @@ $totalPages_allcounty = ceil($totalRows_allcounty/$maxRows_allcounty)-1;
             Officers
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="officers.php">Add Officer</a></li>
+            <li><a class="dropdown-item" href="officerregistration.php">Add Officer</a></li>
             <li><a class="dropdown-item" href="adddepartment.php">Add Department</a></li>
             <li><a class="dropdown-item" href="addworkstation.php">Add WorkStation</a></li>
           </ul>
@@ -159,19 +159,19 @@ $totalPages_allcounty = ceil($totalRows_allcounty/$maxRows_allcounty)-1;
   <table align="center">
 
     <tr valign="baseline">
-      <td><input type="text" name="countyname" value="" size="32" placeholder="County name" /></td>
+      <td><input type="text" name="countyname" value="" placeholder="County name" class="myinputtext" /></td>
     </tr>
     <tr valign="baseline">
-      <td><input type="text" name="description" value="" size="32" placeholder="Description" /></td>
+      <td><input type="text" name="description" value="" placeholder="Description" class="myinputtext" /></td>
     </tr>
     <tr valign="baseline">
-      <td><input type="date" name="dateadded" value="" size="32" /></td>
+      <td><input type="date" name="dateadded" value="" class="myinputtext" /></td>
     </tr>
   
    
     <tr valign="baseline">
-      <td nowrap="nowrap" align="right">&nbsp;</td>
-      <td><input type="submit" value="Insert record" /></td>
+      
+      <td><input type="submit" value="Add County"  class="mybutton" /></td>
     </tr>
   </table>
   <input type="hidden" name="MM_insert" value="form1" />

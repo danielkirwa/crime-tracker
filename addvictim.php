@@ -99,8 +99,10 @@ if (isset($_GET['pageNum_postedvictime'])) {
 }
 $startRow_postedvictime = $pageNum_postedvictime * $maxRows_postedvictime;
 
+$UserID =  $_SESSION['thisuserid'];
+
 mysql_select_db($database_crimecon, $crimecon);
-$query_postedvictime = "SELECT  tblvictim.victimID, tblcrime.crimeID, tblvictim.firstname, tblvictim.gender, tblvictim.dateadded, tblsection.sectionnmae FROM tblcrime, tblvictim, tblsection WHERE  tblsection.sectionID =  tblcrime.sectionID  AND tblvictim.crimeID = tblcrime.crimeID   AND tblcrime.complainerID = 1";
+$query_postedvictime = "SELECT  tblvictim.victimID, tblcrime.crimeID, tblvictim.firstname, tblvictim.gender, tblvictim.dateadded, tblsection.sectionnmae FROM tblcrime, tblvictim, tblsection WHERE  tblsection.sectionID =  tblcrime.sectionID  AND tblvictim.crimeID = tblcrime.crimeID   AND tblcrime.complainerID = '{$UserID}'";
 $query_limit_postedvictime = sprintf("%s LIMIT %d, %d", $query_postedvictime, $startRow_postedvictime, $maxRows_postedvictime);
 $postedvictime = mysql_query($query_limit_postedvictime, $crimecon) or die(mysql_error());
 $row_postedvictime = mysql_fetch_assoc($postedvictime);

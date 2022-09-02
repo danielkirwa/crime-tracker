@@ -65,6 +65,12 @@ if (isset($_GET['totalRows_AllusersinSystem'])) {
   $totalRows_AllusersinSystem = mysql_num_rows($all_AllusersinSystem);
 }
 $totalPages_AllusersinSystem = ceil($totalRows_AllusersinSystem/$maxRows_AllusersinSystem)-1;
+
+mysql_select_db($database_crimecon, $crimecon);
+$query_AllOfficers = "SELECT tblofficers.email, tblofficers.firstname, tblofficers.phone, tblofficers.status, tbldepartment.departmentName, tblworkstation.workstation FROM tblofficers, tblworkstation, tbldepartment WHERE tblworkstation.workstationID = tblofficers.workstationID AND tbldepartment.departmentId = tblofficers.departmentID";
+$AllOfficers = mysql_query($query_AllOfficers, $crimecon) or die(mysql_error());
+$row_AllOfficers = mysql_fetch_assoc($AllOfficers);
+$totalRows_AllOfficers = mysql_num_rows($AllOfficers);
 ?>
 
 <?php 
@@ -76,12 +82,31 @@ $totalPages_AllusersinSystem = ceil($totalRows_AllusersinSystem/$maxRows_Alluser
    if (mysql_query($close_user)) {
      // code...
     echo '<script>alert ("User deleted successfuly")</script>';
-    header("Location:crimes.php");
+    header("Location:systemusers.php");
    }else{
       echo '<script>alert ("Failed to delete User")</script>';
    }
 
    mysql_query($close_user) or die(mysql_error());
+
+}
+ ?>
+
+ <?php 
+
+   if(isset($_POST['btndisableofficer'])){
+    $closeid = $_POST['btndisableofficer'];
+  
+   $close_Account = "UPDATE tblofficers SET status = 0 WHERE email = '$closeid' ";
+   if (mysql_query($close_Account)) {
+     // code...
+    echo '<script>alert ("Officer Disabled successfuly")</script>';
+    header("Location:systemusers.php");
+   }else{
+      echo '<script>alert ("Failed to Disable")</script>';
+   }
+
+   mysql_query($close_crime) or die(mysql_error());
 
 }
  ?>
@@ -98,6 +123,16 @@ $totalPages_AllusersinSystem = ceil($totalRows_AllusersinSystem/$maxRows_Alluser
 <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
 <title>All users</title>
+<style type="text/css">
+  .myActionbutton{
+  background: dodgerblue;
+  color: white;
+  font-size: 18px;
+  border-radius: 5px;
+  outline: none;
+  border: none;
+}
+</style>
 </head>
 <body>
 <nav class="shadow-lg p-3 mb-5 bg-body rounded">
@@ -182,11 +217,58 @@ $totalPages_AllusersinSystem = ceil($totalRows_AllusersinSystem/$maxRows_Alluser
   </div>
 </nav>
 
+<div class="scroll-table">
+  <div class="table-holder">
+    <div class="table-caption">
+      <label class="largeText dodgerblueText">Availlable Officers <span></span></label>
+    </div>
+<table>
+  <thead>
+  <tr>
+    <th>Email</th>
+    <th>Name</th>
+    <th>Phone</th>
+    <th>Department</th>
+    <th>Workstation</th>
+    <th>Status</th>
+    <th>Action</th>
+  </tr>
+  </thead>
+  <tbody>
+  <?php do { ?>
+    <tr>
+      <td><?php echo $row_AllOfficers['email']; ?></td>
+      <td><?php echo $row_AllOfficers['firstname']; ?></td>
+      <td><?php echo $row_AllOfficers['phone']; ?></td>
+      <td><?php echo $row_AllOfficers['departmentName']; ?></td>
+      <td><?php echo $row_AllOfficers['workstation']; ?></td>
+      <td><?php  if ($row_AllOfficers['status'] == 1){
+         echo "Active";
+      }else{
+        echo "Account Closed";
+      }  
+    ?></td>
+    <td>
+      
+      <form action="officerregistration.php" method="POST" name="formdiasbleofficer" id="disableoffiser1"> <button class="myActionbutton" value="<?php echo $row_AllOfficers['email']; ?>" name="btndisableofficer">Disable</button>
+      </form>
+
+    </td>
+    </tr>
+    <?php } while ($row_AllOfficers = mysql_fetch_assoc($AllOfficers)); ?>
+
+    </tbody>
+</table>
+</div>
+</div>
+
+
+
 
 <div class="scroll-table">
   <div class="table-holder">
     <div class="table-caption">
-      <label class="largeText dodgerblueText">All users <span></span></label>
+      <label class="largeText dodgerblueText">All users/ Residence <span></span></label>
     </div>
     <table>
       <thead>
@@ -209,7 +291,7 @@ $totalPages_AllusersinSystem = ceil($totalRows_AllusersinSystem/$maxRows_Alluser
             }else{
             	echo "Account closed";
             } ?></td>
-            <td><form action="crimes.php" method="POST" name="formclosecrime" id="closecrime1"> <button class="mybutton-small" value="<?php echo $row_AllusersinSystem['email']; ?>" name="btndelete">Close</button>
+            <td><form action="systemusers.php" method="POST" name="formclosecrime" id="closecrime1"> <button class="myActionbutton" value="<?php echo $row_AllusersinSystem['email']; ?>" name="btndelete">Close</button>
       </form></td>
 
           </tr>
@@ -258,4 +340,6 @@ $totalPages_AllusersinSystem = ceil($totalRows_AllusersinSystem/$maxRows_Alluser
 </html>
 <?php
 mysql_free_result($AllusersinSystem);
+
+mysql_free_result($AllOfficers);
 ?>

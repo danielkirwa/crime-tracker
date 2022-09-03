@@ -45,49 +45,27 @@ function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDe
 }
 }
 
-$maxRows_AllSuspects = 10;
-$pageNum_AllSuspects = 0;
-if (isset($_GET['pageNum_AllSuspects'])) {
-  $pageNum_AllSuspects = $_GET['pageNum_AllSuspects'];
+$maxRows_AllWitness = 10;
+$pageNum_AllWitness = 0;
+if (isset($_GET['pageNum_AllWitness'])) {
+  $pageNum_AllWitness = $_GET['pageNum_AllWitness'];
 }
-$startRow_AllSuspects = $pageNum_AllSuspects * $maxRows_AllSuspects;
+$startRow_AllWitness = $pageNum_AllWitness * $maxRows_AllWitness;
 
 mysql_select_db($database_crimecon, $crimecon);
-$query_AllSuspects = "SELECT tblsuspect.suspectID, tblsuspect.crimeID, tblsuspect.firstname, tblsuspect.dateadded, tblsuspect.status, tblsection.sectionnmae, tblward.wardname FROM tblsuspect, tblcrime, tblsection, tblward WHERE  tblcrime.crimeID = tblsuspect.crimeID AND tblsection.sectionID = tblcrime.sectionID  AND tblward.wardID = tblsuspect.wardID  AND tblsuspect.status = 1";
-$query_limit_AllSuspects = sprintf("%s LIMIT %d, %d", $query_AllSuspects, $startRow_AllSuspects, $maxRows_AllSuspects);
-$AllSuspects = mysql_query($query_limit_AllSuspects, $crimecon) or die(mysql_error());
-$row_AllSuspects = mysql_fetch_assoc($AllSuspects);
+$query_AllWitness = "SELECT tblwitness.witnessID, tblwitness.crimeID, tblwitness.firstname, tblwitness.phone, tblwitness.dateadded, tblward.wardname, tblsection.sectionnmae FROM tblwitness, tblward, tblcrime, tblsection WHERE tblsection.sectionID = tblcrime.sectionID  AND tblward.wardID = tblwitness.wardID   AND tblcrime.crimeID =  tblwitness.crimeID";
+$query_limit_AllWitness = sprintf("%s LIMIT %d, %d", $query_AllWitness, $startRow_AllWitness, $maxRows_AllWitness);
+$AllWitness = mysql_query($query_limit_AllWitness, $crimecon) or die(mysql_error());
+$row_AllWitness = mysql_fetch_assoc($AllWitness);
 
-if (isset($_GET['totalRows_AllSuspects'])) {
-  $totalRows_AllSuspects = $_GET['totalRows_AllSuspects'];
+if (isset($_GET['totalRows_AllWitness'])) {
+  $totalRows_AllWitness = $_GET['totalRows_AllWitness'];
 } else {
-  $all_AllSuspects = mysql_query($query_AllSuspects);
-  $totalRows_AllSuspects = mysql_num_rows($all_AllSuspects);
+  $all_AllWitness = mysql_query($query_AllWitness);
+  $totalRows_AllWitness = mysql_num_rows($all_AllWitness);
 }
-$totalPages_AllSuspects = ceil($totalRows_AllSuspects/$maxRows_AllSuspects)-1;
+$totalPages_AllWitness = ceil($totalRows_AllWitness/$maxRows_AllWitness)-1;
 ?>
-
-<?php 
-
-   if(isset($_POST['btndisablesuspects'])){
-    $closeid = $_POST['btndisablesuspects'];
-  
-   $close_crime = "UPDATE tblsuspect SET status = 0 WHERE suspectID = '$closeid' ";
-   if (mysql_query($close_crime)) {
-     // code...
-    echo '<script>alert ("Suspects Released successfuly")</script>';
-    header("Location:suspects.php");
-   }else{
-      echo '<script>alert ("Failed To Released Suspects")</script>';
-   }
-
-   mysql_query($close_crime) or die(mysql_error());
-
-}
- ?>
-
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -96,7 +74,7 @@ $totalPages_AllSuspects = ceil($totalRows_AllSuspects/$maxRows_AllSuspects)-1;
 <link rel="stylesheet" type="text/css" href="customcss/navigation.css">
 <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
-<title>Suspects</title>
+<title>Witness</title>
 <style type="text/css">
   .myActionbutton{
   background: dodgerblue;
@@ -110,7 +88,8 @@ $totalPages_AllSuspects = ceil($totalRows_AllSuspects/$maxRows_AllSuspects)-1;
 </head>
 <body>
 
-<nav class="shadow-lg p-3 mb-5 bg-body rounded">
+
+   <nav class="shadow-lg p-3 mb-5 bg-body rounded">
    <div class="logoholder">
     <div class="logo-holder">
       <img src="assets/logo/logo.png">
@@ -192,6 +171,7 @@ $totalPages_AllSuspects = ceil($totalRows_AllSuspects/$maxRows_AllSuspects)-1;
 </nav>
 
 
+
 <div class="scroll-table">
   <div class="table-holder">
     <div class="table-caption">
@@ -200,38 +180,27 @@ $totalPages_AllSuspects = ceil($totalRows_AllSuspects/$maxRows_AllSuspects)-1;
 <table>
   <thead>
   <tr>
-    <td>Suspect ID</td>
-    <td>First Name</td>
-    <td>Date added</td>
-    <td>Crime ID</td>
-    <td>Section</td>
-    <td>Ward Name</td>
-    <td>Status</td>
-    <td>Action</td>
+    <th>Witness ID</th>
+    <th>First Name</th>
+    <th>Phone</th>
+    <th>Date Added</th>
+    <th>Ward</th>
+    <th>Crime ID</th>
+    <th>Section</th>
   </tr>
   </thead>
   <tbody>
     <?php do { ?>
     <tr>
-      <td><?php echo $row_AllSuspects['suspectID']; ?></td>
-      <td><?php echo $row_AllSuspects['firstname']; ?></td>
-      <td><?php echo $row_AllSuspects['dateadded']; ?></td>
-      <td><?php echo $row_AllSuspects['crimeID']; ?></td>
-      <td><?php echo $row_AllSuspects['sectionnmae']; ?></td>
-      <td><?php echo $row_AllSuspects['wardname']; ?></td>
-      <td><?php  if ($row_AllSuspects['status'] == 1) {
-        // code...
-        echo "Active";
-      }else{
-        echo "Innocent";
-      } ?></td>
-      
-      <td>
-        <form action="suspects.php" method="POST" name="formdiasblesuspects" id="disablesuspects1"> <button class="myActionbutton" value="<?php echo $row_AllSuspects['suspectID']; ?>" name="btndisablesuspects">Disable</button>
-      </form>
-      </td>
+      <td><?php echo $row_AllWitness['witnessID']; ?></td>
+      <td><?php echo $row_AllWitness['firstname']; ?></td>
+      <td><?php echo $row_AllWitness['phone']; ?></td>
+      <td><?php echo $row_AllWitness['dateadded']; ?></td>
+      <td><?php echo $row_AllWitness['wardname']; ?></td>
+      <td><?php echo $row_AllWitness['crimeID']; ?></td>
+      <td><?php echo $row_AllWitness['sectionnmae']; ?></td>
     </tr>
-     <?php } while ($row_AllSuspects = mysql_fetch_assoc($AllSuspects)); ?>
+    <?php } while ($row_AllWitness = mysql_fetch_assoc($AllWitness)); ?>
 
     </tbody>
 </table>
@@ -273,9 +242,8 @@ $totalPages_AllSuspects = ceil($totalRows_AllSuspects/$maxRows_AllSuspects)-1;
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
 
-
 </body>
 </html>
 <?php
-mysql_free_result($AllSuspects);
+mysql_free_result($AllWitness);
 ?>

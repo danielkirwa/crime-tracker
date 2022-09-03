@@ -98,6 +98,18 @@ $query_activesections = "SELECT tblsection.sectionID FROM tblsection WHERE tblse
 $activesections = mysql_query($query_activesections, $crimecon) or die(mysql_error());
 $row_activesections = mysql_fetch_assoc($activesections);
 $totalRows_activesections = mysql_num_rows($activesections);
+
+mysql_select_db($database_crimecon, $crimecon);
+$query_mostcommonward = "SELECT tblward.wardname, tblcrime.wardID   FROM tblward, tblcrime WHERE tblward.wardID = tblcrime.wardID   ORDER BY tblward.wardID DESC LIMIT 1";
+$mostcommonward = mysql_query($query_mostcommonward, $crimecon) or die(mysql_error());
+$row_mostcommonward = mysql_fetch_assoc($mostcommonward);
+$totalRows_mostcommonward = mysql_num_rows($mostcommonward);
+
+mysql_select_db($database_crimecon, $crimecon);
+$query_mostcommonconstituency = "SELECT tblconstituency.constituencyname, tblcrime.constituencyID    FROM tblconstituency, tblcrime  WHERE tblconstituency.constituencyID = tblcrime.constituencyID       ORDER BY  tblconstituency.constituencyID DESC LIMIT 1";
+$mostcommonconstituency = mysql_query($query_mostcommonconstituency, $crimecon) or die(mysql_error());
+$row_mostcommonconstituency = mysql_fetch_assoc($mostcommonconstituency);
+$totalRows_mostcommonconstituency = mysql_num_rows($mostcommonconstituency);
 ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
@@ -227,6 +239,23 @@ $totalRows_activesections = mysql_num_rows($activesections);
     </table>
     </div>
 
+
+
+    <div class="enroll-card hoverme" id="crimebtn">
+      <table>
+      <tr>
+        <td>
+          <img src="" width="75px">
+        </td>
+        <td>
+          <label class="smallText dodgerblueText">Danger Zone  : </label><br/>
+          <label>Constituency : <?php echo $row_mostcommonconstituency['constituencyname']; ?></label><br>
+          <label>Ward :  <?php echo $row_mostcommonward['wardname']; ?></label>
+        </td>
+      </tr>
+    </table>
+    </div>
+
     
 
     <div class="enroll-card hoverme" id="crimebtn">
@@ -303,20 +332,20 @@ $totalRows_activesections = mysql_num_rows($activesections);
   <div class="report-holder">
     <div class="report-card">
       
-   <label>ALL CRIMES : <span>null</span></label><br>
+   <label>ALL CRIMES : <span><?php echo $totalRows_adminAllcrimes ?></span></label><br>
    <canvas id="graphallcases" width="50%"></canvas>
     </div>
-    <div class="report-card-long">
+   <!--  <div class="report-card-long">
       
    <label>RESULTS </label><br>
    <canvas id="barGraphResults" width="50%"></canvas>
-    </div>
-    <div class="report-card-longer">
+    </div> -->
+    <!-- <div class="report-card-longer">
       
    <label>GENERAL INFORMATION </label><br>
     <canvas id="barGraphUnitReport" width="50%"></canvas>
    
-    </div>
+    </div> -->
   </div>
   
   </div>
@@ -386,4 +415,8 @@ mysql_free_result($activecrimes);
 mysql_free_result($activedepartmets);
 
 mysql_free_result($activesections);
+
+mysql_free_result($mostcommonward);
+
+mysql_free_result($mostcommonconstituency);
 ?>

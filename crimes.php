@@ -65,6 +65,12 @@ if (isset($_GET['totalRows_allcrimesmangement'])) {
   $totalRows_allcrimesmangement = mysql_num_rows($all_allcrimesmangement);
 }
 $totalPages_allcrimesmangement = ceil($totalRows_allcrimesmangement/$maxRows_allcrimesmangement)-1;
+
+mysql_select_db($database_crimecon, $crimecon);
+$query_ClosedCrime = "SELECT tblcrime.crimeID,  tblcrime.description, tblcrime.dateofoffence, tblcrime.dateadded, tblcrime.status, tblsection.sectionnmae, tblresidence.firstname FROM tblcrime, tblsection, tblresidence WHERE tblsection.sectionID = tblcrime.sectionID  AND tblresidence.residenceID = tblcrime.complainerID  AND tblcrime.status = 0";
+$ClosedCrime = mysql_query($query_ClosedCrime, $crimecon) or die(mysql_error());
+$row_ClosedCrime = mysql_fetch_assoc($ClosedCrime);
+$totalRows_ClosedCrime = mysql_num_rows($ClosedCrime);
 ?>
 <?php 
 
@@ -78,6 +84,25 @@ $totalPages_allcrimesmangement = ceil($totalRows_allcrimesmangement/$maxRows_all
     header("Location:crimes.php");
    }else{
       echo '<script>alert ("Failed to Close crime")</script>';
+   }
+
+   mysql_query($close_crime) or die(mysql_error());
+
+}
+ ?>
+
+ <?php 
+
+   if(isset($_POST['btnopencase'])){
+    $closeid = $_POST['btnopencase'];
+  
+   $close_crime = "UPDATE tblcrime SET status = 1 WHERE crimeID = '$closeid' ";
+   if (mysql_query($close_crime)) {
+     // code...
+    echo '<script>alert ("Crime Opened successfuly")</script>';
+    header("Location:crimes.php");
+   }else{
+      echo '<script>alert ("Failed to Open crime")</script>';
    }
 
    mysql_query($close_crime) or die(mysql_error());
@@ -104,6 +129,14 @@ $totalPages_allcrimesmangement = ceil($totalRows_allcrimesmangement/$maxRows_all
     flex-wrap: wrap;
     justify-content: center;
 }
+ .myActionbutton{
+  background: dodgerblue;
+  color: white;
+  font-size: 18px;
+  border-radius: 5px;
+  outline: none;
+  border: none;
+}
 
 
 </style>
@@ -126,7 +159,7 @@ $totalPages_allcrimesmangement = ceil($totalRows_allcrimesmangement/$maxRows_all
 
       <li class="nav-item dropdown">
           <a class="navbar-brand dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Username
+           <?php echo $_SESSION['username'] ?>
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
             <li><a class="dropdown-item" href="crimes.php">Profile</a></li>
@@ -205,7 +238,7 @@ $totalPages_allcrimesmangement = ceil($totalRows_allcrimesmangement/$maxRows_all
 <div class="scroll-table">
   <div class="table-holder">
     <div class="table-caption">
-      <label class="largeText dodgerblueText">Availlable Constituencies <span></span></label>
+      <label class="largeText dodgerblueText">All Availlable Active Crimes <span></span></label>
     </div>
     <table>
       <thead>
@@ -235,12 +268,56 @@ $totalPages_allcrimesmangement = ceil($totalRows_allcrimesmangement/$maxRows_all
       }else{
         echo "Closed";
       } ?></td>
-      <td><form action="crimes.php" method="POST" name="formclosecrime" id="closecrime1"> <button class="mybutton-small" value="<?php echo $row_allcrimesmangement['crimeID']; ?>" name="btnclosecase">Close</button>
+      <td><form action="crimes.php" method="POST" name="formclosecrime" id="closecrime1"> <button class="myActionbutton" value="<?php echo $row_allcrimesmangement['crimeID']; ?>" name="btnclosecase">Close</button>
       </form>
     </td>
       
     </tr>
     <?php } while ($row_allcrimesmangement = mysql_fetch_assoc($allcrimesmangement)); ?>
+    </tbody>
+</table>
+  </div>
+  </div>
+
+  <div class="scroll-table">
+  <div class="table-holder">
+    <div class="table-caption">
+      <label class="largeText dodgerblueText">All Closed Crimes <span></span></label>
+    </div>
+    <table>
+      <thead>
+  <tr>
+    <th>ID</th>
+    <th>Section</th>
+    <th>Description</th>
+    <th>Date of offence</th>
+    <th>Date Added</th>
+    <th>Complainer</th>
+    <th>Status</th>
+    
+  </tr>
+  </thead>
+  <tbody>
+    
+<?php do { ?>
+    <tr>
+      <td><?php echo $row_ClosedCrime['crimeID']; ?></td>
+      <td><?php echo $row_ClosedCrime['sectionnmae']; ?></td>
+      <td><?php echo $row_ClosedCrime['description']; ?></td>
+      <td><?php echo $row_ClosedCrime['dateofoffence']; ?></td>
+      <td><?php echo $row_ClosedCrime['dateadded']; ?></td>
+      <td><?php echo $row_ClosedCrime['firstname']; ?></td>
+      <td><?php   if($row_ClosedCrime['status'] == 0 && $row_ClosedCrime['crimeID'] >= 1){
+        echo "Closed";
+      }else{
+       
+      } ?></td>
+      <td><form action="crimes.php" method="POST" name="formopencrime" id="opencrime1"> <button class="myActionbutton" value="<?php echo $row_ClosedCrime['crimeID']; ?>" name="btnopencase">Open</button>
+      </form>
+    </td>
+      
+    </tr>
+    <?php } while ($row_ClosedCrime = mysql_fetch_assoc($ClosedCrime)); ?>
     </tbody>
 </table>
   </div>
@@ -287,4 +364,6 @@ $totalPages_allcrimesmangement = ceil($totalRows_allcrimesmangement/$maxRows_all
 </html>
 <?php
 mysql_free_result($allcrimesmangement);
+
+mysql_free_result($ClosedCrime);
 ?>

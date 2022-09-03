@@ -1,0 +1,4 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<info>
+	<infoitem key="UD_AllSuspects" value="name:suspectID;datatype:int,name:crimeID;datatype:int,name:firstname;datatype:string,name:dateadded;datatype:date,name:status;datatype:int,name:sectionnmae;datatype:string,name:wardname;datatype:string" />
+</info>

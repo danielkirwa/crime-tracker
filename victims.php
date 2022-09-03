@@ -66,6 +66,25 @@ if (isset($_GET['totalRows_AllVictims'])) {
 }
 $totalPages_AllVictims = ceil($totalRows_AllVictims/$maxRows_AllVictims)-1;
 ?>
+
+<?php 
+
+   if(isset($_POST['btndisablevictims'])){
+    $closeid = $_POST['btndisablevictims'];
+  
+   $close_victim = "UPDATE tblvictim SET status = 0 WHERE victimID = '$closeid' ";
+   if (mysql_query($close_victim)) {
+     // code...
+    echo '<script>alert ("Victim Released successfuly")</script>';
+    header("Location:victims.php");
+   }else{
+      echo '<script>alert ("Failed To Released Victim")</script>';
+   }
+
+   mysql_query($close_victim) or die(mysql_error());
+
+}
+ ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -207,7 +226,7 @@ $totalPages_AllVictims = ceil($totalRows_AllVictims/$maxRows_AllVictims)-1;
       } ?></td>
       
       <td>
-        <form action="victims.php" method="POST" name="formdiasblevictime" id="disablevictim1"> <button class="myActionbutton" value="<?php echo $row_AllVictims['victimID']; ?>" name="btndisablevictim">Disable</button>
+        <form action="victims.php" method="POST" name="formdiasblevictime" id="disablevictim1"> <button class="myActionbutton" value="<?php echo $row_AllVictims['victimID']; ?>" name="btndisablevictims">Disable</button>
       </form>
       </td>
     </tr>

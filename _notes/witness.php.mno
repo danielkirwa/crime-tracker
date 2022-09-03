@@ -1,0 +1,4 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<info>
+	<infoitem key="UD_AllWitness" value="name:witnessID;datatype:int,name:crimeID;datatype:int,name:firstname;datatype:string,name:phone;datatype:string,name:dateadded;datatype:date,name:wardname;datatype:string,name:sectionnmae;datatype:string" />
+</info>

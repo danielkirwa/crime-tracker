@@ -97,6 +97,12 @@ $query_mostcommonconstituency = "SELECT tblconstituency.constituencyname, tblcri
 $mostcommonconstituency = mysql_query($query_mostcommonconstituency, $crimecon) or die(mysql_error());
 $row_mostcommonconstituency = mysql_fetch_assoc($mostcommonconstituency);
 $totalRows_mostcommonconstituency = mysql_num_rows($mostcommonconstituency);
+
+mysql_select_db($database_crimecon, $crimecon);
+$query_ActiveAdvice = "SELECT tbladvice.adviceID, tbladvice.title, tbladvice.advice, tbladvice.dateadded FROM tbladvice  WHERE tbladvice.status = 1";
+$ActiveAdvice = mysql_query($query_ActiveAdvice, $crimecon) or die(mysql_error());
+$row_ActiveAdvice = mysql_fetch_assoc($ActiveAdvice);
+$totalRows_ActiveAdvice = mysql_num_rows($ActiveAdvice);
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -238,9 +244,10 @@ nav{
    <div class="card">
     <img src="assets/logo/warning.jpg" class="card-img-top">
     <div class="card-body">
-        <h5 class="card-title">Advice report</h5>
+        <h5 class="card-title">Advice : <?php echo $row_ActiveAdvice['title']; ?></h5>
+        <label>Date published : <?php echo $row_ActiveAdvice['dateadded']; ?></label>
         <p class="card-text">
-            Praesent sed lobortis mi. Suspendisse vel placerat ligula. Vivamus ac sem lacus. Ut vehicula rhoncus elementum. Etiam quis tristique lectus.
+            <?php echo $row_ActiveAdvice['advice']; ?>
         </p>
         <!-- <a href="" class="btn btn-primary">View more</a> -->
     </div>
@@ -341,7 +348,7 @@ nav{
                     </div>
                     <div class="col-md-6 item text">
                         <h3>Bungoma  Crime Logger</h3>
-                        <p>Praesent sed lobortis mi. Suspendisse vel placerat ligula. Vivamus ac sem lacus. Ut vehicula rhoncus elementum. Etiam quis tristique lectus. Aliquam in arcu eget velit pulvinar dictum vel in justo.</p>
+                        <p>This is bungoma county crime reporting system that aid in capturing crime details reported by residence to tha law enforcers.</p>
                     </div>
                     
                 </div>
@@ -365,4 +372,6 @@ mysql_free_result($activeeditablecrime);
 mysql_free_result($mostcommonward);
 
 mysql_free_result($mostcommonconstituency);
+
+mysql_free_result($ActiveAdvice);
 ?>

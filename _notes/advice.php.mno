@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<info>
+	<infoitem key="UD_ActiveAdvice" value="name:adviceID;datatype:int,name:title;datatype:string,name:advice;datatype:string,name:dateadded;datatype:date" />
+	<infoitem key="UD_ClosedAdvice" value="name:adviceID;datatype:int,name:title;datatype:string,name:advice;datatype:string,name:dateadded;datatype:date" />
+</info>

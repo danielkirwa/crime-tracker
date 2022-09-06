@@ -6,4 +6,5 @@
 	<infoitem key="UD_activeeditablecrime" value="name:crimeID;datatype:int,name:dateadded;datatype:date,name:status;datatype:int,name:sectionnmae;datatype:string" />
 	<infoitem key="UD_mostcommonward" value="name:wardname;datatype:string,name:wardID;datatype:int" />
 	<infoitem key="UD_mostcommonconstituency" value="name:constituencyname;datatype:string,name:constituencyID;datatype:int" />
+	<infoitem key="UD_ActiveAdvice" value="name:adviceID;datatype:int,name:title;datatype:string,name:advice;datatype:string,name:dateadded;datatype:date" />
 </info>

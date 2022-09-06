@@ -130,6 +130,7 @@ $totalPages_AllSuspects = ceil($totalRows_AllSuspects/$maxRows_AllSuspects)-1;
           <a class="navbar-brand dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             <?php echo $_SESSION['username'] ?> </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="advice.php">Advice</a></li>
             <li><a class="dropdown-item" href="profile.php">Profile</a></li>
             <li><a class="dropdown-item" href="adminusermanual.php">User Guide </a></li>
             <li><a class="dropdown-item" href="logout.php">Logout</a></li>
@@ -261,7 +262,7 @@ $totalPages_AllSuspects = ceil($totalRows_AllSuspects/$maxRows_AllSuspects)-1;
                     </div>
                     <div class="col-md-6 item text">
                         <h3>Bungoma  Crime Logger</h3>
-                        <p>Praesent sed lobortis mi. Suspendisse vel placerat ligula. Vivamus ac sem lacus. Ut vehicula rhoncus elementum. Etiam quis tristique lectus. Aliquam in arcu eget velit pulvinar dictum vel in justo.</p>
+                        <p>This is bungoma county crime reporting system that aid in capturing crime details reported by residence to tha law enforcers.</p>
                     </div>
                     
                 </div>

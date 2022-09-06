@@ -1,5 +1,19 @@
 <?php require_once('Connections/crimecon.php'); ?>
 <?php
+//initialize the session
+if (!isset($_SESSION)) {
+  session_start();
+}
+
+if ($_SESSION['username']) {
+  // code...
+ $currentUser =   $_SESSION['username'];
+}else{
+    header("Location:login.php");
+}
+
+?>
+<?php
 if (!function_exists("GetSQLValueString")) {
 function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "") 
 {
@@ -93,7 +107,19 @@ $totalPages_allcounty = ceil($totalRows_allcounty/$maxRows_allcounty)-1;
       
       <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">Username</a>
+    
+    <li class="nav-item dropdown">
+          <a class="navbar-brand dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <?php echo $_SESSION['username'] ?>
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="advice.php">Advice</a></li>
+            <li><a class="dropdown-item" href="profile.php">Profile</a></li>
+            <li><a class="dropdown-item" href="adminusermanual.php">User Guide </a></li>
+            <li><a class="dropdown-item" href="logout.php">Logout</a></li>
+          </ul>
+        </li>
+
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -219,7 +245,36 @@ $totalPages_allcounty = ceil($totalRows_allcounty/$maxRows_allcounty)-1;
 
 
 
-
+<div class="footer-dark">
+        <footer>
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6 col-md-3 item">
+                        <h3>Services</h3>
+                        <ul>
+                            <li><a href="#">Crime reporting</a></li>
+                            <li><a href="#">Crime alerts</a></li>
+                            <li><a href="#">Danger Zone </a></li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-6 col-md-3 item">
+                        <h3>About</h3>
+                        <ul>
+                            <li><a href="#">Police</a></li>
+                            <li><a href="#">CID</a></li>
+                            <li><a href="#">DCI</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6 item text">
+                        <h3>Bungoma  Crime Logger</h3>
+                        <p>This is bungoma county crime reporting system that aid in capturing crime details reported by residence to tha law enforcers.</p>
+                    </div>
+                    
+                </div>
+                <p class="copyright">Bungoma  Crime Logger &copy; 2022</p>
+            </div>
+        </footer>
+    </div>
 
 
 

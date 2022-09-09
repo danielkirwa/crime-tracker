@@ -30,6 +30,15 @@
 	min-width: 300px;
 	margin-top: 16px;
 }
+.myinputtextsmall{
+  padding: 8px 6px;
+  background: #f0f0f0;
+  font-size: 16px;
+  border-radius: 5px;
+  outline: none;
+  border: none;
+  min-width: 150px;
+}
 .myoption{
 	padding: 8px 6px;
 	background: #f0f0f0;

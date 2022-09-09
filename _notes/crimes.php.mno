@@ -3,4 +3,6 @@
 	<infoitem key="UD_allcrimesmangement" value="name:crimeID;datatype:int,name:description;datatype:string,name:dateofoffence;datatype:date,name:dateadded;datatype:date,name:status;datatype:int,name:sectionnmae;datatype:string,name:firstname;datatype:string" />
 	<infoitem key="UD_ClosedCrimes" value="name:crimeID;datatype:int,name:description;datatype:string,name:dateofoffence;datatype:date,name:dateadded;datatype:date,name:status;datatype:int,name:sectionnmae;datatype:string,name:firstname;datatype:string" />
 	<infoitem key="UD_ClosedCrime" value="name:crimeID;datatype:int,name:description;datatype:string,name:dateofoffence;datatype:date,name:dateadded;datatype:date,name:status;datatype:int,name:sectionnmae;datatype:string,name:firstname;datatype:string" />
+	<infoitem key="UD_cmbconstituency" value="name:constituencyID;datatype:int,name:constituencyname;datatype:string" />
+	<infoitem key="UD_SearchCrime" value="name:crimeID;datatype:int,name:description;datatype:string,name:dateofoffence;datatype:date,name:dateadded;datatype:date,name:status;datatype:int,name:sectionnmae;datatype:string,name:firstname;datatype:string" />
 </info>

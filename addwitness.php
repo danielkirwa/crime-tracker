@@ -303,7 +303,7 @@ do {
 <div class="scroll-table">
   <div class="table-holder">
     <div class="table-caption">
-      <label class="largeText dodgerblueText">Closed crime <span></span></label>
+      <label class="largeText dodgerblueText">Available Witness <span></span></label>
     </div>
     
 <table>

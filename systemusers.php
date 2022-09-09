@@ -53,10 +53,28 @@ if (isset($_GET['pageNum_AllusersinSystem'])) {
 $startRow_AllusersinSystem = $pageNum_AllusersinSystem * $maxRows_AllusersinSystem;
 
 mysql_select_db($database_crimecon, $crimecon);
-$query_AllusersinSystem = "SELECT tblresidence.email, tblresidence.phone, tblresidence.status FROM tblresidence";
+$query_AllusersinSystem = "SELECT tblresidence.email, tblresidence.phone, tblresidence.status FROM tblresidence WHERE tblresidence.status = 1";
 $query_limit_AllusersinSystem = sprintf("%s LIMIT %d, %d", $query_AllusersinSystem, $startRow_AllusersinSystem, $maxRows_AllusersinSystem);
 $AllusersinSystem = mysql_query($query_limit_AllusersinSystem, $crimecon) or die(mysql_error());
 $row_AllusersinSystem = mysql_fetch_assoc($AllusersinSystem);
+
+
+ // CLOSED USERS
+
+$maxRows_AllusersClosedinSystem = 10;
+$pageNum_AllusersClosedinSystem = 0;
+if (isset($_GET['pageNum_AllusersClosedinSystem'])) {
+  $pageNum_AllusersClosedinSystem = $_GET['pageNum_AllusersClosedinSystem'];
+}
+$startRow_AllusersClosedinSystem = $pageNum_AllusersClosedinSystem * $maxRows_AllusersClosedinSystem;
+
+mysql_select_db($database_crimecon, $crimecon);
+$query_AllusersClosedinSystem = "SELECT tblresidence.email, tblresidence.phone, tblresidence.status FROM tblresidence WHERE tblresidence.status = 0";
+$query_limit_AllusersClosedinSystem = sprintf("%s LIMIT %d, %d", $query_AllusersClosedinSystem, $startRow_AllusersClosedinSystem, $maxRows_AllusersClosedinSystem);
+$AllusersClosedinSystem = mysql_query($query_limit_AllusersClosedinSystem, $crimecon) or die(mysql_error());
+$row_AllusersClosedinSystem = mysql_fetch_assoc($AllusersClosedinSystem);
+
+
 
 if (isset($_GET['totalRows_AllusersinSystem'])) {
   $totalRows_AllusersinSystem = $_GET['totalRows_AllusersinSystem'];
@@ -67,18 +85,27 @@ if (isset($_GET['totalRows_AllusersinSystem'])) {
 $totalPages_AllusersinSystem = ceil($totalRows_AllusersinSystem/$maxRows_AllusersinSystem)-1;
 
 mysql_select_db($database_crimecon, $crimecon);
-$query_AllOfficers = "SELECT tblofficers.email, tblofficers.firstname, tblofficers.phone, tblofficers.status, tbldepartment.departmentName, tblworkstation.workstation FROM tblofficers, tblworkstation, tbldepartment WHERE tblworkstation.workstationID = tblofficers.workstationID AND tbldepartment.departmentId = tblofficers.departmentID";
+$query_AllOfficers = "SELECT tblofficers.email, tblofficers.firstname, tblofficers.phone, tblofficers.status, tbldepartment.departmentName, tblworkstation.workstation FROM tblofficers, tblworkstation, tbldepartment WHERE tblworkstation.workstationID = tblofficers.workstationID AND tbldepartment.departmentId = tblofficers.departmentID AND tblofficers.status = 1";
 $AllOfficers = mysql_query($query_AllOfficers, $crimecon) or die(mysql_error());
 $row_AllOfficers = mysql_fetch_assoc($AllOfficers);
 $totalRows_AllOfficers = mysql_num_rows($AllOfficers);
+// closed account
+
+mysql_select_db($database_crimecon, $crimecon);
+$query_AllClosedOfficers = "SELECT tblofficers.email, tblofficers.firstname, tblofficers.phone, tblofficers.status, tbldepartment.departmentName, tblworkstation.workstation FROM tblofficers, tblworkstation, tbldepartment WHERE tblworkstation.workstationID = tblofficers.workstationID AND tbldepartment.departmentId = tblofficers.departmentID AND tblofficers.status = 0";
+$AllClosedOfficers = mysql_query($query_AllClosedOfficers, $crimecon) or die(mysql_error());
+$row_AllClosedOfficers = mysql_fetch_assoc($AllClosedOfficers);
+$totalRows_AllClosedOfficers = mysql_num_rows($AllClosedOfficers);
 ?>
 
 <?php 
 
    if(isset($_POST['btndelete'])){
     $useremail = $_POST['btndelete'];
+    $newPrivillage = "none";
   
    $close_user = "UPDATE tblresidence SET status = 0 WHERE email = '$useremail' ";
+     $close_user_account = "UPDATE tblusers SET privillage = '$newPrivillage' WHERE username = '$useremail' ";
    if (mysql_query($close_user)) {
      // code...
     echo '<script>alert ("User deleted successfuly")</script>';
@@ -88,6 +115,7 @@ $totalRows_AllOfficers = mysql_num_rows($AllOfficers);
    }
 
    mysql_query($close_user) or die(mysql_error());
+   mysql_query($close_user_account) or die(mysql_error());
 
 }
  ?>
@@ -96,8 +124,10 @@ $totalRows_AllOfficers = mysql_num_rows($AllOfficers);
 
    if(isset($_POST['btndisableofficer'])){
     $closeid = $_POST['btndisableofficer'];
+    $newPrivillage = "none";
   
    $close_Account = "UPDATE tblofficers SET status = 0 WHERE email = '$closeid' ";
+   $close_officer_account = "UPDATE tblusers SET privillage = '$newPrivillage' WHERE username = '$closeid' ";
    if (mysql_query($close_Account)) {
      // code...
     echo '<script>alert ("Officer Disabled successfuly")</script>';
@@ -106,10 +136,56 @@ $totalRows_AllOfficers = mysql_num_rows($AllOfficers);
       echo '<script>alert ("Failed to Disable")</script>';
    }
 
-   mysql_query($close_crime) or die(mysql_error());
+   mysql_query($close_Account) or die(mysql_error());
+   mysql_query($close_officer_account) or die(mysql_error());
 
 }
  ?>
+
+
+ <?php 
+
+   if(isset($_POST['btnopenaccount'])){
+    $useremail = $_POST['btnopenaccount'];
+    $newPrivillage = "user";
+  
+   $close_user = "UPDATE tblresidence SET status = 1 WHERE email = '$useremail' ";
+   $open_user_account = "UPDATE tblusers SET privillage = '$newPrivillage' WHERE username = '$useremail' ";
+   if (mysql_query($close_user)) {
+     // code...
+    echo '<script>alert ("User account opened successfuly")</script>';
+    header("Location:systemusers.php");
+   }else{
+      echo '<script>alert ("Failed to open  User")</script>';
+   }
+
+   mysql_query($close_user) or die(mysql_error());
+   mysql_query($open_user_account) or die(mysql_error());
+
+}
+ ?>
+<?php 
+
+   if(isset($_POST['btnenableofficer'])){
+    $closeid = $_POST['btnenableofficer'];
+    $newPrivillage = "admin";
+  
+   $close_Account = "UPDATE tblofficers SET status = 1 WHERE email = '$closeid' ";
+   $open_user_account = "UPDATE tblusers SET privillage = '$newPrivillage' WHERE username = '$closeid' ";
+   if (mysql_query($close_Account)) {
+     // code...
+    echo '<script>alert ("Officer Enabled successfuly")</script>';
+    header("Location:systemusers.php");
+   }else{
+      echo '<script>alert ("Failed to Enabled")</script>';
+   }
+
+   mysql_query($close_Account) or die(mysql_error());
+   mysql_query($open_user_account) or die(mysql_error());
+
+}
+ ?>
+
 
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -190,7 +266,7 @@ $totalRows_AllOfficers = mysql_num_rows($AllOfficers);
             Officers
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="officers.php">Add Officer</a></li>
+            <li><a class="dropdown-item" href="officerregistration.php">Add Officer</a></li>
             <li><a class="dropdown-item" href="adddepartment.php">Add Department</a></li>
             <li><a class="dropdown-item" href="addworkstation.php">Add WorkStation</a></li>
           </ul>
@@ -251,7 +327,7 @@ $totalRows_AllOfficers = mysql_num_rows($AllOfficers);
     ?></td>
     <td>
       
-      <form action="officerregistration.php" method="POST" name="formdiasbleofficer" id="disableoffiser1"> <button class="myActionbutton" value="<?php echo $row_AllOfficers['email']; ?>" name="btndisableofficer">Disable</button>
+      <form action="systemusers.php" method="POST" name="formdiasbleofficer" id="disableoffiser1"> <button class="myActionbutton" value="<?php echo $row_AllOfficers['email']; ?>" name="btndisableofficer">Disable</button>
       </form>
 
     </td>
@@ -262,6 +338,10 @@ $totalRows_AllOfficers = mysql_num_rows($AllOfficers);
 </table>
 </div>
 </div>
+
+
+
+
 
 
 
@@ -302,6 +382,101 @@ $totalRows_AllOfficers = mysql_num_rows($AllOfficers);
   </div>
   </div>
 
+  <!-- close -->
+<hr>
+<center><label class="largeText" style="color: crimson;">All closed accounts</label></center>
+
+<!-- closed officers -->
+
+<div class="scroll-table">
+  <div class="table-holder">
+    <div class="table-caption">
+      <label class="largeText dodgerblueText" style="color: crimson;">All Closed Officers Account<span></span></label>
+    </div>
+<table>
+  <thead>
+  <tr>
+    <th>Email</th>
+    <th>Name</th>
+    <th>Phone</th>
+    <th>Department</th>
+    <th>Workstation</th>
+    <th>Status</th>
+    <th>Action</th>
+  </tr>
+  </thead>
+  <tbody>
+  <?php do { ?>
+    <tr>
+      <td><?php echo $row_AllClosedOfficers['email']; ?></td>
+      <td><?php echo $row_AllClosedOfficers['firstname']; ?></td>
+      <td><?php echo $row_AllClosedOfficers['phone']; ?></td>
+      <td><?php echo $row_AllClosedOfficers['departmentName']; ?></td>
+      <td><?php echo $row_AllClosedOfficers['workstation']; ?></td>
+      <td><?php  if ($row_AllClosedOfficers['status'] == 1){
+         echo "Active";
+      }else{
+        echo "Account Closed";
+      }  
+    ?></td>
+    <td>
+      
+      <form action="systemusers.php" method="POST" name="formenableofficer" id="enableoffiser1"> <button class="myActionbutton" value="<?php echo $row_AllClosedOfficers['email']; ?>" name="btnenableofficer">Enable</button>
+      </form>
+
+    </td>
+    </tr>
+    <?php } while ($row_AllClosedOfficers = mysql_fetch_assoc($AllClosedOfficers)); ?>
+
+    </tbody>
+</table>
+</div>
+</div>
+
+
+
+
+
+
+<!-- closed users -->
+
+<div class="scroll-table">
+  <div class="table-holder">
+    <div class="table-caption">
+      <label class="largeText dodgerblueText" style="color: crimson;">Closed Residence Accounts<span></span></label>
+    </div>
+    <table>
+      <thead>
+  <tr>
+    <th>Email</th>
+    <th>Phone</th>
+    <th>Status</th>
+    <th>Action</th>
+
+  </tr>
+  </thead>
+  <tbody>
+    
+ <?php do { ?>
+          <tr>
+            <td><?php echo $row_AllusersClosedinSystem['email']; ?></td>
+            <td><?php echo $row_AllusersClosedinSystem['phone']; ?></td>
+            <td><?php if ($row_AllusersClosedinSystem['status'] == 1) {
+              echo "Active";
+            }else{
+              echo "Account closed";
+            } ?></td>
+            <td><form action="systemusers.php" method="POST" name="formclosecrime" id="closecrime1"> <button class="myActionbutton" value="<?php echo $row_AllusersClosedinSystem['email']; ?>" name="btnopenaccount">Open</button>
+      </form></td>
+
+          </tr>
+          <?php } while ($row_AllusersClosedinSystem = mysql_fetch_assoc($AllusersClosedinSystem)); ?>
+    </tbody>
+</table>
+  </div>
+  </div>
+
+
 
      
 <div class="footer-dark">
@@ -341,6 +516,8 @@ $totalRows_AllOfficers = mysql_num_rows($AllOfficers);
 </html>
 <?php
 mysql_free_result($AllusersinSystem);
+mysql_free_result($AllusersClosedinSystem);
 
 mysql_free_result($AllOfficers);
+mysql_free_result($AllClosedOfficers);
 ?>

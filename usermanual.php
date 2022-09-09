@@ -34,7 +34,22 @@ nav{
   transition: all 0.4s ease;
   z-index: 1000;
 }
+.guide-holder{
+    display: flex;
+    width: 80%;
+    margin-left: 10%;
+    border: 1px solid dodgerblue;
+  }
+  .guide-image{
 
+    width: 50%;
+    
+  }
+  .guide-description{
+
+    width: 50%;
+    
+  }
 
 
 
@@ -102,7 +117,88 @@ nav{
 <br><br><br><br><br><br><br><br>
   <hr>
 
-user manual
+
+<br>
+<div>
+  <div class="guide-holder">
+    <div class="guide-image">
+         <img src="assets/images/loginguide.png" width="100%">
+    </div>
+    <div class="guide-description">
+             <center><b>Login page</b></center>
+             <br>
+             <ol>
+              <li>This is the authication page for both admin and normal users</li>
+              <li>You must have registered account before login in to the system</li>
+              <li>Use your Username (Email used to register account)</li>
+              <li>Use your Password (Use your password)</li>
+              <li>Click login button </li>
+              <li>If all your cridential are correct you will be granted access</li>
+             </ol>
+    </div>
+  </div>
+
+<br><br>
+<div class="guide-holder">
+    <div class="guide-image">
+         <img src="assets/images/userdash.png" width="100%">
+    </div>
+    <div class="guide-description">
+             <center><b>Admin Dashboard</b></center>
+             <br>
+             <ol>
+              <li>After login in as a user the dashboard will open </li>
+              <li>You will have a view of all data in the system in an analiesd form</li>
+              <li>You can navigate through the naviagtion bar provided at the top</li>
+              <li>Loged in admin username will be displayed at the top right corner</li>
+              <li>Your account posts will be displayed out in the dashboard</li>
+              
+             </ol>
+    </div>
+  </div>
+
+<br><br>
+
+
+<div class="guide-holder">
+    <div class="guide-image">
+         <img src="assets/images/addcrime.png" width="100%">
+    </div>
+    <div class="guide-description">
+             <center><b>Post Crime</b></center>
+             <br>
+             <ol>
+              <li>As a user you can post crime on the system</li>
+              <li>Click on the report tab to display more tabs</li>
+              <li>Select crime to open crime post page </li>
+              <li>fill all the crime details accodingly </li>
+              <li>Click on the post button </li>
+              
+             </ol>
+    </div>
+  </div>
+
+<br><br>
+
+<div class="guide-holder">
+    <div class="guide-image">
+         <img src="assets/images/crimemanagementguide.png" width="100%">
+    </div>
+    <div class="guide-description">
+             <center><b>Add Suspect,victim or witness</b></center>
+             <br>
+             <ol>
+              <li>The user dashboad all select on the specific crime </li>
+              <li>This will open tha page accoding to the selected button</li>
+              <li>Fill the details accodingly and post </li>
+              <li>All posted crime and their binded suspect, victim, or witness</li>
+              
+             </ol>
+    </div>
+  </div>
+
+<br><br>
+
 
 
 

@@ -44,6 +44,8 @@ function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDe
   return $theValue;
 }
 }
+$row_SearchVictims = "Undefined";
+$SearchVictims = "Undefined";
 
 $maxRows_AllVictims = 10;
 $pageNum_AllVictims = 0;
@@ -65,6 +67,12 @@ if (isset($_GET['totalRows_AllVictims'])) {
   $totalRows_AllVictims = mysql_num_rows($all_AllVictims);
 }
 $totalPages_AllVictims = ceil($totalRows_AllVictims/$maxRows_AllVictims)-1;
+
+mysql_select_db($database_crimecon, $crimecon);
+$query_cmbsetion = "SELECT tblsection.sectionID, tblsection.sectionnmae FROM tblsection WHERE tblsection.status = 1";
+$cmbsetion = mysql_query($query_cmbsetion, $crimecon) or die(mysql_error());
+$row_cmbsetion = mysql_fetch_assoc($cmbsetion);
+$totalRows_cmbsetion = mysql_num_rows($cmbsetion);
 ?>
 
 <?php 
@@ -85,6 +93,45 @@ $totalPages_AllVictims = ceil($totalRows_AllVictims/$maxRows_AllVictims)-1;
 
 }
  ?>
+
+
+ <?php 
+
+
+   if(isset($_POST['btnsearchvictim'])){
+    $searchsection = $_POST['searchsectionID'];
+
+if($searchsection == 0){
+
+}else{
+  // select query
+$maxRows_SearchVictims = 10;
+$pageNum_SearchVictims = 0;
+if (isset($_GET['pageNum_SearchVictims'])) {
+  $pageNum_SearchVictims = $_GET['pageNum_SearchVictims'];
+}
+  $startRow_SearchVictims = $pageNum_SearchVictims * $maxRows_SearchVictims;
+
+$query_SearchVictims = "SELECT tblvictim.victimID,  tblvictim.firstname, tblvictim.phone, tblward.wardname,tblvictim.crimeID, tblsection.sectionnmae,tblvictim.status, tblvictim.dateadded FROM tblvictim, tblward, tblcrime, tblsection WHERE tblward.wardID = tblvictim.wardid  AND tblcrime.crimeID = tblvictim.crimeID   AND tblsection.sectionID = '$searchsection' AND tblvictim.status = 1 ";
+$query_limit_SearchVictims = sprintf("%s LIMIT %d, %d", $query_SearchVictims, $startRow_SearchVictims, $maxRows_SearchVictims);
+$SearchVictims = mysql_query($query_limit_SearchVictims, $crimecon) or die(mysql_error());
+$row_SearchVictims = mysql_fetch_assoc($SearchVictims);
+
+
+}
+
+
+
+
+
+
+
+ }
+
+ ?>
+
+
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -189,6 +236,97 @@ $totalPages_AllVictims = ceil($totalRows_AllVictims/$maxRows_AllVictims)-1;
     </div>
   </div>
 </nav>
+<!-- start of search -->
+
+
+
+<div class="scroll-table">
+  <div class="table-holder">
+    <div class="table-caption">
+      <form action="victims.php" method="POST" name="searchvictim">
+      <label class="largeText ">Constituency : </label>&nbsp;&nbsp;
+      <select  name="searchsectionID" class="myoption">
+        <option value="0">Select Section</option>
+          <?php
+do {  
+?>
+          <option value="<?php echo $row_cmbsetion['sectionID']?>"<?php if (!(strcmp($row_cmbsetion['sectionID'], $row_cmbsetion['sectionID']))) {echo "selected=\"selected\"";} ?>><?php echo $row_cmbsetion['sectionnmae']?></option>
+          <?php
+} while ($row_cmbsetion = mysql_fetch_assoc($cmbsetion));
+  $rows = mysql_num_rows($cmbsetion);
+  if($rows > 0) {
+      mysql_data_seek($cmbsetion, 0);
+    $row_cmbsetion = mysql_fetch_assoc($cmbsetion);
+  }
+?>
+        </select>&nbsp;&nbsp;
+      <button class="myActionbutton" name="btnsearchvictim">Search Victim</button>
+    </form>
+    </div>
+    <table>
+      <thead>
+  <tr>
+    <th>Victim ID</th>
+    <th>First Name</th>
+    <th>Phone</th>
+    <th>Ward Name</th>
+    <th>Crime ID</th>
+    <th>Section Name</th>
+    <th>Date Added</th>
+    <th>Status</th>
+
+    
+  </tr>
+  </thead>
+  <tbody>
+   </tr>
+  <?php if($row_SearchVictims == "Undefined") {
+    } else {
+   do { ?>
+    <tr>
+      <td><?php if ($row_SearchVictims == "Undefined") {
+        // code...
+      }else{echo $row_SearchVictims['victimID'];}  ?></td>
+      <td><?php if ($row_SearchVictims == "Undefined") {
+        // code...
+      }else{ echo $row_SearchVictims['firstname'];} ?></td>
+      <td><?php  if ($row_SearchVictims == "Undefined") {
+        // code...
+      }else{ echo $row_SearchVictims['phone'];} ?></td>
+      <td><?php  if ($row_SearchVictims == "Undefined") {
+        // code...
+      }else{ echo $row_SearchVictims['wardname'];} ?></td>
+      <td><?php  if ($row_SearchVictims == "Undefined") {
+        // code...
+      }else{ echo $row_SearchVictims['crimeID'];} ?></td>
+      <td><?php  if ($row_SearchVictims == "Undefined") {
+        // code...
+      }else{ echo $row_SearchVictims['sectionnmae'];} ?></td>
+      <td><?php  if ($row_SearchVictims == "Undefined") {
+        // code...
+      }else{ echo $row_SearchVictims['dateadded'];} ?></td>
+      <td><?php  if ($row_SearchVictims == "Undefined") {
+        // code...
+      }else{  
+          if($row_SearchVictims['status'] == 1){
+        echo "Active";
+      }else{
+        echo "Closed";
+      }
+    } ?></td>
+      
+      
+    </tr>
+    <?php } while ($row_SearchVictims = mysql_fetch_assoc($SearchVictims));
+    
+  } ?>
+   
+    </tbody>
+</table>
+  </div>
+  </div>
+
+<!-- end of search -->
 
 <div class="scroll-table">
   <div class="table-holder">
@@ -276,4 +414,11 @@ $totalPages_AllVictims = ceil($totalRows_AllVictims/$maxRows_AllVictims)-1;
 </html>
 <?php
 mysql_free_result($AllVictims);
+if ($SearchVictims ==  'Undefined') {
+  // code...
+}else{
+  mysql_free_result($SearchVictims);
+}
+
+mysql_free_result($cmbsetion);
 ?>

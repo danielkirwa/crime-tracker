@@ -13,90 +13,47 @@ if ($_SESSION['username']) {
 }
 
 ?>
-<?php
-if (!function_exists("GetSQLValueString")) {
-function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "") 
-{
-  if (PHP_VERSION < 6) {
-    $theValue = get_magic_quotes_gpc() ? stripslashes($theValue) : $theValue;
-  }
 
-  $theValue = function_exists("mysql_real_escape_string") ? mysql_real_escape_string($theValue) : mysql_escape_string($theValue);
-
-  switch ($theType) {
-    case "text":
-      $theValue = ($theValue != "") ? "'" . $theValue . "'" : "NULL";
-      break;    
-    case "long":
-    case "int":
-      $theValue = ($theValue != "") ? intval($theValue) : "NULL";
-      break;
-    case "double":
-      $theValue = ($theValue != "") ? doubleval($theValue) : "NULL";
-      break;
-    case "date":
-      $theValue = ($theValue != "") ? "'" . $theValue . "'" : "NULL";
-      break;
-    case "defined":
-      $theValue = ($theValue != "") ? $theDefinedValue : $theNotDefinedValue;
-      break;
-  }
-  return $theValue;
-}
-}
-
-$maxRows_AllWitness = 10;
-$pageNum_AllWitness = 0;
-if (isset($_GET['pageNum_AllWitness'])) {
-  $pageNum_AllWitness = $_GET['pageNum_AllWitness'];
-}
-$startRow_AllWitness = $pageNum_AllWitness * $maxRows_AllWitness;
-
-mysql_select_db($database_crimecon, $crimecon);
-$query_AllWitness = "SELECT tblwitness.witnessID, tblwitness.crimeID, tblwitness.firstname, tblwitness.phone, tblwitness.dateadded, tblward.wardname, tblsection.sectionnmae FROM tblwitness, tblward, tblcrime, tblsection WHERE tblsection.sectionID = tblcrime.sectionID  AND tblward.wardID = tblwitness.wardID   AND tblcrime.crimeID =  tblwitness.crimeID";
-$query_limit_AllWitness = sprintf("%s LIMIT %d, %d", $query_AllWitness, $startRow_AllWitness, $maxRows_AllWitness);
-$AllWitness = mysql_query($query_limit_AllWitness, $crimecon) or die(mysql_error());
-$row_AllWitness = mysql_fetch_assoc($AllWitness);
-
-if (isset($_GET['totalRows_AllWitness'])) {
-  $totalRows_AllWitness = $_GET['totalRows_AllWitness'];
-} else {
-  $all_AllWitness = mysql_query($query_AllWitness);
-  $totalRows_AllWitness = mysql_num_rows($all_AllWitness);
-}
-$totalPages_AllWitness = ceil($totalRows_AllWitness/$maxRows_AllWitness)-1;
-?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link rel="stylesheet" type="text/css" href="customcss/myelements.css">
+<title>Untitled Document</title>
 <link rel="stylesheet" type="text/css" href="customcss/navigation.css">
+<link rel="stylesheet" type="text/css" href="customcss/admin.css">
+<link rel="stylesheet" type="text/css" href="customcss/popupanalysis.css">
 <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
-<title>Witness</title>
-<style type="text/css">
-  .myActionbutton{
-  background: dodgerblue;
-  color: white;
-  font-size: 18px;
-  border-radius: 5px;
-  outline: none;
-  border: none;
-}
-</style>
 </head>
+
+<style type="text/css">
+	
+	.guide-holder{
+		display: flex;
+		width: 80%;
+		margin-left: 10%;
+		border: 1px solid dodgerblue;
+	}
+	.guide-image{
+
+		width: 50%;
+		
+	}
+	.guide-description{
+
+		width: 50%;
+		
+	}
+</style>
 <body>
-
-
-   <nav class="shadow-lg p-3 mb-5 bg-body rounded">
+ <nav class="shadow-lg p-3 mb-5 bg-body rounded">
    <div class="logoholder">
-    <div class="logo-holder">
-      <img src="assets/logo/logo.png">
-    </div>
-    <div class="name-holder">
-      <h3>Bungoma county crime logger</h3>
-    </div>
+   	<div class="logo-holder">
+   		<img src="assets/logo/logo.png">
+   	</div>
+   	<div class="name-holder">
+   		<h3>Bungoma county crime logger</h3>
+   	</div>
    </div>
    </nav>
    <hr>
@@ -107,9 +64,10 @@ $totalPages_AllWitness = ceil($totalRows_AllWitness/$maxRows_AllWitness)-1;
 
       <li class="nav-item dropdown">
           <a class="navbar-brand dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <?php echo $_SESSION['username'] ?> </a>
+            <?php echo $_SESSION['username'] ?>
+          </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="Advice.php">Advice</a></li>
+            <li><a class="dropdown-item" href="advice.php">Advice</a></li>
             <li><a class="dropdown-item" href="profile.php">Profile</a></li>
             <li><a class="dropdown-item" href="adminusermanual.php">User Guide </a></li>
             <li><a class="dropdown-item" href="logout.php">Logout</a></li>
@@ -121,7 +79,7 @@ $totalPages_AllWitness = ceil($totalRows_AllWitness/$maxRows_AllWitness)-1;
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
+      	<li class="nav-item">
           <a class="nav-link active" href="dashboardadmin.php">Dashboard</a>
         </li>
 
@@ -159,9 +117,17 @@ $totalPages_AllWitness = ceil($totalRows_AllWitness/$maxRows_AllWitness)-1;
             <li><a class="dropdown-item" href="addwards.php">Add Wards</a></li>
           </ul>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="systemusers.php">All Users</a>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Reports
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="filter.php">Case Filter</a></li>
+            <li><a class="dropdown-item" href="systemusers.php">All Users</a></li>
+            
+          </ul>
         </li>
+       
       </ul>
       <form class="d-flex">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
@@ -171,41 +137,129 @@ $totalPages_AllWitness = ceil($totalRows_AllWitness/$maxRows_AllWitness)-1;
   </div>
 </nav>
 
+<br>
+<div>
+	<div class="guide-holder">
+		<div class="guide-image">
+         <img src="assets/images/loginguide.png" width="100%">
+		</div>
+		<div class="guide-description">
+             <center><b>Login page</b></center>
+             <br>
+             <ol>
+             	<li>This is the authication page for both admin and normal users</li>
+             	<li>You must have registered account before login in to the system</li>
+             	<li>Use your Username (Email used to register account)</li>
+             	<li>Use your Password (Use your password)</li>
+             	<li>Click login button </li>
+             	<li>If all your cridential are correct you will be granted access</li>
+             </ol>
+		</div>
+	</div>
+
+<br><br>
+<div class="guide-holder">
+		<div class="guide-image">
+         <img src="assets/images/admindashguide.png" width="100%">
+		</div>
+		<div class="guide-description">
+             <center><b>Admin Dashboard</b></center>
+             <br>
+             <ol>
+             	<li>After login in as an admin dashboard will open </li>
+             	<li>You will have a view of all data in the system in an analiesd form</li>
+             	<li>You can navigate through the naviagtion bar provided at the top</li>
+             	<li>Loged in admin username will be displayed at the top right corner</li>
+             	
+             </ol>
+		</div>
+	</div>
+
+<br><br>
 
 
-<div class="scroll-table">
-  <div class="table-holder">
-    <div class="table-caption">
-      <label class="largeText dodgerblueText">Availlable Active Witness <span></span></label>
-    </div>
-<table>
-  <thead>
-  <tr>
-    <th>Witness ID</th>
-    <th>First Name</th>
-    <th>Phone</th>
-    <th>Date Added</th>
-    <th>Ward</th>
-    <th>Crime ID</th>
-    <th>Section</th>
-  </tr>
-  </thead>
-  <tbody>
-    <?php do { ?>
-    <tr>
-      <td><?php echo $row_AllWitness['witnessID']; ?></td>
-      <td><?php echo $row_AllWitness['firstname']; ?></td>
-      <td><?php echo $row_AllWitness['phone']; ?></td>
-      <td><?php echo $row_AllWitness['dateadded']; ?></td>
-      <td><?php echo $row_AllWitness['wardname']; ?></td>
-      <td><?php echo $row_AllWitness['crimeID']; ?></td>
-      <td><?php echo $row_AllWitness['sectionnmae']; ?></td>
-    </tr>
-    <?php } while ($row_AllWitness = mysql_fetch_assoc($AllWitness)); ?>
+<div class="guide-holder">
+		<div class="guide-image">
+         <img src="assets/images/adaviceaddguide.png" width="100%">
+		</div>
+		<div class="guide-description">
+             <center><b>Post advice</b></center>
+             <br>
+             <ol>
+             	<li>As an admin you can post advice to the residence</li>
+             	<li>Click on the username to display more menu including "Add advice tab"</li>
+             	<li>Click that "Add Advice tab" to open advice posting page</li>
+             	<li>Add advice accodingly and click save</li>
+             	<li>Close all absolute advice </li>
+             	
+             </ol>
+		</div>
+	</div>
 
-    </tbody>
-</table>
-</div>
+<br><br>
+
+<div class="guide-holder">
+		<div class="guide-image">
+         <img src="assets/images/crimemanagementguide.png" width="100%">
+		</div>
+		<div class="guide-description">
+             <center><b>Crime Management</b></center>
+             <br>
+             <ol>
+             	<li>On the navigation bar click "Crimes/case" to open more tabs </li>
+             	<li>Click on "Crimes" to open the management page to open crimes</li>
+             	<li>You will have a clear view of all crims </li>
+             	<li>Close all solved all crime to ensure that they clear track are kept</li>
+             	<li>You can reopen crims  </li>
+             	
+             </ol>
+		</div>
+	</div>
+
+<br><br>
+
+
+<div class="guide-holder">
+		<div class="guide-image">
+         <img src="assets/images/crimemanagementguide.png" width="100%">
+		</div>
+		<div class="guide-description">
+             <center><b>User Management</b></center>
+             <br>
+             <ol>
+             	<li>On the navigation bar click "Users" to open management tab </li>
+             	<li>You can view all users in the syatem categorised</li>
+             	<li>You can close accounts of users of and reopen them</li>
+             	
+             	
+             </ol>
+		</div>
+	</div>
+
+<br><br>
+
+<div class="guide-holder">
+		<div class="guide-image">
+         <img src="assets/images/officeraddguide.png" width="100%">
+		</div>
+		<div class="guide-description">
+             <center><b>Add more admin</b></center>
+             <br>
+             <ol>
+             	<li>On the navigation bar click "Officer" to open more tabs and select "Add officers" </li>
+             	<li>Added officer will be added </li>
+             	<li>Username will be (Email)</li>
+             	<li>Password will be (Password)</li>
+             	<li>New admin account will be be open and ready to login</li>
+             	
+             	
+             </ol>
+		</div>
+	</div>
+
+<br><br>
+
+
 </div>
 
 
@@ -241,10 +295,8 @@ $totalPages_AllWitness = ceil($totalRows_AllWitness/$maxRows_AllWitness)-1;
     </div>
 
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
 
 </body>
 </html>
-<?php
-mysql_free_result($AllWitness);
-?>

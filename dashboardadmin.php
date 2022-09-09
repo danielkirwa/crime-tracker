@@ -70,7 +70,7 @@ $row_adminAllsection = mysql_fetch_assoc($adminAllsection);
 $totalRows_adminAllsection = mysql_num_rows($adminAllsection);
 
 mysql_select_db($database_crimecon, $crimecon);
-$query_mostcommoncrime = "SELECT tblcrime.sectionID, tblsection.sectionnmae FROM tblcrime, tblsection WHERE tblsection.sectionID = tblcrime.sectionID ORDER BY tblcrime.sectionID ASC  LIMIT 1";
+$query_mostcommoncrime = "SELECT tblcrime.sectionID, tblsection.sectionnmae,  tblsection.`description`  FROM tblcrime, tblsection WHERE tblsection.sectionID = tblcrime.sectionID ORDER BY tblsection.sectionnmae ASC  LIMIT 1";
 $mostcommoncrime = mysql_query($query_mostcommoncrime, $crimecon) or die(mysql_error());
 $row_mostcommoncrime = mysql_fetch_assoc($mostcommoncrime);
 $totalRows_mostcommoncrime = mysql_num_rows($mostcommoncrime);
@@ -100,13 +100,13 @@ $row_activesections = mysql_fetch_assoc($activesections);
 $totalRows_activesections = mysql_num_rows($activesections);
 
 mysql_select_db($database_crimecon, $crimecon);
-$query_mostcommonward = "SELECT tblward.wardname, tblcrime.wardID   FROM tblward, tblcrime WHERE tblward.wardID = tblcrime.wardID   ORDER BY tblward.wardID DESC LIMIT 1";
+$query_mostcommonward = "SELECT tblward.wardname, tblcrime.wardID   FROM tblward, tblcrime WHERE tblward.wardID = tblcrime.wardID   ORDER BY  tblward.wardname DESC LIMIT  1";
 $mostcommonward = mysql_query($query_mostcommonward, $crimecon) or die(mysql_error());
 $row_mostcommonward = mysql_fetch_assoc($mostcommonward);
 $totalRows_mostcommonward = mysql_num_rows($mostcommonward);
 
 mysql_select_db($database_crimecon, $crimecon);
-$query_mostcommonconstituency = "SELECT tblconstituency.constituencyname, tblcrime.constituencyID    FROM tblconstituency, tblcrime  WHERE tblconstituency.constituencyID = tblcrime.constituencyID       ORDER BY  tblconstituency.constituencyID DESC LIMIT 1";
+$query_mostcommonconstituency = "SELECT tblconstituency.constituencyname, tblcrime.constituencyID    FROM tblconstituency, tblcrime  WHERE tblconstituency.constituencyID = tblcrime.constituencyID       ORDER BY   tblconstituency.constituencyname ASC LIMIT 1";
 $mostcommonconstituency = mysql_query($query_mostcommonconstituency, $crimecon) or die(mysql_error());
 $row_mostcommonconstituency = mysql_fetch_assoc($mostcommonconstituency);
 $totalRows_mostcommonconstituency = mysql_num_rows($mostcommonconstituency);
@@ -210,9 +210,17 @@ $totalRows_mostcommonconstituency = mysql_num_rows($mostcommonconstituency);
             <li><a class="dropdown-item" href="addwards.php">Add Wards</a></li>
           </ul>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="systemusers.php">All Users</a>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Reports
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="filter.php">Case Filter</a></li>
+            <li><a class="dropdown-item" href="systemusers.php">All Users</a></li>
+            
+          </ul>
         </li>
+       
       </ul>
       <form class="d-flex">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
@@ -228,9 +236,6 @@ $totalRows_mostcommonconstituency = mysql_num_rows($mostcommonconstituency);
       <table>
       <tr>
         <td>
-          <img src="" width="75px">
-        </td>
-        <td>
           <label class="smallText dodgerblueText">All Crimes : <span id="lbtotalcrimes"> <?php echo $totalRows_adminAllcrimes ?> </span> </label><br/>
           <label>Solved crimes : <span id="lbtotalsolvedcrimes"> <?php echo $totalRows_adminAllcrimes - $totalRows_activecrimes ?> </span> </label><br>
           <label>Unsolved crimes : <?php echo $totalRows_activecrimes ?></label><br>
@@ -245,9 +250,7 @@ $totalRows_mostcommonconstituency = mysql_num_rows($mostcommonconstituency);
     <div class="enroll-card hoverme" id="crimebtn">
       <table>
       <tr>
-        <td>
-          <img src="" width="75px">
-        </td>
+        
         <td>
           <label class="smallText dodgerblueText">Danger Zone  : </label><br/>
           <label>Constituency : <?php echo $row_mostcommonconstituency['constituencyname']; ?></label><br>
@@ -262,12 +265,10 @@ $totalRows_mostcommonconstituency = mysql_num_rows($mostcommonconstituency);
     <div class="enroll-card hoverme" id="crimebtn">
       <table>
       <tr>
-        <td>
-          <img src="" width="75px">
-        </td>
+      
         <td>
           <label class="smallText dodgerblueText">Common Crime :  <?php echo $row_mostcommoncrime['sectionnmae']; ?></label>
-          <label class="smallText dodgerblueText">Total cases : <?php echo $totalRows_mostcommoncrime ?></label>
+          <label class="smallText dodgerblueText">Description : <?php echo $row_mostcommoncrime['description']; ?></label>
         </td>
       </tr>
     </table>
@@ -276,9 +277,7 @@ $totalRows_mostcommonconstituency = mysql_num_rows($mostcommonconstituency);
      <div class="enroll-card hoverme" id="crimebtn">
       <table>
       <tr>
-        <td>
-          <img src="" width="75px">
-        </td>
+       
         <td>
           <label class="smallText dodgerblueText">All Officers : <?php echo $totalRows_adminAllofficer ?></label><br/>
           <label class="smallText dodgerblueText">Active Officers :<?php echo $totalRows_activeofficer ?> </label>
@@ -292,9 +291,7 @@ $totalRows_mostcommonconstituency = mysql_num_rows($mostcommonconstituency);
     <div class="enroll-card hoverme" id="crimebtn">
       <table>
       <tr>
-        <td>
-          <img src="" width="75px">
-        </td>
+        
         <td>
           <label class="smallText dodgerblueText">All Departments : <?php echo $totalRows_adminAlldepartments ?></label><br/>
           <label class="smallText dodgerblueText">Active Departments : <?php echo $totalRows_activedepartmets ?></label><br/>
@@ -307,9 +304,7 @@ $totalRows_mostcommonconstituency = mysql_num_rows($mostcommonconstituency);
     <div class="enroll-card hoverme" id="crimebtn">
       <table>
       <tr>
-        <td>
-          <img src="" width="75px">
-        </td>
+      
         <td>
           <label class="smallText dodgerblueText">All Sections : <?php echo $totalRows_adminAllsection ?></label><br/>
           <label class="smallText dodgerblueText">Active Sections : <?php echo $totalRows_activesections ?></label><br/>

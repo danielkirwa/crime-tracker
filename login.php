@@ -56,6 +56,10 @@ if(isset($_POST['btnlogin'])){
    header("Location:dashboardadmin.php");
 
   }
+  if($_SESSION['privillage'] == "none"){
+   echo '<script>alert ("Your account was Disable")</script>';
+
+  }
 
   }
 

@@ -1,4 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <info>
 	<infoitem key="UD_AllVictims" value="name:victimID;datatype:int,name:firstname;datatype:string,name:phone;datatype:string,name:wardname;datatype:string,name:crimeID;datatype:int,name:sectionnmae;datatype:string,name:status;datatype:int,name:dateadded;datatype:date" />
+	<infoitem key="UD_cmbsetion" value="name:sectionID;datatype:int,name:sectionnmae;datatype:string" />
 </info>
